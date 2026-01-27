@@ -1,19 +1,21 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import DashBoard from "@/dashboard/DashBoard";
 import AdminPage from "@/pages/AdminPage";
 import EmployerPage from "@/pages/EmployerPage";
 import JobPostPage from "@/pages/JobPostPage";
 import AllJobsPage from "@/pages/AllJobsPage";
+import ErrorPage from "@/pages/ErrorPage";
+import HomePage from "@/pages/HomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <DashBoard />,
+        element: <HomePage />,
       },
       {
         path: "/admin",

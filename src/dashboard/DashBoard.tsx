@@ -1,16 +1,10 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Outlet } from "react-router";
 import Sidebar from "../components/Sidebar";
-
-const DashBoard = ({ children }: { children: React.ReactNode }) => {
+const DashBoard = () => {
   return (
-    <div>
-      <SidebarProvider>
-        <Sidebar />
-        <main>
-          <SidebarTrigger className="cursor-pointer" />
-          {children}
-        </main>
-      </SidebarProvider>
+    <div className="flex bg-gray-50">
+      <Sidebar />
+      <Outlet />
     </div>
   );
 };

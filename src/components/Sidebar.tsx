@@ -7,26 +7,37 @@ import { MdWork } from "react-icons/md";
 import { FaBriefcase } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { useState } from "react";
+import { FaMoon } from "react-icons/fa";
+import { MdOutlineWbSunny } from "react-icons/md";
 
 const Sidebar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [darkNightToggle, setDarkNightToggle] = useState(false);
+
+  const darkNightToggleButton = () => {
+    setDarkNightToggle(!darkNightToggle);
+  };
 
   const sidebarToggle = () => {
     setOpenSidebar(!openSidebar);
   };
 
-  //   const sidebarContext = createContext(openSidebar);
-
-  const btnClass = `flex gap-4 items-center w-full py-2 hover:bg-blue-100 hover:rounded-md text-xl font-bold opacity-60 hover:opacity-100 px-2`;
+  const btnClass = `flex gap-4 justify-baseline items-center w-full py-2 hover:bg-blue-100 hover:rounded-md text-xl font-bold opacity-60 hover:opacity-100 px-2 h-14`;
 
   return (
-    <aside className="h-screen">
+    <aside className={`h-screen`}>
       <nav className="h-full flex flex-col bg-white border-r border-gray-200 shadow-lg">
-        <div className="p-4 pb-2 flex justify-between items-center gap-2">
-          <NavLink to="/" className={`font-extrabold text-4xl `}>
-            <span className={`${openSidebar ? "hidden" : ""}`}>Dashboard</span>
+        <div className="p-4 flex justify-between items-center gap-2 h-14">
+          <NavLink
+            to="/"
+            className={`font-extrabold text-4xl ${openSidebar ? "hidden" : ""}`}
+          >
+            <span>Dashboard</span>
           </NavLink>
-          <button onClick={sidebarToggle} className="text-2xl cursor-pointer">
+          <button
+            onClick={sidebarToggle}
+            className="text-2xl cursor-pointer pl-2"
+          >
             {openSidebar ? <GoSidebarCollapse /> : <GoSidebarExpand />}
           </button>
         </div>
@@ -53,9 +64,21 @@ const Sidebar = () => {
           </NavLink>
         </div>
         <div className="p-4">
-          <button className={`${btnClass} ${openSidebar ? "hidden" : ""}`}>
-            Dark Mode
-          </button>
+          <div
+            className={`flex gap-4 items-center pl-2 text-xl font-bold opacity-60 hover:opacity-100`}
+          >
+            <button
+              className="cursor-pointer h-14"
+              onClick={darkNightToggleButton}
+            >
+              {darkNightToggle ? <MdOutlineWbSunny /> : <FaMoon />}
+            </button>
+            <button>
+              <span className={`${openSidebar ? "hidden" : ""} h-14`}>
+                {darkNightToggle ? "Light Mode" : " Dark Mode"}
+              </span>
+            </button>
+          </div>
           <NavLink to="profile" className={btnClass}>
             <CgProfile />
 

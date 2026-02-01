@@ -1,7 +1,9 @@
 import { NavLink } from "react-router";
 import { GoSidebarExpand } from "react-icons/go";
 import { GoSidebarCollapse } from "react-icons/go";
-import { RiAdminLine } from "react-icons/ri";
+import { MdSpaceDashboard } from "react-icons/md";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+
 import { FaUserTie } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import { FaBriefcase } from "react-icons/fa6";
@@ -22,17 +24,19 @@ const Sidebar = () => {
     setOpenSidebar(!openSidebar);
   };
 
-  const btnClass = `flex gap-4 justify-baseline items-center w-full py-2 hover:bg-blue-100 hover:rounded-md text-xl font-bold opacity-60 hover:opacity-100 px-2 h-14`;
+  const btnClass = `flex gap-4 justify-baseline items-center w-full py-2 hover:bg-blue-100 hover:rounded-md text-xl font-bold opacity-60 hover:opacity-100 px-2 h-14 hover:scale-102 transition-transform duration-100`;
+
+  const openSideBarClass = openSidebar ? "hidden" : "";
 
   return (
-    <aside className={`h-screen`}>
+    <aside className={`fixed top-0 left-0 h-screen`}>
       <nav className="h-full flex flex-col bg-white border-r border-gray-200 shadow-lg">
         <div className="p-4 flex justify-between items-center gap-2 h-14">
           <NavLink
             to="/"
-            className={`font-extrabold text-4xl ${openSidebar ? "hidden" : ""}`}
+            className={`font-extrabold text-4xl ${openSideBarClass}`}
           >
-            <span>Dashboard</span>
+            <span>6FigureJobs</span>
           </NavLink>
           <button
             onClick={sidebarToggle}
@@ -41,26 +45,55 @@ const Sidebar = () => {
             {openSidebar ? <GoSidebarCollapse /> : <GoSidebarExpand />}
           </button>
         </div>
-        <div className="p-4 flex-1 flex-col justify-center items-center space-y-4">
-          <NavLink to="/admin" className={`${btnClass}`}>
-            <RiAdminLine />
-            <span className={`${openSidebar ? "hidden " : ""}`}>Admin</span>
-          </NavLink>
-          <NavLink to="/employer" className={btnClass}>
-            <FaUserTie />
 
-            <span className={`${openSidebar ? "hidden" : ""}`}>Employer</span>
-          </NavLink>
-          <NavLink to="/job-post" className={btnClass}>
+        <div className="p-4 flex-1 flex-col justify-center items-center space-y-4">
+          {/* Dashboard */}
+
+          <div>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `${btnClass} ${isActive ? "bg-blue-100 rounded-md" : ""}`
+              }
+            >
+              <MdSpaceDashboard />
+              <span className={`${openSideBarClass}`}>Dashboard</span>
+            </NavLink>
+          </div>
+
+          {/* Employer */}
+          <div className={`${btnClass}`}>
+            <div className="flex justify-between items-center gap-2 w-full">
+              <div className="flex justify-center items-center gap-2">
+                <FaUserTie />
+                <span className={`${openSideBarClass}`}>Employers</span>
+              </div>
+              <div>
+                <MdOutlineKeyboardArrowDown className={`${openSideBarClass}`} />
+              </div>
+            </div>
+          </div>
+
+          {/* Add job post */}
+
+          <NavLink
+            to="/job-post"
+            className={({ isActive }) =>
+              `${btnClass} ${isActive ? "bg-blue-100 rounded-md" : ""}`
+            }
+          >
             <MdWork />
-            <span className={`${openSidebar ? "hidden" : ""}`}>
-              Add Job Post
-            </span>
+            <span className={`${openSideBarClass}`}>Add Job Post</span>
           </NavLink>
-          <NavLink to="/all-jobs" className={btnClass}>
+          <NavLink
+            to="/all-jobs"
+            className={({ isActive }) =>
+              `${btnClass} ${isActive ? "bg-blue-100 rounded-md" : ""}`
+            }
+          >
             <FaBriefcase />
 
-            <span className={`${openSidebar ? "hidden" : ""}`}>All Jobs</span>
+            <span className={`${openSideBarClass}`}>All Jobs</span>
           </NavLink>
         </div>
         <div className="p-4">
@@ -74,15 +107,20 @@ const Sidebar = () => {
               {darkNightToggle ? <MdOutlineWbSunny /> : <FaMoon />}
             </button>
             <button>
-              <span className={`${openSidebar ? "hidden" : ""} h-14`}>
+              <span className={`${openSideBarClass} h-14`}>
                 {darkNightToggle ? "Light Mode" : " Dark Mode"}
               </span>
             </button>
           </div>
-          <NavLink to="profile" className={btnClass}>
+          <NavLink
+            to="profile"
+            className={({ isActive }) =>
+              `${btnClass} ${isActive ? "bg-blue-100 rounded-md" : ""}`
+            }
+          >
             <CgProfile />
 
-            <span className={`${openSidebar ? "hidden" : ""}`}>Profile</span>
+            <span className={`${openSideBarClass}`}>Profile</span>
           </NavLink>
         </div>
       </nav>

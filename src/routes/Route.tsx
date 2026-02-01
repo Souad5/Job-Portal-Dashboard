@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import AdminPage from "../pages/AdminPage";
 import EmployerPage from "../pages/EmployerPage";
 import JobPostPage from "../pages/JobPostPage";
 import AllJobsPage from "../pages/AllJobsPage";
@@ -19,8 +18,8 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/admin",
-        element: <AdminPage />,
+        path: "/dashboard",
+        element: <HomePage />,
       },
       {
         path: "/employer",

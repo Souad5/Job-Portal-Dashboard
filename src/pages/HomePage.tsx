@@ -2,9 +2,11 @@ import { FaBriefcase } from "react-icons/fa6";
 import { MdEngineering } from "react-icons/md";
 import { FaRegMessage } from "react-icons/fa6";
 import { FaBusinessTime } from "react-icons/fa6";
-import BiaxiaLineChart from "../components/BiaxialLineChart";
+import BiaxiaLineChart from "../components/Dashboard/HiringTrends";
 import { NavLink } from "react-router";
 import Button from "../components/ui/Button";
+import { ApplicationChart } from "../components/Dashboard/ApplicationsChart";
+import { RecentActivity } from "../components/Dashboard/RecentlyActivities";
 
 const HomePage = () => {
   const data = [
@@ -39,7 +41,7 @@ const HomePage = () => {
 
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="font-bold text-2xl">Dashboard</h1>
+          <h1 className="font-extrabold text-4xl">Dashboard</h1>
         </div>
         <div>
           <h1 className="font-semibold text-xl">Welcome back </h1>
@@ -78,15 +80,24 @@ const HomePage = () => {
       {/* features jobs sections */}
 
       <div className="grid grid-cols-3 grid-rows-5 gap-4 mt-10">
-        {/* Charts  */}
+        {/*Hiring trends Charts  */}
         <div className="col-span-2 row-span-2 bg-white p-6 border border-gray-200 rounded-xl">
           <h1 className="font-bold text-xl mb-4">Hiring Trends</h1>
           <BiaxiaLineChart />
         </div>
 
-        <div className="row-span-2 col-start-1 row-start-3">2</div>
+        {/* Applications Status */}
 
-        <div className="row-span-2 col-start-2 row-start-3">3</div>
+        <div className="row-span-2 col-start-1 row-start-3 bg-white rounded-xl h-0">
+          <ApplicationChart />
+        </div>
+
+        {/* Recent Activities */}
+
+        <div className="row-span-2 col-start-2 row-start-3">
+          {" "}
+          <RecentActivity />{" "}
+        </div>
 
         {/* Quick Actions */}
         <div className="col-start-3 row-start-1 bg-white rounded-xl flex flex-col justify-center items-start gap-6 border border-gray-200">
@@ -103,9 +114,9 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="row-span-2 col-start-3 row-start-2">5</div>
+        <div className="row-span-2 col-start-3 row-start-2 border">5</div>
 
-        <div className="row-span-2 col-start-3 row-start-4">6</div>
+        <div className="row-span-2 col-start-3 row-start-4 border">6</div>
       </div>
     </section>
   );

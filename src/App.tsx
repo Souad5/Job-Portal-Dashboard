@@ -1,9 +1,9 @@
-import DashBoard from "./dashboard/DashBoard";
+import DashBoardLayout from "./MainLayout/DashBoardLayout";
 
 function App() {
   return (
     <>
-      <DashBoard />
+      <DashBoardLayout />
     </>
   );
 }

@@ -13,25 +13,25 @@ import { RechartsDevtools } from "@recharts/devtools";
 const data = [
   {
     name: "Jan",
-    Hire: 4000,
-    Application: 2400,
+    Hire: 400,
+    Application: 4000,
     amt: 2400,
   },
   {
     name: "Feb",
-    Hire: 3000,
-    Application: 1398,
+    Hire: 300,
+    Application: 13098,
     amt: 2210,
   },
   {
     name: "Mar",
-    Hire: 2000,
+    Hire: 200,
     Application: 9800,
     amt: 2290,
   },
   {
     name: "April",
-    Hire: 2780,
+    Hire: 278,
     Application: 3908,
     amt: 2000,
   },
@@ -43,13 +43,13 @@ const data = [
   },
   {
     name: "Jun",
-    Hire: 2390,
+    Hire: 290,
     Application: 3800,
     amt: 2500,
   },
   {
     name: "July",
-    Hire: 3490,
+    Hire: 349,
     Application: 4300,
     amt: 2100,
   },
@@ -62,7 +62,7 @@ export default function Example() {
       style={{
         width: "100%",
         maxWidth: "90%",
-        maxHeight: "30vh",
+        maxHeight: "70vh",
         aspectRatio: 1.618,
       }}
       responsive

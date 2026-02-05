@@ -153,7 +153,7 @@ export default function JobsTablePage() {
 
   return (
     <div className="px-6 py-12">
-      <h1 className="text-3xl font-semibold text-gray-900 mb-6">
+      <h1 className="text-3xl font-semibold text-[#044635] mb-6">
         Open Positions
       </h1>
 

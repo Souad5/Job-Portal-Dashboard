@@ -40,7 +40,7 @@ export default function StepJobDetails() {
 
       {/* Guidance Note */}
       <div className="rounded-md bg-gray-50 border border-gray-200 p-4">
-        <p className="text-md text-gray-600 leading-relaxed">
+        <p className="text-md text-gray-600 leading-relaxed selection:bg-red-400">
           <span className="font-medium text-gray-800">Tip:</span> Job postings
           with a clear title and concise summary receive significantly more
           qualified applicants.

@@ -1,4 +1,3 @@
-// components/form/StepReview.tsx
 import { useFormContext } from "react-hook-form";
 import { JobFormValues } from "../../types/job";
 

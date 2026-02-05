@@ -41,7 +41,7 @@ const HomePage = () => {
 
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="font-extrabold text-4xl">Dashboard</h1>
+          <h1 className="font-extrabold text-4xl text-[#044635]">Dashboard</h1>
         </div>
         <div>
           <h1 className="font-semibold text-xl">Welcome back </h1>
@@ -61,12 +61,12 @@ const HomePage = () => {
 
       {/* cart sections here is cart content */}
 
-      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-4">
+      <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center gap-4 ">
         {data.map((d, i) => (
           <div
             key={i}
             style={{ backgroundColor: d.color }}
-            className="hover:shadow-xl text-white p-6 text-2xl flex justify-between items-center w-full rounded-xl"
+            className="hover:shadow-xl text-white p-6 text-2xl flex justify-between items-center w-full rounded-xl hover:scale-102 transition-scale duration-200"
           >
             <div className="border p-2 rounded-lg border-white">{d.icon}</div>
             <div className="flex flex-col items-end">

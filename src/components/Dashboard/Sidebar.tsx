@@ -16,9 +16,12 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const [darkMode, setDarkMode] = useState(false);
 
   const btnClass =
-    "flex gap-4 items-center w-full py-2 px-2 h-14 text-xl font-bold opacity-60 hover:opacity-100 hover:bg-blue-100 rounded-md";
+    "flex gap-4 items-center w-full py-2 px-2 h-14 text-xl font-bold opacity-90 hover:opacity-100 hover:bg-[#044635] transition duration-200 hover:text-white rounded-md";
 
   const hideText = open ? "hidden transition-all duration-150" : "";
+
+  const isActive = ({ isActive }: { isActive: unknown }) =>
+    `${btnClass} ${isActive ? "bg-[#044635] text-white" : ""}`;
 
   return (
     <aside
@@ -29,7 +32,10 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       <nav className="h-full flex flex-col bg-white border-r border-gray-200 shadow-lg">
         {/* Header */}
         <div className="p-4 flex justify-between items-center h-14">
-          <NavLink to="/" className={`font-extrabold text-3xl ${hideText}`}>
+          <NavLink
+            to="/"
+            className={`font-extrabold text-3xl text-[#044635] ${hideText}`}
+          >
             6FigureJobs
           </NavLink>
 
@@ -43,28 +49,23 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
         {/* Menu */}
         <div className="p-4 flex-1 space-y-4">
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              `${btnClass} ${isActive ? "bg-blue-100" : ""}`
-            }
-          >
+          <NavLink to="/dashboard" className={isActive}>
             <MdSpaceDashboard />
             <span className={hideText}>Dashboard</span>
           </NavLink>
 
-          <div className={btnClass}>
+          <NavLink to="/employer" className={isActive}>
             <FaUserTie />
             <span className={hideText}>Employers</span>
             <MdOutlineKeyboardArrowDown className={`ml-auto ${hideText}`} />
-          </div>
+          </NavLink>
 
-          <NavLink to="/job-post" className={btnClass}>
+          <NavLink to="/job-post" className={isActive}>
             <MdWork />
             <span className={`${hideText} text-nowrap`}>Job Post</span>
           </NavLink>
 
-          <NavLink to="/all-jobs" className={btnClass}>
+          <NavLink to="/all-jobs" className={isActive}>
             <FaBriefcase />
             <span className={hideText}>All Jobs</span>
           </NavLink>
@@ -82,7 +83,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
             </span>
           </button>
 
-          <NavLink to="/profile" className={btnClass}>
+          <NavLink to="/profile" className={isActive}>
             <CgProfile />
             <span className={hideText}>Profile</span>
           </NavLink>

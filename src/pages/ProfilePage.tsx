@@ -27,7 +27,7 @@ const ProfilePage = () => {
           <h2 className="text-lg font-semibold text-[#044635]">
             Personal Information
           </h2>
-          <button className="text-sm font-medium text-blue-600 hover:underline">
+          <button className="text-sm font-medium text-blue-600 hover:underline cursor-pointer">
             Edit
           </button>
         </div>
@@ -76,7 +76,7 @@ const ProfilePage = () => {
       <div className="mt-10 rounded-xl bg-white px-10 py-6">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-[#044635]">Address</h2>
-          <button className="text-sm font-medium text-blue-600 hover:underline">
+          <button className="text-sm font-medium text-blue-600 hover:underline cursor-pointer">
             Edit
           </button>
         </div>

@@ -75,7 +75,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
         <div className="p-4 space-y-4">
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="flex gap-4 items-center text-xl font-bold opacity-60 hover:opacity-100"
+            className="flex gap-4 items-center text-xl font-bold opacity-60 hover:opacity-100 pl-2"
           >
             {darkMode ? <MdOutlineWbSunny /> : <FaMoon />}
             <span className={hideText}>

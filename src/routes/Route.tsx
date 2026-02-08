@@ -6,6 +6,7 @@ import AllJobsPage from "../pages/AllJobsPage";
 import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
+import Login from "../components/Login";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/dashboard",

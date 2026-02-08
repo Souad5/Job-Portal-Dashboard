@@ -35,6 +35,7 @@ const HomePage = () => {
       color: "#8BC740",
     },
   ];
+
   return (
     <section className="w-full p-4">
       {/* header part dashboard name and profile picture */}

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router";
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
-import { MdSpaceDashboard, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { MdSpaceDashboard } from "react-icons/md";
 import { FaUserTie, FaMoon } from "react-icons/fa";
 import { MdWork, MdOutlineWbSunny } from "react-icons/md";
 import { FaBriefcase } from "react-icons/fa6";
@@ -16,7 +16,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const [darkMode, setDarkMode] = useState(false);
 
   const btnClass =
-    "flex gap-4 items-center w-full py-2 px-2 h-14 text-xl font-bold opacity-90 hover:opacity-100 hover:bg-[#044635] transition duration-200 hover:text-white rounded-md";
+    "flex gap-4 items-center w-full py-2 px-2 h-14 text-xl font-bold opacity-90 hover:opacity-100 hover:bg-[#3c7365] transition duration-200 hover:text-white rounded-md";
 
   const hideText = open ? "hidden transition-all duration-150" : "";
 
@@ -56,8 +56,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
           <NavLink to="/employer" className={isActive}>
             <FaUserTie />
-            <span className={hideText}>Employers</span>
-            <MdOutlineKeyboardArrowDown className={`ml-auto ${hideText}`} />
+            <span className={hideText}>Recruiters</span>
           </NavLink>
 
           <NavLink to="/job-post" className={isActive}>

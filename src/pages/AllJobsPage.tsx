@@ -1,12 +1,5 @@
-import { useState, useMemo } from "react";
-import {
-  ColumnDef,
-  useReactTable,
-  getCoreRowModel,
-  getPaginationRowModel,
-  flexRender,
-} from "@tanstack/react-table";
-import { Briefcase, MapPin } from "lucide-react";
+import { Briefcase, MapPin, Clock } from "lucide-react";
+import { useState } from "react";
 
 interface Job {
   id: string;
@@ -17,7 +10,6 @@ interface Job {
   postedAt: string;
   color: string;
 }
-
 // Fake Data
 const jobs: Job[] = [
   {
@@ -85,137 +77,110 @@ const jobs: Job[] = [
   },
 ];
 
-export default function JobsTablePage() {
-  const [pageSize] = useState(10);
+export default function JobsCardPage() {
+  const pageSize = 9;
+  const [pageIndex, setPageIndex] = useState(0);
 
-  const columns = useMemo<ColumnDef<Job>[]>(
-    () => [
-      {
-        header: "Job Title",
-        accessorKey: "title",
-        cell: (info) => (
-          <span className="font-medium text-gray-900 hover:text-indigo-600 cursor-pointer">
-            {info.getValue() as string}
-          </span>
-        ),
-      },
-      {
-        header: "Company",
-        accessorKey: "company",
-        cell: (info) => (
-          <div className="flex items-center gap-1 text-gray-500">
-            <Briefcase size={14} /> {info.getValue() as string}
-          </div>
-        ),
-      },
-      {
-        header: "Location",
-        accessorKey: "location",
-        cell: (info) => (
-          <div className="flex items-center gap-1 text-gray-500">
-            <MapPin size={14} /> {info.getValue() as string}
-          </div>
-        ),
-      },
-      {
-        header: "Type",
-        accessorKey: "type",
-        cell: (info) => {
-          const job = info.row.original;
-          return (
-            <span
-              className={`px-2 py-0.5 rounded-full text-xs font-medium ${job.color}`}
-            >
-              {info.getValue() as string}
-            </span>
-          );
-        },
-      },
-      {
-        header: "Posted",
-        accessorKey: "postedAt",
-        cell: (info) => (
-          <span className="text-gray-400">{info.getValue() as string}</span>
-        ),
-      },
-    ],
-    [],
+  const paginatedJobs = jobs.slice(
+    pageIndex * pageSize,
+    (pageIndex + 1) * pageSize,
   );
-
-  // eslint-disable-next-line react-hooks/incompatible-library
-  const table = useReactTable({
-    data: jobs,
-    columns,
-    pageCount: Math.ceil(jobs.length / pageSize),
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-  });
 
   return (
     <div className="px-6 py-12">
-      <h1 className="text-3xl font-semibold text-[#044635] mb-6">
+      <h1 className="text-3xl font-semibold text-[#044635] mb-8">
         Open Positions
       </h1>
 
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="px-4 py-6 text-left text-xl font-semibold text-gray-700"
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
+      {/* Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+        {paginatedJobs.map((job) => (
+          <div
+            key={job.id}
+            className="
+              group cursor-pointer
+              rounded-2xl bg-white
+              shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+              ring-1 ring-gray-200/70
+              p-6
+              transition-all duration-300
+              hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+            "
+          >
+            {/* Header */}
+            <div className="flex items-start justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition">
+                {job.title}
+              </h2>
 
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {table
-              .getRowModel()
-              .rows.slice(0, pageSize) // pagination
-              .map((row) => (
-                <tr key={row.id} className="hover:bg-gray-50 transition">
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-5 text-md">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-          </tbody>
-        </table>
+              <span
+                className={`shrink-0 px-3 py-1 rounded-full text-xs font-semibold ${job.color}`}
+              >
+                {job.type}
+              </span>
+            </div>
+
+            {/* Company */}
+            <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
+              <Briefcase size={16} className="opacity-70" />
+              <span className="font-medium">{job.company}</span>
+            </div>
+
+            {/* Location */}
+            <div className="flex items-center gap-2 text-gray-500 text-sm mb-4">
+              <MapPin size={16} className="opacity-70" />
+              {job.location}
+            </div>
+
+            {/* Footer */}
+            <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs text-gray-400">
+                <Clock size={14} />
+                {job.postedAt}
+              </div>
+
+              <span className="text-sm font-medium text-indigo-600 group-hover:underline">
+                View Details →
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-end mt-4 gap-2 items-center text-sm text-gray-700">
+      <div className="flex justify-end mt-10 gap-4 items-center text-sm text-gray-700">
         <button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-          className="px-3 py-1 rounded border border-gray-300 disabled:opacity-50"
+          onClick={() => setPageIndex((p) => Math.max(p - 1, 0))}
+          disabled={pageIndex === 0}
+          className="
+            cursor-pointer rounded-lg px-4 py-2
+            border border-gray-300
+            hover:bg-gray-100
+            disabled:opacity-40 disabled:cursor-not-allowed
+            transition
+          "
         >
           Previous
         </button>
-        <span>
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {Math.ceil(jobs.length / pageSize)}
+
+        <span className="font-medium">
+          Page {pageIndex + 1} of {Math.ceil(jobs.length / pageSize)}
         </span>
+
         <button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-          className="px-3 py-1 rounded border border-gray-300 disabled:opacity-50"
+          onClick={() =>
+            setPageIndex((p) =>
+              Math.min(p + 1, Math.ceil(jobs.length / pageSize) - 1),
+            )
+          }
+          disabled={(pageIndex + 1) * pageSize >= jobs.length}
+          className="
+            cursor-pointer rounded-lg px-4 py-2
+            border border-gray-300
+            hover:bg-gray-100
+            disabled:opacity-40 disabled:cursor-not-allowed
+            transition
+          "
         >
           Next
         </button>

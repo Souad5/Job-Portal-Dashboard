@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import EmployerPage from "../pages/EmployerPage";
 import JobPostPage from "../pages/JobPostPage";
 import AllJobsPage from "../pages/AllJobsPage";
 import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
 import Login from "../components/Login";
+import RecruiterPage from "../pages/RecruiterPage";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/employer",
-        element: <EmployerPage />,
+        element: <RecruiterPage />,
       },
       {
         path: "/job-post",

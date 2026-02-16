@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-
 import Stepper from "../components/stepper/Stepper";
 import StepJobDetails from "../components/form/StepJobsDetails";
 import StepCompanyInfo from "../components/form/StepCompanyInfo";
@@ -40,7 +39,7 @@ export default function JobPostForm() {
             <button
               type="button"
               onClick={() => setStep(step - 1)}
-              className="text-sm font-medium text-gray-600"
+              className="text-sm font-medium text-gray-600 border px-6 py-2 rounded-md cursor-pointer hover:bg-gray-50 transition-transform active:scale-95 duration-100"
             >
               Back
             </button>
@@ -50,7 +49,7 @@ export default function JobPostForm() {
             <button
               type="button"
               onClick={() => setStep(step + 1)}
-              className="ml-auto rounded-md bg-indigo-600 px-6 py-2 text-sm font-medium text-white"
+              className="ml-auto rounded-md bg-indigo-600 px-6 py-2 text-sm font-medium text-white cursor-pointer transition-transform active:scale-95"
             >
               Continue
             </button>

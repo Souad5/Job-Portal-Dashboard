@@ -19,7 +19,7 @@ export default function Input({ name, label, type = "text" }: InputProps) {
         type={type}
         {...register(name)}
         className="w-full rounded-md border border-gray-300 px-3 py-2 text-md
-                   focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                   focus:outline-none focus:ring-2 transition-all duration-200 focus:ring-indigo-600"
       />
       {errors[name] && (
         <p className="text-xs text-red-500">{String(errors[name]?.message)}</p>

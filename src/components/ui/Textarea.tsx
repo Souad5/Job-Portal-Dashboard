@@ -28,7 +28,7 @@ export default function Textarea({
         {...register(name)}
         className="w-full rounded-md border border-gray-300 px-3 py-2 text-md
                    resize-none
-                   focus:outline-none focus:ring-2 focus:ring-indigo-600
+                   focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all duration-200
                    focus:border-indigo-600"
       />
 

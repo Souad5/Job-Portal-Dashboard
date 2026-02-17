@@ -5,6 +5,7 @@ import { ApplicationChart } from "../components/Dashboard/ApplicationsChart";
 import { RecentActivity } from "../components/Dashboard/RecentlyActivities";
 import Notification from "../components/Dashboard/Notification";
 import RecentJobs from "../components/Dashboard/RecentJobs";
+import { IoPeopleOutline } from "react-icons/io5";
 
 const stats = [
   {
@@ -12,24 +13,34 @@ const stats = [
     label: "Total Jobs",
     value: "500+",
     accent: "indigo",
+    color: "#40189D",
   },
   {
     icon: <MdEngineering />,
     label: "Pending Jobs",
     value: "200+",
     accent: "blue",
+    color: "#48A9F8",
   },
   {
     icon: <FaBusinessTime />,
     label: "Approved Jobs",
     value: "50+",
     accent: "emerald",
+    color: "#1BD084",
   },
   {
     icon: <FaRegMessage />,
     label: "Rejected Jobs",
     value: "10+",
     accent: "rose",
+  },
+  {
+    icon: <IoPeopleOutline />,
+    label: "Total Recruiter",
+    value: "10+",
+    accent: "rose",
+    color: "#8BC740",
   },
 ];
 
@@ -57,16 +68,17 @@ const HomePage = () => {
       </header>
 
       {/* Stats */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6">
         {stats.map((s, i) => (
           <div
             key={i}
-            className="
+            style={{ background: s.color }}
+            className={`
               bg-white rounded-2xl p-6
               shadow-[0_10px_40px_rgba(0,0,0,0.06)]
               ring-1 ring-slate-200/70
               transition hover:-translate-y-1 hover:shadow-lg
-            "
+            `}
           >
             <div
               className={`w-12 h-12 rounded-xl flex items-center justify-center
@@ -74,8 +86,8 @@ const HomePage = () => {
             >
               {s.icon}
             </div>
-            <p className="text-sm text-slate-500">{s.label}</p>
-            <h2 className="text-2xl font-semibold text-slate-900">{s.value}</h2>
+            <p className="text-sm">{s.label}</p>
+            <h2 className="text-2xl font-semibold">{s.value}</h2>
           </div>
         ))}
       </section>

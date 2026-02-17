@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
-import App from "../App";
 import JobPostPage from "../pages/JobPostPage";
 import AllJobsPage from "../pages/AllJobsPage";
+import App from "../App";
 import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
@@ -18,10 +18,7 @@ const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
-      {
-        path: "/login",
-        element: <Login />,
-      },
+
       {
         path: "/dashboard",
         element: <HomePage />,
@@ -43,6 +40,10 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

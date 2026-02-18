@@ -17,9 +17,13 @@ export default function StepCompanyInfo() {
 
       {/* Core Company Details */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <Input name="companyName" label="Company Name" />
+        <Input
+          placeholder="Enter Company Name"
+          name="companyName"
+          label="Company Name"
+        />
 
-        <Input name="location" label="Location" />
+        <Input placeholder="Enter Location" name="location" label="Location" />
       </div>
 
       {/* Company Description */}

@@ -16,7 +16,7 @@ export default function StepJobDetails() {
 
       {/* Core Fields */}
       <div className="grid grid-cols-1 gap-8">
-        <Input name="title" label="Job Title" />
+        <Input placeholder="Enter Title" name="title" label="Job Title" />
 
         <Select
           name="type"

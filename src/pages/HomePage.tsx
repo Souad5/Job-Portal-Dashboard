@@ -1,4 +1,4 @@
-import { FaBriefcase, FaRegMessage, FaBusinessTime } from "react-icons/fa6";
+import { FaBriefcase, FaMessage, FaBusinessTime } from "react-icons/fa6";
 import { MdEngineering } from "react-icons/md";
 import BiaxiaLineChart from "../components/Dashboard/HiringTrends";
 import { ApplicationChart } from "../components/Dashboard/ApplicationsChart";
@@ -6,63 +6,73 @@ import { RecentActivity } from "../components/Dashboard/RecentlyActivities";
 import Notification from "../components/Dashboard/Notification";
 import RecentJobs from "../components/Dashboard/RecentJobs";
 import { IoPeopleOutline } from "react-icons/io5";
+import { IoIosNotifications } from "react-icons/io";
+import { IoIosLogOut } from "react-icons/io";
 
 const stats = [
   {
-    icon: <FaBriefcase />,
+    icon: <FaBriefcase size={20} />,
     label: "Total Jobs",
     value: "500+",
     accent: "indigo",
-    color: "#40189D",
   },
   {
-    icon: <MdEngineering />,
+    icon: <MdEngineering size={20} />,
     label: "Pending Jobs",
     value: "200+",
-    accent: "blue",
-    color: "#48A9F8",
+    accent: "yellow",
   },
   {
-    icon: <FaBusinessTime />,
+    icon: <FaBusinessTime size={20} />,
     label: "Approved Jobs",
     value: "50+",
     accent: "emerald",
-    color: "#1BD084",
   },
   {
-    icon: <FaRegMessage />,
+    icon: <FaMessage size={20} />,
     label: "Rejected Jobs",
     value: "10+",
     accent: "rose",
   },
   {
-    icon: <IoPeopleOutline />,
+    icon: <IoPeopleOutline size={20} />,
     label: "Total Recruiter",
     value: "10+",
-    accent: "rose",
-    color: "#8BC740",
+    accent: "amber",
   },
 ];
 
 const HomePage = () => {
   return (
-    <section className="px-4 md:px-8 py-6 space-y-10">
+    <section className="md:px-4 py-6 space-y-10">
       {/* Header */}
-      <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <header className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold text-slate-900">Dashboard</h1>
+          <h1 className="text-3xl font-semibold text-[#044635]">Dashboard</h1>
           <p className="text-slate-500">Overview of your hiring activity</p>
         </div>
 
-        <div className="flex items-center gap-4 bg-white p-3 rounded-xl shadow-sm ring-1 ring-slate-200">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s"
-            alt="profile"
-            className="w-12 h-12 rounded-full object-cover"
-          />
+        <div
+          className="flex items-center gap-6 p-3 cursor-pointer "
+          title="Notifications"
+        >
+          <div className="relative inline-flex items-center">
+            {/* Bell */}
+            <IoIosNotifications
+              size={24}
+              className="text-slate-700 animate-bell"
+            />
+
+            {/* Badge */}
+            <span className="absolute -top-1 right-0 flex h-2 w-2 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white animate-pulse"></span>
+          </div>
           <div>
-            <p className="font-medium text-slate-900">Mr. Souad</p>
-            <p className="text-xs text-slate-500">Employer</p>
+            <p
+              className="font-medium text-slate-900 cursor-pointer "
+              title="Logout"
+            >
+              <IoIosLogOut size={25} />
+            </p>
           </div>
         </div>
       </header>
@@ -72,7 +82,6 @@ const HomePage = () => {
         {stats.map((s, i) => (
           <div
             key={i}
-            style={{ background: s.color }}
             className={`
               bg-white rounded-2xl p-6
               shadow-[0_10px_40px_rgba(0,0,0,0.06)]

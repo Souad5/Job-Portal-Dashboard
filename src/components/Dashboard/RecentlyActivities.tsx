@@ -54,9 +54,9 @@ const iconMap = {
 };
 
 const statusColors = {
-  new: "bg-blue-100 text-blue-400",
-  pending: "bg-[#f3b101] text-white text-warning",
-  completed: "bg-success/10 text-success",
+  new: "bg-blue-100 text-blue-400 px-2 py-1",
+  pending: "bg-yellow-200 text-yellow-600 text-warning px-2 py-1",
+  completed: "bg-green-100 text-green-600 px-2 py-1 font-bold",
 };
 
 export const RecentActivity = () => {
@@ -77,7 +77,7 @@ export const RecentActivity = () => {
           return (
             <div
               key={activity.id}
-              className="activity-item animate-slide-in"
+              className="activity-item animate-slide-in flex items-start space-y-5"
               style={{ animationDelay: `${index * 50}ms` }}
             >
               <div className="p-2 rounded-lg bg-muted/50">

@@ -1,56 +1,73 @@
+import { useForm, FormProvider } from "react-hook-form";
+import Button from "../components/ui/Button";
+import Input from "../components/ui/Input";
+
 const EmployerPage = () => {
+  const methods = useForm();
+
+  const onSubmit = (data: unknown) => {
+    console.log("Form Data:", data);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 px-4 md:px-10 py-8">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-100 px-4 py-6">
       {/* Header */}
       <header className="mb-10">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900">
-            Recruiter Management
-          </h1>
-          <p className="text-slate-500 max-w-2xl">
-            Create and manage recruiters who can post jobs on the platform
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#044635]">
+          Recruiter Management
+        </h1>
+        <p className="text-slate-500 max-w-2xl">
+          Create and manage recruiters who can post jobs on the platform
+        </p>
       </header>
 
       {/* Create Recruiter Card */}
-      <section className="mb-10 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.07)] ring-1 ring-slate-200/70 p-6">
-        <h2 className="text-lg font-semibold text-slate-800 mb-6">
-          Create Recruiter
-        </h2>
+      <section className="mb-10 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.07)] ring-1 ring-blue-200/70 p-6">
+        <h2 className="text-lg font-semibold mb-6">Create Recruiter</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-5">
-          {["Recruiter Name", "Recruiter Email", "Temporary Password"].map(
-            (item) => (
-              <input
-                key={item}
-                placeholder={item}
-                className="w-full rounded-xl border border-slate-300/60 px-4 py-2.5
-                focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
-                transition outline-none"
-              />
-            ),
-          )}
-        </div>
-
-        <div className="mt-6 flex justify-end">
-          <button
-            className="
-              cursor-pointer rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600
-              px-7 py-3 text-white font-medium
-              hover:brightness-110 hover:shadow-xl
-              active:scale-[0.97]
-              focus:ring-4 focus:ring-indigo-500/40
-              transition-all
-            "
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="grid grid-cols-1 md:grid-cols-1 gap-5"
           >
-            Create Recruiter
-          </button>
-        </div>
+            <Input
+              name="recruiterName"
+              label="Recruiter Name"
+              placeholder="Enter name"
+            />
+            <Input
+              name="recruiterEmail"
+              label="Recruiter Email"
+              placeholder="Enter email"
+              type="email"
+            />
+            <Input
+              name="tempPassword"
+              label="Temporary Password"
+              placeholder="Enter password"
+              type="password"
+            />
+            <Input
+              name="tempPassword"
+              label="Temporary Confirm Password"
+              placeholder="Enter password"
+              type="password"
+            />
+
+            <div className="mt-6 flex justify-end">
+              <Button
+                onClick={() => {}}
+                style={{}}
+                value="Create Recruiter"
+                type="submit"
+              />
+            </div>
+          </form>
+        </FormProvider>
       </section>
 
       {/* Recruiter Table */}
-      <section className="bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.07)] ring-1 ring-slate-200/70 p-6">
+      <section className="bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.07)] ring-1 ring-blue-200/70 p-6">
         <h2 className="text-lg font-semibold text-slate-800 mb-5">
           Recruiter List
         </h2>
@@ -68,22 +85,25 @@ const EmployerPage = () => {
 
             <tbody>
               {[
-                { name: "John Doe", status: "Active" },
-                { name: "Sarah Smith", status: "Disabled" },
+                {
+                  name: "John Doe",
+                  email: "john@company.com",
+                  status: "Active",
+                },
+                {
+                  name: "Sarah Smith",
+                  email: "sarah@company.com",
+                  status: "Disabled",
+                },
               ].map((rec, idx) => (
                 <tr
                   key={idx}
-                  className="
-                    bg-slate-50 hover:bg-indigo-50/60
-                    transition cursor-pointer
-                  "
+                  className="bg-slate-50 hover:bg-indigo-50/60 transition cursor-pointer"
                 >
                   <td className="px-4 py-4 font-medium text-slate-900">
                     {rec.name}
                   </td>
-
-                  <td className="text-slate-600">recruiter@company.com</td>
-
+                  <td className="text-slate-600">{rec.email}</td>
                   <td>
                     <span
                       className={`
@@ -98,7 +118,6 @@ const EmployerPage = () => {
                       {rec.status}
                     </span>
                   </td>
-
                   <td className="text-right pr-4">
                     <button
                       className="

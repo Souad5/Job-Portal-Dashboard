@@ -39,7 +39,7 @@ const Login: React.FC = () => {
       {/* Left Image */}
       <div className="w-1/2 hidden md:block">
         <img
-          src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/leftSideImage.png"
+          src="/1311600_678.jpg"
           alt="Login illustration"
           className="h-full w-full object-cover"
         />

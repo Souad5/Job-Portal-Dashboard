@@ -7,6 +7,7 @@ import StepRequirements from "../components/form/StepRequirements";
 import StepReview from "../components/form/StepReview";
 
 import { JobFormValues } from "../types/job";
+import Button from "../components/ui/Button";
 
 export default function JobPostForm() {
   const [step, setStep] = useState(1);
@@ -25,7 +26,7 @@ export default function JobPostForm() {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="bg-white m-4 p-10 rounded shadow-sm"
+        className="bg-white mx-4 my-6 px-4 py-6 rounded shadow-sm"
       >
         <Stepper currentStep={step} />
 
@@ -34,32 +35,30 @@ export default function JobPostForm() {
         {step === 3 && <StepRequirements />}
         {step === 4 && <StepReview />}
 
-        <div className="flex justify-between mt-10">
+        <div className="flex items-center justify-end gap-4 mt-10">
           {step > 1 && (
-            <button
+            <Button
+              value="Back"
               type="button"
+              style={{}}
               onClick={() => setStep(step - 1)}
-              className="text-sm font-medium text-gray-600 border px-6 py-2 rounded-md cursor-pointer hover:bg-gray-50 transition-transform active:scale-95 duration-100"
-            >
-              Back
-            </button>
+            ></Button>
           )}
 
           {step < 4 ? (
-            <button
+            <Button
+              value="Continue"
+              style={{}}
               type="button"
               onClick={() => setStep(step + 1)}
-              className="ml-auto rounded-md bg-indigo-600 px-6 py-2 text-sm font-medium text-white cursor-pointer transition-transform active:scale-95"
-            >
-              Continue
-            </button>
+            ></Button>
           ) : (
-            <button
+            <Button
+              onClick={() => {}}
               type="submit"
-              className="ml-auto rounded-md bg-indigo-600 px-6 py-2 text-sm font-medium text-white"
-            >
-              Publish Job
-            </button>
+              value=" Publish Job"
+              style={{}}
+            ></Button>
           )}
         </div>
       </form>

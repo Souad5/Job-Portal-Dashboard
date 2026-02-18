@@ -87,7 +87,7 @@ export default function JobsCardPage() {
   );
 
   return (
-    <div className="px-6 py-12">
+    <div className="px-4 py-6">
       <h1 className="text-3xl font-semibold text-[#044635] mb-8">
         Open Positions
       </h1>

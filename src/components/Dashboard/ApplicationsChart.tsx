@@ -17,7 +17,7 @@ const data = [
 
 export function ApplicationChart() {
   return (
-    <div className="bg-card p-6 shadow-sm bg-white rounded-xl">
+    <div className=" p-6 shadow-sm bg-white rounded-xl">
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Application Status
       </h3>
@@ -39,13 +39,13 @@ export function ApplicationChart() {
             </Pie>
             <Tooltip
               contentStyle={{
-                backgroundColor: "hsl(var(--card))",
-                border: "1px solid hsl(var(--border))",
+                backgroundColor: "white",
+                border: "1px solid green",
                 borderRadius: "8px",
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                boxShadow: "shadow-lg",
               }}
               formatter={(value) =>
-                value !== undefined ? [`${value} applications`, ""] : ["", ""]
+                value !== undefined ? [`${value} applications`] : [""]
               }
             />
             <Legend

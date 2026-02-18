@@ -1,35 +1,43 @@
+import Button from "../components/ui/Button";
+
 const ProfilePage = () => {
   return (
-    <section className="p-4">
+    <section className="px-4 py-6">
       {/* Page Title */}
       <h1 className="text-2xl font-semibold text-[#044635]">My Profile</h1>
 
       {/* Profile Header */}
-      <div className="mt-6 flex items-center gap-6 rounded-xl bg-white px-10 py-6">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s"
-          alt="Profile"
-          className="h-28 w-28 rounded-full object-cover"
-        />
-
-        <div className="space-y-1">
-          <h2 className="text-xl font-semibold text-[#044635]">
-            Md Souad Al Kabir
-          </h2>
-          <p className="text-sm text-gray-600">Admin</p>
-          <p className="text-sm text-gray-500">Dhaka, Bangladesh</p>
+      <div className="mt-6 flex items-center gap-6 rounded-xl bg-white px-10 py-6 ring-1 ring-blue-200">
+        <div className="flex justify-between items-start gap-2 w-full">
+          <div className="space-y-1">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s"
+              alt="Profile"
+              className="h-28 w-28 rounded-full object-cover"
+            />
+            <h2 className="text-xl font-semibold text-[#044635]">
+              Md Souad Al Kabir
+            </h2>
+            <p className="text-sm text-gray-600">Admin</p>
+            <p className="text-sm text-gray-500">Dhaka, Bangladesh</p>
+          </div>
+          <div>
+            <Button
+              style={{}}
+              type={{}}
+              onClick={() => {}}
+              value="Edit"
+            ></Button>
+          </div>
         </div>
       </div>
 
       {/* Personal Information */}
-      <div className="mt-10 rounded-xl bg-white px-10 py-6">
+      <div className="mt-10 rounded-xl bg-white px-10 py-6 ring-1 ring-blue-200">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-[#044635]">
             Personal Information
           </h2>
-          <button className="text-sm font-medium text-blue-600 hover:underline cursor-pointer">
-            Edit
-          </button>
         </div>
 
         <hr className="border border-gray-100" />
@@ -73,12 +81,9 @@ const ProfilePage = () => {
       </div>
 
       {/* Personal Information */}
-      <div className="mt-10 rounded-xl bg-white px-10 py-6">
+      <div className="mt-10 rounded-xl bg-white px-10 py-6 ring-1 ring-blue-200">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-[#044635]">Address</h2>
-          <button className="text-sm font-medium text-blue-600 hover:underline cursor-pointer">
-            Edit
-          </button>
         </div>
 
         <hr className="border border-gray-100" />

@@ -19,7 +19,7 @@ const ErrorPage = () => {
         <h2 className="mt-4 text-3xl font-semibold">Page Not Found</h2>
 
         <p className="mt-4 text-gray-400 text-lg">
-          Oops! The page you’re looking for doesn’t exist or was moved.
+          Oops! The page you`re looking for doesn`t exist or was moved.
         </p>
 
         {/* Button */}

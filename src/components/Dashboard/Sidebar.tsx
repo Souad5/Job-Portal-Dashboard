@@ -18,10 +18,10 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const btnClass =
     "flex gap-4 items-center w-full py-2 px-2 h-14 text-xl font-bold opacity-90 hover:opacity-100 hover:bg-[#3c7365] transition duration-200 hover:text-white rounded-md";
 
-  const hideText = open ? "hidden transition-all duration-150" : "";
+  const hideText = open ? "hidden transition-all duration-150 " : "";
 
   const isActive = ({ isActive }: { isActive: unknown }) =>
-    `${btnClass} ${isActive ? "bg-[#044635] text-white" : ""}`;
+    `${btnClass} ${isActive ? "bg-[#044635] text-white " : ""}`;
 
   return (
     <aside

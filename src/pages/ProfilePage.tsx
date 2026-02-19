@@ -23,7 +23,8 @@ const ProfilePage = () => {
           </div>
           <div>
             <Button
-              style={{}}
+              disabled
+              loading
               type={{}}
               onClick={() => {}}
               value="Edit"

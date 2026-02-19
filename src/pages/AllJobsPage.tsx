@@ -148,7 +148,7 @@ export default function JobsCardPage() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-end mt-10 gap-4 items-center text-sm text-gray-700">
+      <div className="flex justify-center mt-10 gap-4 items-center text-md">
         <button
           onClick={() => setPageIndex((p) => Math.max(p - 1, 0))}
           disabled={pageIndex === 0}
@@ -160,7 +160,7 @@ export default function JobsCardPage() {
             transition
           "
         >
-          Previous
+          Prev
         </button>
 
         <span className="font-medium">

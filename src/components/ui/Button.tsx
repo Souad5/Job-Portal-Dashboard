@@ -2,26 +2,23 @@ import React from "react";
 
 type buttonProps = {
   value: string;
-  style: unknown;
   type: unknown;
   onClick: () => void;
+  disabled: boolean;
+  loading: boolean;
 };
 
-const Button = ({ value, style, onClick }: buttonProps) => {
+const Button = ({ value, onClick }: buttonProps) => {
   return (
     <button
       onClick={onClick}
-      className={`relative inline-block text-lg group w-${style} cursor-pointer`}
+      className="px-5 py-2.5 relative rounded group font-medium text-white inline-block cursor-pointer"
     >
-      <span className="relative z-10 block px-5 py-3 overflow-hidden font-medium leading-tight text-gray-800 transition-colors duration-300 ease-out border-2 border-gray-200 rounded-lg">
-        <span className="absolute inset-0 w-full h-full px-5 py-3 rounded-lg bg-gray-50"></span>
-        <span className="absolute left-0 w-54 h-48 -ml-2 transition-all duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-blue-200 group-hover:-rotate-180 ease"></span>
-        <span className="relative">{value}</span>
-      </span>
-      <span
-        className="absolute bottom-0 right-0 w-full h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-blue-200 rounded-lg group-hover:mb-0 group-hover:mr-0"
-        data-rounded="rounded-lg"
-      ></span>
+      <span className="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-linear-to-br from-purple-600 to-blue-500"></span>
+      <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-linear-to-br filter group-active:opacity-0 rounded opacity-50 from-purple-600 to-blue-500"></span>
+      <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-linear-to-br filter group-active:opacity-0 group-hover:blur-sm from-purple-600 to-blue-500"></span>
+      <span className="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-linear-to-br to-purple-600 from-blue-500"></span>
+      <span className="relative">{value}</span>
     </button>
   );
 };

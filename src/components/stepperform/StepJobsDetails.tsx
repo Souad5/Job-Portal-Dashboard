@@ -16,8 +16,12 @@ export default function StepJobDetails() {
 
       {/* Core Fields */}
       <div className="grid grid-cols-1 gap-8">
-        <Input placeholder="Enter Title" name="title" label="Job Title" />
-
+        <Input
+          placeholder="Enter Title"
+          name="title"
+          label="Job Title"
+          required
+        />
         <Select
           name="type"
           label="Employment Type"
@@ -29,7 +33,6 @@ export default function StepJobDetails() {
             "Remote",
           ]}
         />
-
         <Textarea
           name="summary"
           label="Job Summary"

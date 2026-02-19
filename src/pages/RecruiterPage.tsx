@@ -1,9 +1,12 @@
 import { useForm, FormProvider } from "react-hook-form";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
+import { useState } from "react";
+import { Modal } from "../components/ui/Modal";
 
 const EmployerPage = () => {
   const methods = useForm();
+  const [open, setOpen] = useState(false);
 
   const onSubmit = (data: unknown) => {
     console.log("Form Data:", data);
@@ -34,30 +37,35 @@ const EmployerPage = () => {
               name="recruiterName"
               label="Recruiter Name"
               placeholder="Enter name"
+              required
             />
             <Input
               name="recruiterEmail"
               label="Recruiter Email"
               placeholder="Enter email"
               type="email"
+              required
             />
             <Input
               name="tempPassword"
               label="Temporary Password"
               placeholder="Enter password"
               type="password"
+              required
             />
             <Input
-              name="tempPassword"
-              label="Temporary Confirm Password"
+              name="confirmPassword"
+              label="Confirm Password"
               placeholder="Enter password"
               type="password"
+              required
             />
 
             <div className="mt-6 flex justify-end">
               <Button
+                disabled
+                loading
                 onClick={() => {}}
-                style={{}}
                 value="Create Recruiter"
                 type="submit"
               />
@@ -120,6 +128,7 @@ const EmployerPage = () => {
                   </td>
                   <td className="text-right pr-4">
                     <button
+                      onClick={() => setOpen(true)}
                       className="
                         cursor-pointer text-sm font-medium text-indigo-600
                         hover:text-indigo-800
@@ -136,6 +145,36 @@ const EmployerPage = () => {
           </table>
         </div>
       </section>
+      <Modal
+        open={open}
+        onOpenChange={setOpen}
+        title="Create Job"
+        description="Fill in the details below to post a new job."
+      >
+        <FormProvider {...methods}>
+          <div className="space-y-4">
+            <Input
+              label="Title"
+              name="Job Title"
+              placeholder="Job title"
+              required
+            />
+            <Input
+              name="Location"
+              label="Enter Location"
+              placeholder="Location"
+              required
+            />
+            <Button
+              disabled
+              loading
+              value="Submit"
+              type={{ onSubmit }}
+              onClick={() => {}}
+            ></Button>
+          </div>
+        </FormProvider>
+      </Modal>
     </div>
   );
 };

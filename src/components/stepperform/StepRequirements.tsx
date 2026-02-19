@@ -17,9 +17,19 @@ export default function StepRequirements() {
 
       {/* Experience Level */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        <Input name="experience" label="Experience Level" />
+        <Input
+          placeholder=""
+          required
+          name="experience"
+          label="Experience Level"
+        />
 
-        <Input name="education" label="Education (Optional)" />
+        <Input
+          placeholder=""
+          required
+          name="education"
+          label="Education (Optional)"
+        />
       </div>
 
       {/* Skills */}

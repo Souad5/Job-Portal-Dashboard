@@ -1,38 +1,74 @@
 import { Check } from "lucide-react";
+import clsx from "clsx";
 
 interface StepperProps {
-  currentStep: number;
+  steps: string[];
+  currentStep: number; // 1-based index
 }
 
-const steps = ["Job Details", "Company Information", "Requirements", "Review"];
-
-export default function Stepper({ currentStep }: StepperProps) {
+export default function Stepper({ steps, currentStep }: StepperProps) {
   return (
-    <div className="flex items-center justify-between mb-10">
-      {steps.map((label, index) => {
-        const stepNumber = index + 1;
-        const active = stepNumber <= currentStep;
+    <nav aria-label="Progress">
+      <ol className="flex items-center">
+        {steps.map((label, index) => {
+          const step = index + 1;
+          const isActive = step === currentStep;
+          const isCompleted = step < currentStep;
+          const isLast = index === steps.length - 1;
 
-        return (
-          <div key={label} className="flex-1 flex items-center w-full">
-            <div
-              className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-medium
-                ${active ? "bg-blue-400 text-white" : "bg-gray-200 text-gray-500"}
-              `}
+          return (
+            <li
+              key={label}
+              className={clsx(
+                "relative flex flex-1 flex-col items-center",
+                !isLast && "pr-4",
+              )}
             >
-              {active ? <Check /> : stepNumber}
-            </div>
+              {/* Connector */}
+              {!isLast && (
+                <span
+                  aria-hidden="true"
+                  className={clsx(
+                    "absolute left-96 top-5 h-0.5 w-full -translate-x-1/2",
+                    isCompleted ? "bg-blue-600" : "bg-gray-200",
+                  )}
+                />
+              )}
 
-            {index !== steps.length - 1 && (
-              <div
-                className={`flex-1 h-0.5 mx-2
-                  ${active ? "bg-blue-200 " : "bg-gray-200"}
-                `}
-              />
-            )}
-          </div>
-        );
-      })}
-    </div>
+              {/* Step circle */}
+              <span
+                role="listitem"
+                aria-current={isActive ? "step" : undefined}
+                className={clsx(
+                  "relative z-10 flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold transition-all duration-300",
+                  isCompleted &&
+                    "bg-blue-600 text-white ring-4 ring-blue-600/20",
+                  isActive && "bg-white text-blue-600 ring-4 ring-blue-600/30",
+                  !isCompleted &&
+                    !isActive &&
+                    "bg-gray-100 text-gray-500 ring-1 ring-gray-300",
+                )}
+              >
+                {isCompleted ? (
+                  <Check className="h-5 w-5" aria-hidden="true" />
+                ) : (
+                  step
+                )}
+              </span>
+
+              {/* Label */}
+              <span
+                className={clsx(
+                  "mt-3 text-center text-xs font-medium transition-colors",
+                  isCompleted || isActive ? "text-gray-900" : "text-gray-500",
+                )}
+              >
+                {label}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
   );
 }

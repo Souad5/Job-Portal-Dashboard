@@ -25,7 +25,7 @@ export const Modal = ({
 
       <Dialog.Portal>
         {/* Overlay */}
-        <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-fade-in" />
+        <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out" />
 
         {/* Content */}
         <Dialog.Content
@@ -33,7 +33,7 @@ export const Modal = ({
             fixed left-1/2 top-1/2 w-full max-w-md
             -translate-x-1/2 -translate-y-1/2
             rounded-xl bg-white p-6 shadow-lg
-            focus:outline-none animate-scale-in
+            focus:outline-none data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out
           "
         >
           {/* Header */}
@@ -61,7 +61,7 @@ export const Modal = ({
               aria-label="Close"
               className="absolute right-4 top-4 rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
             >
-              <X className="h-4 w-4" />
+              <X className="h-4 w-4 cursor-pointer" />
             </button>
           </Dialog.Close>
         </Dialog.Content>

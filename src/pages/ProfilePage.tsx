@@ -22,13 +22,7 @@ const ProfilePage = () => {
             <p className="text-sm text-gray-500">Dhaka, Bangladesh</p>
           </div>
           <div>
-            <Button
-              disabled
-              loading
-              type={{}}
-              onClick={() => {}}
-              value="Edit"
-            ></Button>
+            <Button disabled loading value="Edit"></Button>
           </div>
         </div>
       </div>

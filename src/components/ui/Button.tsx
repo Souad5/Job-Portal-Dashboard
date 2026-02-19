@@ -1,11 +1,11 @@
 import React from "react";
 
 type buttonProps = {
-  value: string;
-  type: unknown;
-  onClick: () => void;
-  disabled: boolean;
-  loading: boolean;
+  value?: string;
+  type?: unknown;
+  onClick?: () => void;
+  disabled?: boolean;
+  loading?: boolean;
 };
 
 const Button = ({ value, onClick }: buttonProps) => {

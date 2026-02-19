@@ -170,7 +170,6 @@ const EmployerPage = () => {
               loading
               value="Submit"
               type={{ onSubmit }}
-              onClick={() => {}}
             ></Button>
           </div>
         </FormProvider>

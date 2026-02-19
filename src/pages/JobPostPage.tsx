@@ -108,9 +108,9 @@ export default function JobPostForm() {
                     <Button
                       value="Back"
                       type={{}}
-                      onClick={() => handleBack}
+                      onClick={() => handleBack()}
                       disabled={isSubmitting}
-                      loading
+                      loading={false}
                     ></Button>
                   )}
 
@@ -129,7 +129,6 @@ export default function JobPostForm() {
                         type="submit"
                         loading={isSubmitting}
                         disabled={isSubmitting || !isValid}
-                        onClick={() => {}}
                       ></Button>
                     )}
                   </div>

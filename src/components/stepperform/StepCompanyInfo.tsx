@@ -21,9 +21,15 @@ export default function StepCompanyInfo() {
           placeholder="Enter Company Name"
           name="companyName"
           label="Company Name"
+          required
         />
 
-        <Input placeholder="Enter Location" name="location" label="Location" />
+        <Input
+          placeholder="Enter Location"
+          name="location"
+          label="Location"
+          required
+        />
       </div>
 
       {/* Company Description */}

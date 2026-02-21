@@ -15,8 +15,10 @@ type SidebarProps = {
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const [darkMode, setDarkMode] = useState(false);
 
-  const btnClass =
-    "flex gap-4 items-center w-full py-2 px-2 h-14 text-xl font-bold opacity-90 hover:opacity-100 hover:bg-[#3c7365] transition duration-200 hover:text-white rounded-md";
+  const btnClass = `flex items-center w-full py-2 h-14 text-xl font-bold
+  opacity-90 hover:opacity-100 hover:bg-[#3c7365]
+  transition duration-200 hover:text-white rounded-md
+  ${open ? "justify-center px-0" : "gap-4 px-2 justify-start"}`;
 
   const hideText = open ? "hidden transition-all duration-150 " : "";
 
@@ -25,9 +27,13 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen transition-all duration-150 ${
-        open ? "w-20" : "w-72"
-      }`}
+      className={`
+    fixed top-0 left-0 h-screen z-40
+    transition-all duration-200
+    bg-white
+    ${open ? " md:w-20" : "md:w-72"}
+    ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+  `}
     >
       <nav className="h-full flex flex-col bg-white border-r border-gray-200 shadow-lg">
         {/* Header */}
@@ -54,7 +60,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
             <span className={hideText}>Dashboard</span>
           </NavLink>
 
-          <NavLink to="/employer" className={isActive}>
+          <NavLink to="/recruiter-page" className={isActive}>
             <FaUserTie />
             <span className={hideText}>Recruiters</span>
           </NavLink>
@@ -72,10 +78,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
         {/* Footer */}
         <div className="p-4 space-y-4">
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="flex gap-4 items-center text-xl font-bold opacity-60 hover:opacity-100 pl-2"
-          >
+          <button onClick={() => setDarkMode(!darkMode)} className={btnClass}>
             {darkMode ? <MdOutlineWbSunny /> : <FaMoon />}
             <span className={hideText}>
               {darkMode ? "Light Mode" : "Dark Mode"}

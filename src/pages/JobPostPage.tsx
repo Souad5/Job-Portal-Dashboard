@@ -81,7 +81,7 @@ export default function JobPostForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50/60 py-8 px-4 sm:px-6 lg:px-4">
+    <div className="min-h-screen bg-gray-50/60 py-6 px-4 sm:px-6 lg:px-4">
       <div className="">
         <div className="mb-10 text-left text-[#044635]">
           <h1 className="text-3xl font-bold">Post a New Job</h1>
@@ -96,7 +96,7 @@ export default function JobPostForm() {
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <Stepper steps={steps} currentStep={step} />
 
-                <div className="mt-10 min-h-[360px]">
+                <div className="mt-10 min-h-90">
                   {step === 1 && <StepJobDetails />}
                   {step === 2 && <StepCompanyInfo />}
                   {step === 3 && <StepRequirements />}

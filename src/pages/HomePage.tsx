@@ -44,7 +44,7 @@ const stats = [
 
 const HomePage = () => {
   return (
-    <section className="md:px-4 py-6 space-y-10">
+    <section className="px-4 py-6 space-y-10">
       {/* Header */}
       <header className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
         <div>

@@ -18,9 +18,10 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const btnClass = `flex items-center w-full py-2 h-14 text-xl font-bold
   opacity-90 hover:opacity-100 hover:bg-[#3c7365]
   transition duration-200 hover:text-white rounded-md
-  ${open ? "justify-center px-0" : "gap-4 px-2 justify-start"}`;
+  ${open ? "md:justify-center md:px-0 justify-start gap-4 px-2" : "gap-4 px-2 justify-start"}
+`;
 
-  const hideText = open ? "hidden transition-all duration-150 " : "";
+  const hideText = open ? "md:hidden transition-all duration-150 " : "";
 
   const isActive = ({ isActive }: { isActive: unknown }) =>
     `${btnClass} ${isActive ? "bg-[#044635] text-white " : ""}`;
@@ -31,7 +32,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
     fixed top-0 left-0 h-screen z-40
     transition-all duration-200
     bg-white
-    ${open ? " md:w-20" : "md:w-72"}
+    ${open ? " md:w-20" : "w-72"}
     ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
   `}
     >
@@ -47,7 +48,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
           <button
             onClick={() => setOpen(!open)}
-            className={`text-2xl cursor-pointer ${open ? "pl-2" : ""}`}
+            className={`text-2xl cursor-pointer hidden md:block ${open ? "pl-2" : ""}`}
           >
             {open ? <GoSidebarCollapse /> : <GoSidebarExpand />}
           </button>

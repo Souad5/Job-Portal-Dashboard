@@ -6,7 +6,7 @@ interface StepperProps {
   currentStep: number; // 1-based index
 }
 
-export default function Stepper({ steps, currentStep }: StepperProps) {
+const Stepper = ({ steps, currentStep }: StepperProps) => {
   return (
     <nav aria-label="Progress">
       <ol className="flex items-center">
@@ -71,4 +71,6 @@ export default function Stepper({ steps, currentStep }: StepperProps) {
       </ol>
     </nav>
   );
-}
+};
+
+export default Stepper;

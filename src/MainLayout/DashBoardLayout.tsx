@@ -16,29 +16,28 @@ const DashBoardLayout = () => {
         <div
           onClick={() => setOpen(false)}
           className="fixed inset-0 bg-black/40 z-30 md:hidden"
-        />
+        ></div>
       )}
 
       {/* Main */}
       <main
         className={`
-          transition-all duration-300 min-h-screen
-          ml-0 md:${open ? "ml-20" : "ml-72"}
+          transition-all duration-300 min-h-screen ${open ? "md:ml-20" : "md:ml-72"}
         `}
       >
-        <h1 className="relative p-2">
+        <div className="relative p-2">
           {/* Mobile toggle */}
           <button
-            onClick={() => setOpen(true)}
-            className="absolute top-4 left-6 md:hidden font-semibold"
+            onClick={() => setOpen((prev) => !prev)}
+            className="absolute top-4 left-6 md:hidden font-semibold cursor-pointer active:scale-95"
           >
             <GiHamburgerMenu size={25} />
           </button>
 
-          <div className="mt-6 md:mt-0 md:ml-2">
+          <div className={`mt-6 md:mt-0`}>
             <Outlet />
           </div>
-        </h1>
+        </div>
       </main>
     </div>
   );

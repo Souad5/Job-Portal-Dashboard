@@ -1,5 +1,7 @@
 import { Briefcase, MapPin, Clock } from "lucide-react";
 import { useState } from "react";
+import Button from "../components/ui/Button";
+import { NavLink } from "react-router";
 
 interface Job {
   id: string;
@@ -88,9 +90,14 @@ export default function JobsCardPage() {
 
   return (
     <div className="px-4 py-6">
-      <h1 className="text-3xl font-semibold text-[#044635] mb-8">
-        Open Positions
-      </h1>
+      <div className="flex justify-between items-start">
+        <h1 className="text-3xl font-semibold text-[#044635] mb-8">
+          Open Positions
+        </h1>
+        <NavLink to="/job-post">
+          <Button value="Create Job"></Button>
+        </NavLink>
+      </div>
 
       {/* Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">

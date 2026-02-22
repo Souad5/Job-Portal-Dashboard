@@ -2,10 +2,11 @@ import { NavLink } from "react-router";
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaUserTie, FaMoon } from "react-icons/fa";
-import { MdWork, MdOutlineWbSunny } from "react-icons/md";
+import { MdOutlineWbSunny } from "react-icons/md";
 import { FaBriefcase } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { useState } from "react";
+import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 
 type SidebarProps = {
   open: boolean;
@@ -23,29 +24,37 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
   const hideText = open ? "md:hidden transition-all duration-150 " : "";
 
-  const isActive = ({ isActive }: { isActive: unknown }) =>
+  const isActive = ({ isActive }: { isActive: boolean }) =>
     `${btnClass} ${isActive ? "bg-[#044635] text-white " : ""}`;
 
   return (
     <aside
       className={`
-    fixed top-0 left-0 h-screen z-40
+    fixed top-0 left-0 h-screen z-40 
     transition-all duration-200
     bg-white
-    ${open ? " md:w-20" : "w-72"}
-    ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+    ${open ? " md:w-20" : "md:w-72"}
+    ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0 "}
   `}
     >
       <nav className="h-full flex flex-col bg-white border-r border-gray-200 shadow-lg">
         {/* Header */}
-        <div className="p-4 flex justify-between items-center h-14">
-          <NavLink
-            to="/"
-            className={`font-extrabold text-3xl text-[#044635] ${hideText}`}
+        <div className="p-4 flex justify-between  items-center gap-2 h-14">
+          <h1
+            className={`font-extrabold text-3xl text-[#044635] ${hideText} relative`}
           >
             6FigureJobs
-          </NavLink>
+          </h1>
 
+          {/* Mobile close button */}
+          <button
+            onClick={() => setOpen(false)}
+            className="md:hidden text-2xl text-gray-700"
+          >
+            <TbLayoutSidebarLeftCollapse size={30} />
+          </button>
+
+          {/* Desktop collapse button */}
           <button
             onClick={() => setOpen(!open)}
             className={`text-2xl cursor-pointer hidden md:block ${open ? "pl-2" : ""}`}
@@ -64,11 +73,6 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           <NavLink to="/recruiter-page" className={isActive}>
             <FaUserTie />
             <span className={hideText}>Recruiters</span>
-          </NavLink>
-
-          <NavLink to="/job-post" className={isActive}>
-            <MdWork />
-            <span className={`${hideText} text-nowrap`}>Job Post</span>
           </NavLink>
 
           <NavLink to="/all-jobs" className={isActive}>

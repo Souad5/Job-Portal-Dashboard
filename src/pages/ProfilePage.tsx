@@ -1,6 +1,24 @@
+import { useState } from "react";
 import Button from "../components/ui/Button";
+import { Modal } from "../components/ui/Modal";
+import Input from "../components/ui/Input";
+import { FormProvider, useForm } from "react-hook-form";
 
 const ProfilePage = () => {
+  const [open, setOpen] = useState(false);
+
+  const methods = useForm({
+    defaultValues: {
+      firstName: "Md Souad",
+      lastName: "Al Kabir",
+      email: "souadalkabir@gmail.com",
+      role: "Admin",
+      country: "Bangladesh",
+      city: "Dhaka",
+      postalCode: "1229",
+    },
+  });
+
   return (
     <section className="px-4 py-6">
       {/* Page Title */}
@@ -22,8 +40,42 @@ const ProfilePage = () => {
             <p className="text-sm text-gray-500">Dhaka, Bangladesh</p>
           </div>
           <div>
-            <Button disabled loading value="Edit"></Button>
+            <Button value="Edit" onClick={() => setOpen(true)}></Button>
           </div>
+          <Modal
+            open={open}
+            onOpenChange={setOpen} // use onOpenChange, not setOpen
+            title="Edit Profile"
+            description="Update your personal information"
+          >
+            {/* Form content */}
+            {/* Wrap the modal form in FormProvider */}
+            <FormProvider {...methods}>
+              <form className="space-y-4">
+                <Input name="firstName" label="First Name" />
+                <Input name="lastName" label="Last Name" />
+                <Input name="email" label="Email" />
+                <Input name="Date of Birth" type="date" label="Date of Birth" />
+                <Input name="role" label="Role" disabled />
+                <Input name="country" label="Address" />
+                <Input name="city" label="City" />
+                <Input name="postalCode" label="Postal Code" />
+
+                <div className="flex justify-end gap-2 mt-4">
+                  <Button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    value="Cancel"
+                  ></Button>
+                  <Button
+                    value="Save Change"
+                    type="submit"
+                    onClick={methods.handleSubmit((data) => console.log(data))}
+                  ></Button>
+                </div>
+              </form>
+            </FormProvider>
+          </Modal>
         </div>
       </div>
 

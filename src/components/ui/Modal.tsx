@@ -30,10 +30,10 @@ export const Modal = ({
         {/* Content */}
         <Dialog.Content
           className="
-            fixed left-1/2 top-1/2 w-full max-w-md
+            fixed left-1/2 top-1/2 w-[95%] md:w-full max-w-md
             -translate-x-1/2 -translate-y-1/2
             rounded-xl bg-white p-6 shadow-lg
-            focus:outline-none data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out
+            focus:outline-none data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out 
           "
         >
           {/* Header */}

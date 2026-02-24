@@ -46,7 +46,7 @@ const HomePage = () => {
   return (
     <section className="px-4 py-6 space-y-10">
       {/* Header */}
-      <header className="flex flex-row items-start md:justify-between gap-4">
+      <header className="flex flex-row items-start justify-between gap-4">
         <div>
           <h1 className="md:text-3xl text-xl font-semibold text-[#044635]">
             Dashboard

@@ -84,13 +84,18 @@ export default function AllJobsPage() {
     (pageIndex + 1) * pageSize,
   );
 
-  if (loading) return <p>Loading jobs...</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-32 border-t-2 border-b-2 border-blue-900"></div>
+      </div>
+    );
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div className="px-4 py-6">
       {/* Header */}
-      <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="mb-8 flex sm:flex-row items-start sm:items-center justify-between gap-4">
         <h1 className="md:text-3xl text-xl font-semibold text-[#044635]">
           Open Positions
         </h1>
@@ -101,24 +106,28 @@ export default function AllJobsPage() {
 
       {/* Search & Filters */}
       <FormProvider {...methods}>
-        <form className="py-4 px-0.5 flex justify-between flex-col sm:flex-row gap-4 items-start sm:items-center overflow-auto">
-          <Input
-            name="search"
-            label="Search"
-            type="text"
-            placeholder="Search by title or company"
-          />
-          <Select
-            name="employmentType"
-            label="Employment Type"
-            options={[
-              "All",
-              "Full-time",
-              "Part-time",
-              "Contract",
-              "Internship",
-            ]}
-          />
+        <form className="py-4 flex flex-col justify-center items-center sm:flex-row gap-4 w-full">
+          <div className="w-full">
+            <Input
+              name="search"
+              label="Search"
+              type="text"
+              placeholder="Search by title or company"
+            />
+          </div>
+          <div className="w-full">
+            <Select
+              name="employmentType"
+              label="Employment Type"
+              options={[
+                "All",
+                "Full-time",
+                "Part-time",
+                "Contract",
+                "Internship",
+              ]}
+            />
+          </div>
         </form>
       </FormProvider>
 
@@ -162,7 +171,7 @@ export default function AllJobsPage() {
                 <MapPin size={16} />
                 {job.location}
               </div>
-              <div className="flex items-center justify-between pt-4 text-xs text-gray-400">
+              <div className="flex items-center gap-1 justify-center pt-4 text-xs text-gray-400">
                 <Clock size={14} />
                 {job.postedAt}
                 <button
@@ -178,23 +187,38 @@ export default function AllJobsPage() {
       )}
 
       {/* Pagination */}
-      <div className="mt-10 flex items-center justify-center gap-4">
+      <div className="mt-10 flex items-center justify-center gap-3">
+        {/* Prev Button */}
         <button
           onClick={() => setPageIndex((p) => Math.max(p - 1, 0))}
           disabled={pageIndex === 0}
-          className="rounded-lg border px-4 py-2 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
+          className="
+      px-4 py-2 rounded-lg border border-gray-300 bg-white
+      text-gray-700 font-medium
+      shadow-sm hover:bg-gray-100 hover:border-gray-400
+      disabled:opacity-40 disabled:cursor-not-allowed
+      transition-colors duration-150 cursor-pointer
+    "
         >
           Prev
         </button>
 
-        <span className="font-medium">
+        {/* Page Indicator */}
+        <span className="px-3 py-2 rounded-full bg-gray-100 text-gray-800 font-medium shadow-inner">
           Page {pageIndex + 1} of {totalPages}
         </span>
 
+        {/* Next Button */}
         <button
           onClick={() => setPageIndex((p) => Math.min(p + 1, totalPages - 1))}
           disabled={pageIndex === totalPages - 1}
-          className="rounded-lg border px-4 py-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+          className="
+      px-4 py-2 rounded-lg border border-gray-300 bg-white
+      text-gray-700 font-medium
+      shadow-sm hover:bg-gray-100 hover:border-gray-400
+      disabled:opacity-40 disabled:cursor-not-allowed
+      transition-colors duration-150 cursor-pointer
+    "
         >
           Next
         </button>
@@ -210,7 +234,7 @@ export default function AllJobsPage() {
         description={selectedJob?.company}
       >
         {selectedJob && (
-          <div className="space-y-2 text-md text-gray-600 my-6 max-h-[60vh] overflow-y-auto">
+          <div className="space-y-2 text-md text-gray-600 md:max-h-[90vh]">
             <p>
               <strong>Location:</strong> {selectedJob.location}
             </p>
@@ -268,9 +292,9 @@ export default function AllJobsPage() {
                 </ul>
               </div>
             )}
+            <Button value="Apply" />
           </div>
         )}
-        <Button value="Apply" />
       </Modal>
     </div>
   );

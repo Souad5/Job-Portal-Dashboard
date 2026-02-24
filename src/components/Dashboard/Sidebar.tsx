@@ -56,7 +56,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           {/* Desktop collapse button */}
           <button
             onClick={() => setOpen(!open)}
-            className={`text-2xl cursor-pointer hidden md:block ${open ? "pl-2" : ""}`}
+            className={`text-2xl cursor-pointer hidden md:block ${open ? "pl-3" : ""}`}
           >
             {open ? <GoSidebarCollapse /> : <GoSidebarExpand />}
           </button>

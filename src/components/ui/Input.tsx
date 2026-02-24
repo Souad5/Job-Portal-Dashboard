@@ -28,7 +28,7 @@ export default function Input({
   } = useFormContext();
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 w-full">
       <label className="text-md flex gap-1 font-medium">
         {label} {required ? <FaAsterisk color="red" size={8} /> : ""}
       </label>
@@ -37,7 +37,7 @@ export default function Input({
         value={value}
         placeholder={placeholder}
         {...register(name)}
-        className={`min-w-full rounded-md border border-gray-300 px-3 py-2 text-md
+        className={`min-w-full rounded-md bg-white border border-gray-300 px-3 py-2 text-md
           focus:outline-none focus:ring-2 transition-all duration-200 focus:ring-blue-200 ${disabled ? "cursor-not-allowed font-bold text-gray-400" : ""}`}
         disabled={disabled}
       />

@@ -5,15 +5,13 @@ import Input from "./Input";
 interface PasswordInputProps {
   name: string;
   label: string;
-  placeholder: string;
-  required: boolean;
+  placeholder?: string;
 }
 
 export default function PasswordInput({
   name,
   label,
   placeholder,
-  required,
 }: PasswordInputProps) {
   const [show, setShow] = useState(false);
 
@@ -23,7 +21,6 @@ export default function PasswordInput({
         name={name}
         label={label}
         placeholder={placeholder}
-        required={required}
         type={show ? "text" : "password"}
       />
 

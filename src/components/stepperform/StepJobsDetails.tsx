@@ -36,6 +36,7 @@ export default function StepJobDetails() {
         <Textarea
           name="summary"
           label="Job Summary"
+          required
           rows={5}
           placeholder="Briefly describe the role, its impact, and the type of candidate you are looking for."
         />

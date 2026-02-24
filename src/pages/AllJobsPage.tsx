@@ -1,197 +1,277 @@
 import { Briefcase, MapPin, Clock } from "lucide-react";
-import { useState } from "react";
-import Button from "../components/ui/Button";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
+import Button from "../components/ui/Button";
+import { Modal } from "../components/ui/Modal";
+import axios from "axios";
+import Select from "../components/ui/Select";
+import { FormProvider, useForm } from "react-hook-form";
+import Input from "../components/ui/Input";
 
 interface Job {
   id: string;
   title: string;
   company: string;
   location: string;
-  type: string;
+  workMode: string;
+  employmentType: string;
+  department: string;
+  experienceLevel: string;
+  salaryRange: string;
   postedAt: string;
+  description: string;
+  responsibilities: string[];
+  requirements: string[];
+  niceToHave: string[];
+  benefits: string[];
   color: string;
 }
-// Fake Data
-const jobs: Job[] = [
-  {
-    id: "1",
-    title: "Senior Frontend Engineer",
-    company: "Acme Technologies",
-    location: "San Francisco, CA",
-    type: "Full-time",
-    postedAt: "2 days ago",
-    color: "bg-indigo-100 text-indigo-800",
-  },
-  {
-    id: "2",
-    title: "Product Designer",
-    company: "Nimbus Labs",
-    location: "Remote",
-    type: "Remote",
-    postedAt: "5 days ago",
-    color: "bg-green-100 text-green-800",
-  },
-  {
-    id: "3",
-    title: "Backend Engineer",
-    company: "Atlas Systems",
-    location: "Berlin, Germany",
-    type: "Full-time",
-    postedAt: "1 week ago",
-    color: "bg-purple-100 text-purple-800",
-  },
-  {
-    id: "4",
-    title: "Engineering Manager",
-    company: "Vertex Corp",
-    location: "New York, NY",
-    type: "Hybrid",
-    postedAt: "2 weeks ago",
-    color: "bg-yellow-100 text-yellow-800",
-  },
-  {
-    id: "5",
-    title: "Data Scientist",
-    company: "Aurora AI",
-    location: "London, UK",
-    type: "Full-time",
-    postedAt: "3 days ago",
-    color: "bg-pink-100 text-pink-800",
-  },
-  {
-    id: "6",
-    title: "UX Researcher",
-    company: "Nimbus Labs",
-    location: "Remote",
-    type: "Remote",
-    postedAt: "1 day ago",
-    color: "bg-green-100 text-green-800",
-  },
-  {
-    id: "7",
-    title: "Data Scientist",
-    company: "Aurora AI",
-    location: "London, UK",
-    type: "Full-time",
-    postedAt: "3 days ago",
-    color: "bg-pink-100 text-pink-800",
-  },
-];
 
-export default function JobsCardPage() {
-  const pageSize = 9;
+export default function AllJobsPage() {
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [pageIndex, setPageIndex] = useState(0);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const paginatedJobs = jobs.slice(
+  const pageSize = 9;
+
+  const methods = useForm({
+    defaultValues: {
+      search: "",
+      employmentType: "All",
+    },
+  });
+
+  const { watch } = methods;
+  const searchQuery = watch("search");
+  const filterEmploymentType = watch("employmentType");
+
+  // Fetch jobs
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get<Job[]>("/public.json");
+        setJobs(response.data);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load jobs. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  // Filtered & searched jobs
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesEmploymentType =
+      filterEmploymentType === "All" ||
+      job.employmentType === filterEmploymentType;
+
+    return matchesSearch && matchesEmploymentType;
+  });
+
+  const totalPages = Math.ceil(filteredJobs.length / pageSize);
+  const paginatedJobs = filteredJobs.slice(
     pageIndex * pageSize,
     (pageIndex + 1) * pageSize,
   );
 
+  if (loading) return <p>Loading jobs...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+
   return (
     <div className="px-4 py-6">
-      <div className="flex justify-between items-start">
-        <h1 className="text-3xl font-semibold text-[#044635] mb-8">
+      {/* Header */}
+      <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <h1 className="md:text-3xl text-xl font-semibold text-[#044635]">
           Open Positions
         </h1>
         <NavLink to="/job-post">
-          <Button value="Create Job"></Button>
+          <Button value="Create Job" />
         </NavLink>
       </div>
 
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-        {paginatedJobs.map((job) => (
-          <div
-            key={job.id}
-            className="
-              group cursor-pointer
-              rounded-2xl bg-white
-              shadow-[0_10px_40px_rgba(0,0,0,0.08)]
-              ring-1 ring-gray-200/70
-              p-6
-              transition-all duration-300
-              hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]
-            "
-          >
-            {/* Header */}
-            <div className="flex items-start justify-between mb-4">
-              <h2 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition">
-                {job.title}
-              </h2>
+      {/* Search & Filters */}
+      <FormProvider {...methods}>
+        <form className="py-4 px-0.5 flex justify-between flex-col sm:flex-row gap-4 items-start sm:items-center overflow-auto">
+          <Input
+            name="search"
+            label="Search"
+            type="text"
+            placeholder="Search by title or company"
+          />
+          <Select
+            name="employmentType"
+            label="Employment Type"
+            options={[
+              "All",
+              "Full-time",
+              "Part-time",
+              "Contract",
+              "Internship",
+            ]}
+          />
+        </form>
+      </FormProvider>
 
-              <span
-                className={`shrink-0 px-3 py-1 rounded-full text-xs font-semibold ${job.color}`}
-              >
-                {job.type}
-              </span>
-            </div>
-
-            {/* Company */}
-            <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
-              <Briefcase size={16} className="opacity-70" />
-              <span className="font-medium">{job.company}</span>
-            </div>
-
-            {/* Location */}
-            <div className="flex items-center gap-2 text-gray-500 text-sm mb-4">
-              <MapPin size={16} className="opacity-70" />
-              {job.location}
-            </div>
-
-            {/* Footer */}
-            <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-xs text-gray-400">
+      {/* Job Cards */}
+      {paginatedJobs.length === 0 ? (
+        <div className="mt-20 flex flex-col items-center justify-center gap-4">
+          <img
+            src="/Cyber Bug Search.jpg"
+            alt="No jobs found"
+            className="w-56 h-56 opacity-70 rounded-full"
+          />
+          <h3 className="text-xl font-semibold text-gray-700">
+            No jobs match your search.
+          </h3>
+          <p className="text-gray-500 text-center max-w-sm">
+            Try adjusting your search or filters to find relevant jobs.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          {paginatedJobs.map((job) => (
+            <div
+              key={job.id}
+              className="group rounded-2xl bg-white p-6 shadow-md ring-1 ring-gray-200 transition-all hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="mb-4 flex items-start justify-between">
+                <h2 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600">
+                  {job.title}
+                </h2>
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-semibold ${job.color}`}
+                >
+                  {job.employmentType}
+                </span>
+              </div>
+              <div className="mb-2 flex items-center gap-2 text-sm text-gray-600">
+                <Briefcase size={16} />
+                {job.company}
+              </div>
+              <div className="mb-4 flex items-center gap-2 text-sm text-gray-500">
+                <MapPin size={16} />
+                {job.location}
+              </div>
+              <div className="flex items-center justify-between pt-4 text-xs text-gray-400">
                 <Clock size={14} />
                 {job.postedAt}
+                <button
+                  onClick={() => setSelectedJob(job)}
+                  className="text-indigo-600 text-lg hover:underline ml-auto cursor-pointer"
+                >
+                  View Details →
+                </button>
               </div>
-
-              <span className="text-sm font-medium text-indigo-600 group-hover:underline">
-                View Details →
-              </span>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Pagination */}
-      <div className="flex justify-center mt-10 gap-4 items-center text-md">
+      <div className="mt-10 flex items-center justify-center gap-4">
         <button
           onClick={() => setPageIndex((p) => Math.max(p - 1, 0))}
           disabled={pageIndex === 0}
-          className="
-            cursor-pointer rounded-lg px-4 py-2
-            border border-gray-300
-            hover:bg-gray-100
-            disabled:opacity-40 disabled:cursor-not-allowed
-            transition
-          "
+          className="rounded-lg border px-4 py-2 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
         >
           Prev
         </button>
 
         <span className="font-medium">
-          Page {pageIndex + 1} of {Math.ceil(jobs.length / pageSize)}
+          Page {pageIndex + 1} of {totalPages}
         </span>
 
         <button
-          onClick={() =>
-            setPageIndex((p) =>
-              Math.min(p + 1, Math.ceil(jobs.length / pageSize) - 1),
-            )
-          }
-          disabled={(pageIndex + 1) * pageSize >= jobs.length}
-          className="
-            cursor-pointer rounded-lg px-4 py-2
-            border border-gray-300
-            hover:bg-gray-100
-            disabled:opacity-40 disabled:cursor-not-allowed
-            transition
-          "
+          onClick={() => setPageIndex((p) => Math.min(p + 1, totalPages - 1))}
+          disabled={pageIndex === totalPages - 1}
+          className="rounded-lg border px-4 py-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
         >
           Next
         </button>
       </div>
+
+      {/* Job Modal */}
+      <Modal
+        open={!!selectedJob}
+        onOpenChange={(open) => {
+          if (!open) setSelectedJob(null);
+        }}
+        title={selectedJob?.title}
+        description={selectedJob?.company}
+      >
+        {selectedJob && (
+          <div className="space-y-2 text-md text-gray-600 my-6 max-h-[60vh] overflow-y-auto">
+            <p>
+              <strong>Location:</strong> {selectedJob.location}
+            </p>
+            <p>
+              <strong>Employment Type:</strong> {selectedJob.employmentType}
+            </p>
+            <p>
+              <strong>Work Mode:</strong> {selectedJob.workMode}
+            </p>
+            <p>
+              <strong>Department:</strong> {selectedJob.department}
+            </p>
+            <p>
+              <strong>Experience Level:</strong> {selectedJob.experienceLevel}
+            </p>
+            <p>
+              <strong>Salary Range:</strong> {selectedJob.salaryRange}
+            </p>
+            <p>
+              <strong>Description:</strong> {selectedJob.description}
+            </p>
+            <div>
+              <strong>Responsibilities:</strong>
+              <ul className="list-disc ml-6">
+                {selectedJob.responsibilities.map((r, i) => (
+                  <li key={i}>{r}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <strong>Requirements:</strong>
+              <ul className="list-disc ml-6">
+                {selectedJob.requirements.map((r, i) => (
+                  <li key={i}>{r}</li>
+                ))}
+              </ul>
+            </div>
+            {selectedJob.niceToHave.length > 0 && (
+              <div>
+                <strong>Nice-to-Have:</strong>
+                <ul className="list-disc ml-6">
+                  {selectedJob.niceToHave.map((r, i) => (
+                    <li key={i}>{r}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {selectedJob.benefits.length > 0 && (
+              <div>
+                <strong>Benefits:</strong>
+                <ul className="list-disc ml-6">
+                  {selectedJob.benefits.map((r, i) => (
+                    <li key={i}>{r}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+        <Button value="Apply" />
+      </Modal>
     </div>
   );
 }

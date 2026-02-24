@@ -12,13 +12,13 @@ import { RechartsDevtools } from "@recharts/devtools";
 
 // Sample data
 const data = [
-  { name: "Jan", Hire: 400, Application: 4000 },
-  { name: "Feb", Hire: 300, Application: 13098 },
-  { name: "Mar", Hire: 200, Application: 9800 },
-  { name: "Apr", Hire: 278, Application: 3908 },
+  { name: "January", Hire: 400, Application: 4000 },
+  { name: "February", Hire: 300, Application: 13098 },
+  { name: "March", Hire: 200, Application: 9800 },
+  { name: "April", Hire: 278, Application: 3908 },
   { name: "May", Hire: 1890, Application: 4800 },
-  { name: "Jun", Hire: 290, Application: 3800 },
-  { name: "Jul", Hire: 349, Application: 4300 },
+  { name: "June", Hire: 290, Application: 3800 },
+  { name: "July", Hire: 349, Application: 4300 },
 ];
 
 export default function HiringBarChart() {

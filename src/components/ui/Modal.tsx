@@ -25,27 +25,31 @@ export const Modal = ({
 
       <Dialog.Portal>
         {/* Overlay */}
-        <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out" />
+        <Dialog.Overlay
+          style={{ zIndex: 100 }}
+          className="fixed inset-0 bg-black/10 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out"
+        />
 
         {/* Content */}
         <Dialog.Content
+          style={{ zIndex: 100 }}
           className="
-            fixed left-1/2 top-1/2 w-[95%] md:w-full max-w-md
+            fixed left-1/2 top-1/2 w-[95%] md:w-full md:max-w-lg
             -translate-x-1/2 -translate-y-1/2
             rounded-xl bg-white p-6 shadow-lg
-            focus:outline-none data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out 
+            focus:outline-none data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out max-h-[80vh] overflow-y-auto
           "
         >
           {/* Header */}
           {(title || description) && (
             <div className="mb-4">
               {title && (
-                <Dialog.Title className="text-lg font-semibold text-slate-900">
+                <Dialog.Title className="text-xl font-semibold text-slate-900">
                   {title}
                 </Dialog.Title>
               )}
               {description && (
-                <Dialog.Description className="mt-1 text-sm text-slate-500">
+                <Dialog.Description className="mt-1 text-lg text-slate-500">
                   {description}
                 </Dialog.Description>
               )}

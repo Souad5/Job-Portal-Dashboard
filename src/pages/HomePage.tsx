@@ -46,9 +46,11 @@ const HomePage = () => {
   return (
     <section className="px-4 py-6 space-y-10">
       {/* Header */}
-      <header className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+      <header className="flex flex-row items-start md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold text-[#044635]">Dashboard</h1>
+          <h1 className="md:text-3xl text-xl font-semibold text-[#044635]">
+            Dashboard
+          </h1>
           <p className="text-slate-500">Overview of your hiring activity</p>
         </div>
 
@@ -60,15 +62,17 @@ const HomePage = () => {
             {/* Bell */}
             <IoIosNotifications
               size={24}
-              className="text-slate-700 animate-bell"
+              className="text-slate-700 animate-bell opacity-70 hover:opacity-105 transition-hover duration-200"
             />
 
             {/* Badge */}
-            <span className="absolute -top-1 right-0 flex h-2 w-2 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white animate-pulse"></span>
+            <span className="absolute -top-2 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white animate-pulse opacity-100">
+              1
+            </span>
           </div>
           <div>
             <p
-              className="font-medium text-slate-900 cursor-pointer "
+              className="font-medium text-slate-900 cursor-pointer opacity-70 hover:opacity-105"
               title="Logout"
             >
               <IoIosLogOut size={25} />

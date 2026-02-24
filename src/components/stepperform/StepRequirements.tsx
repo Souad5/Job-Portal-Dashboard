@@ -24,12 +24,7 @@ export default function StepRequirements() {
           label="Experience Level"
         />
 
-        <Input
-          placeholder=""
-          required
-          name="education"
-          label="Education (Optional)"
-        />
+        <Input placeholder="" name="education" label="Education (Optional)" />
       </div>
 
       {/* Skills */}
@@ -37,6 +32,7 @@ export default function StepRequirements() {
         name="skills"
         label="Required Skills"
         rows={5}
+        required
         placeholder="List the core technical and soft skills required for this role."
       />
 

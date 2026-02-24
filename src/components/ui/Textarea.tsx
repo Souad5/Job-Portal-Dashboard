@@ -1,10 +1,12 @@
 import { useFormContext } from "react-hook-form";
+import { FaAsterisk } from "react-icons/fa";
 
 interface TextareaProps {
   name: string;
   label: string;
   rows?: number;
   placeholder?: string;
+  required?: boolean;
 }
 
 export default function Textarea({
@@ -12,6 +14,7 @@ export default function Textarea({
   label,
   rows = 4,
   placeholder,
+  required,
 }: TextareaProps) {
   const {
     register,
@@ -20,7 +23,9 @@ export default function Textarea({
 
   return (
     <div className="space-y-1">
-      <label className="text-md font-medium">{label}</label>
+      <label className="text-md flex gap-1 font-medium">
+        {label} {required ? <FaAsterisk color="red" size={8} /> : ""}
+      </label>
 
       <textarea
         rows={rows}

@@ -4,7 +4,6 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaUserTie, FaMoon } from "react-icons/fa";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { FaBriefcase } from "react-icons/fa6";
-import { CgProfile } from "react-icons/cg";
 import { useState } from "react";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 
@@ -91,8 +90,12 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           </button>
 
           <NavLink to="/profile" className={isActive}>
-            <CgProfile />
-            <span className={hideText}>Profile</span>
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s"
+              alt=""
+              className="h-8 w-8"
+            />
+            <span className={hideText}>Md Souad Al Kabir</span>
           </NavLink>
         </div>
       </nav>

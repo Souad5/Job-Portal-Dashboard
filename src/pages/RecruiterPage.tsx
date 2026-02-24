@@ -1,5 +1,10 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { useMemo, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  recruiterSchema,
+  RecruiterFormValues,
+} from "../types/recruiter.schema";
 import {
   ColumnDef,
   flexRender,
@@ -8,11 +13,13 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-
+import { AiFillEdit } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import PasswordInput from "../components/ui/PasswordInput";
 import { Modal } from "../components/ui/Modal";
+import SecondaryButton from "../components/ui/SecondaryButton";
 
 /* ---------------- types ---------------- */
 
@@ -31,8 +38,7 @@ const DATA: Recruiter[] = [
 
 /* ---------------- page ---------------- */
 
-const EmployerPage = () => {
-  const methods = useForm();
+const RecruiterPage = () => {
   const editMethods = useForm<Recruiter>();
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -122,18 +128,20 @@ const EmployerPage = () => {
                 editMethods.reset(row.original);
                 setModalType("edit");
               }}
-              className="text-sm font-medium text-indigo-600 hover:text-indigo-800 cursor-pointer"
+              className="text-lg font-medium text-indigo-400 hover:text-indigo-600 cursor-pointer"
+              title="Edit"
             >
-              Edit
+              <AiFillEdit size={25} />
             </button>
             <button
               onClick={() => {
                 setSelectedRecruiter(row.original);
                 setModalType("delete");
               }}
-              className="text-sm font-medium text-rose-600 hover:text-rose-800 cursor-pointer"
+              title="Delete"
+              className="text-lg font-medium text-rose-400 hover:text-rose-600 cursor-pointer"
             >
-              Delete
+              <MdDelete size={25} />
             </button>
           </div>
         ),
@@ -160,6 +168,12 @@ const EmployerPage = () => {
     console.log("Form Data:", data);
   };
 
+  const methods = useForm<RecruiterFormValues>({
+    resolver: zodResolver(recruiterSchema),
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
+
   return (
     <div className="min-h-screen px-4 py-6 bg-slate-50">
       {/* Header */}
@@ -185,7 +199,6 @@ const EmployerPage = () => {
               name="recruiterName"
               label="Recruiter Name"
               placeholder="Enter name"
-              required
             />
 
             <Input
@@ -193,21 +206,18 @@ const EmployerPage = () => {
               label="Recruiter Email"
               placeholder="Enter email"
               type="email"
-              required
             />
 
             <PasswordInput
-              name="tempPassword"
+              name="temPassword"
               label="Temporary Password"
               placeholder="Enter password"
-              required
             />
 
             <PasswordInput
               name="confirmPassword"
               label="Confirm Password"
               placeholder="Confirm password"
-              required
             />
 
             <div className="flex justify-end mt-4">
@@ -219,13 +229,13 @@ const EmployerPage = () => {
 
       {/* Recruiter Table */}
       <section className="bg-white rounded-2xl p-6 shadow ring-1 ring-blue-200/70">
-        <h2 className="text-lg font-semibold mb-5">Recruiter List</h2>
+        <h2 className="text-xl font-semibold mb-5">Recruiter List</h2>
 
         <div className="overflow-x-auto">
           <table className="min-w-full border-separate border-spacing-y-2">
             <thead>
               {table.getHeaderGroups().map((hg) => (
-                <tr key={hg.id} className="text-sm text-slate-500">
+                <tr key={hg.id} className="text-lg text-slate-500">
                   {hg.headers.map((header) => (
                     <th key={header.id} className="text-left px-4">
                       {flexRender(
@@ -289,7 +299,11 @@ const EmployerPage = () => {
             />
 
             <div className="flex justify-end gap-3">
-              <Button value="Cancel" onClick={() => setModalType(null)} />
+              <SecondaryButton
+                value="Cancel"
+                className={"text-black"}
+                onClick={() => setModalType(null)}
+              />
               <Button value="Save Changes" type="submit" />
             </div>
           </form>
@@ -304,7 +318,11 @@ const EmployerPage = () => {
         description="This action cannot be undone"
       >
         <div className="flex justify-end gap-3">
-          <Button value="Cancel" onClick={() => setModalType(null)} />
+          <SecondaryButton
+            className={"text-black"}
+            value="Cancel"
+            onClick={() => setModalType(null)}
+          />
           <Button value="Delete" />
         </div>
       </Modal>
@@ -312,4 +330,4 @@ const EmployerPage = () => {
   );
 };
 
-export default EmployerPage;
+export default RecruiterPage;

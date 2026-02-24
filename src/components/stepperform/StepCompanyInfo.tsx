@@ -37,6 +37,7 @@ export default function StepCompanyInfo() {
         name="companyDescription"
         label="Company Description"
         rows={5}
+        required
         placeholder="Briefly describe your company, mission, and culture."
       />
 

@@ -23,47 +23,49 @@ const data = [
 
 export default function HiringBarChart() {
   return (
-    <ResponsiveContainer width="100%" height="90%">
-      <BarChart
-        data={data}
-        margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+    <div className="h-52 sm:h-full w-full">
+      <ResponsiveContainer width="100%" height="90%">
+        <BarChart
+          data={data}
+          margin={{ top: 50, right: 20, left: 20, bottom: 10 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
 
-        <XAxis dataKey="name" tick={{ fontSize: 12 }} axisLine={false} />
+          <XAxis dataKey="name" tick={{ fontSize: 12 }} axisLine={false} />
 
-        <YAxis yAxisId="left" tick={{ fontSize: 12 }} axisLine={false} />
+          <YAxis yAxisId="left" tick={{ fontSize: 12 }} axisLine={false} />
 
-        <YAxis
-          yAxisId="right"
-          orientation="right"
-          tick={{ fontSize: 12 }}
-          axisLine={false}
-        />
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tick={{ fontSize: 12 }}
+            axisLine={false}
+          />
 
-        <Tooltip />
-        <Legend />
+          <Tooltip />
+          <Legend />
 
-        <Bar
-          yAxisId="left"
-          dataKey="Application"
-          name="Applications"
-          fill="#6366F1" // indigo
-          radius={[6, 6, 0, 0]}
-          barSize={40}
-        />
+          <Bar
+            yAxisId="left"
+            dataKey="Application"
+            name="Applications"
+            fill="#6366F1" // indigo
+            radius={[6, 6, 0, 0]}
+            barSize={40}
+          />
 
-        <Bar
-          yAxisId="right"
-          dataKey="Hire"
-          name="Hires"
-          fill="#10B981" // emerald
-          radius={[6, 6, 0, 0]}
-          barSize={40}
-        />
+          <Bar
+            yAxisId="right"
+            dataKey="Hire"
+            name="Hires"
+            fill="#10B981" // emerald
+            radius={[6, 6, 0, 0]}
+            barSize={40}
+          />
 
-        <RechartsDevtools />
-      </BarChart>
-    </ResponsiveContainer>
+          <RechartsDevtools />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

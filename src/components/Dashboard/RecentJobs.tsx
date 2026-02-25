@@ -1,10 +1,6 @@
 import React from "react";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 
-/* -------------------------------------------------------------------------- */
-/*                                   Types                                    */
-/* -------------------------------------------------------------------------- */
-
 interface JobItem {
   id: string;
   title: string;
@@ -13,10 +9,6 @@ interface JobItem {
   postedAt: string;
   type: "Full-time" | "Part-time" | "Contract";
 }
-
-/* -------------------------------------------------------------------------- */
-/*                                Fake Data                                   */
-/* -------------------------------------------------------------------------- */
 
 const RECENT_JOBS: JobItem[] = [
   {
@@ -45,19 +37,13 @@ const RECENT_JOBS: JobItem[] = [
   },
 ];
 
-/* -------------------------------------------------------------------------- */
-/*                              Component                                     */
-/* -------------------------------------------------------------------------- */
-
 const RecentJobs = () => {
   return (
-    <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <section className="rounded-2xl p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-800">
       {/* Header */}
       <header className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-slate-900">
-          Recent Job Posts
-        </h3>
-        <Briefcase className="h-5 w-5 text-slate-400" />
+        <h3 className="text-lg font-semibold">Recent Job Posts</h3>
+        <Briefcase className="h-5 w-5" />
       </header>
 
       {/* Job List */}
@@ -65,14 +51,12 @@ const RecentJobs = () => {
         {RECENT_JOBS.map((job) => (
           <li
             key={job.id}
-            className="rounded-xl bg-slate-50 p-4 transition hover:bg-slate-100"
+            className="rounded-xl  p-4 transition hover:bg-slate-100"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-semibold text-slate-900">
-                  {job.title}
-                </p>
-                <p className="text-sm text-slate-500">{job.department}</p>
+                <p className="text-sm font-semibold">{job.title}</p>
+                <p className="text-sm">{job.department}</p>
               </div>
 
               <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-600">
@@ -80,7 +64,7 @@ const RecentJobs = () => {
               </span>
             </div>
 
-            <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-slate-500">
+            <div className="mt-2 flex flex-wrap items-center gap-4 text-xs">
               <div className="flex items-center gap-1">
                 <MapPin className="h-3.5 w-3.5" />
                 <span>{job.location}</span>

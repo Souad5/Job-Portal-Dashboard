@@ -44,14 +44,16 @@ const stats = [
 
 const HomePage = () => {
   return (
-    <section className="px-4 py-6 space-y-10">
+    <section className="px-4 py-6 space-y-10 dark:bg-slate-900 transition-colors duration-500 ease-in-out">
       {/* Header */}
       <header className="flex flex-row items-start justify-between gap-4">
         <div>
-          <h1 className="md:text-3xl text-xl font-semibold text-[#044635]">
+          <h1 className="md:text-3xl text-xl font-semibold text-[#044635] dark:text-[#0af0b4]">
             Dashboard
           </h1>
-          <p className="text-slate-500">Overview of your hiring activity</p>
+          <p className="opacity-80 dark:opacity-100">
+            Overview of your hiring activity
+          </p>
         </div>
 
         <div
@@ -62,32 +64,32 @@ const HomePage = () => {
             {/* Bell */}
             <IoIosNotifications
               size={24}
-              className="text-slate-700 animate-bell opacity-70 hover:opacity-105 transition-hover duration-200"
+              className="text-slate-700 dark:text-white animate-bell opacity-70 hover:opacity-105 transition-hover duration-200"
             />
 
             {/* Badge */}
-            <span className="absolute -top-2 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white animate-pulse opacity-100">
+            <span className="absolute -top-2 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-semibold animate-pulse opacity-100 text-white">
               1
             </span>
           </div>
           <div>
             <p
-              className="font-medium text-slate-900 cursor-pointer opacity-70 hover:opacity-105"
+              className="font-medium text-slate-900 cursor-pointer opacity-70 dark:opacity-80 hover:opacity-105"
               title="Logout"
             >
-              <IoIosLogOut size={25} />
+              <IoIosLogOut size={25} className="dark:text-white" />
             </p>
           </div>
         </div>
       </header>
 
       {/* Stats */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6">
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6 dark:bg-slate-800">
         {stats.map((s, i) => (
           <div
             key={i}
             className={`
-              bg-white rounded-2xl p-6
+               rounded-2xl p-6
               shadow-[0_10px_40px_rgba(0,0,0,0.06)]
               ring-1 ring-slate-200/70
               transition hover:-translate-y-1 hover:shadow-lg
@@ -108,7 +110,7 @@ const HomePage = () => {
       {/* Main Content Grid */}
       <section className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         {/* Hiring Trends */}
-        <div className="xl:col-span-7 bg-white rounded-2xl p-6 shadow-sm ring-1 ring-slate-200">
+        <div className="xl:col-span-7 dark:bg-slate-800 rounded-2xl p-6 shadow-sm ring-1 ring-slate-200">
           <h3 className="text-lg font-semibold mb-4">Hiring Trends</h3>
           <BiaxiaLineChart />
         </div>

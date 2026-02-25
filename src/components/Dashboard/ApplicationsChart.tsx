@@ -17,7 +17,7 @@ const data = [
 
 export function ApplicationChart() {
   return (
-    <div className=" p-6 shadow-sm bg-white rounded-xl">
+    <div className=" p-6 shadow-sm ring-1 ring-slate-200 rounded-xl dark:bg-slate-800">
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Application Status
       </h3>

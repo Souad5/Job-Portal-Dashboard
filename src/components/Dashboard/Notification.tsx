@@ -1,10 +1,6 @@
 import React from "react";
 import { Bell, CheckCircle, AlertCircle, Info } from "lucide-react";
 
-/* -------------------------------------------------------------------------- */
-/*                                   Types                                    */
-/* -------------------------------------------------------------------------- */
-
 type NotificationType = "info" | "success" | "warning";
 
 interface NotificationItem {
@@ -15,10 +11,6 @@ interface NotificationItem {
   type: NotificationType;
   read?: boolean;
 }
-
-/* -------------------------------------------------------------------------- */
-/*                                Fake Data                                   */
-/* -------------------------------------------------------------------------- */
 
 const NOTIFICATIONS: NotificationItem[] = [
   {
@@ -45,10 +37,6 @@ const NOTIFICATIONS: NotificationItem[] = [
   },
 ];
 
-/* -------------------------------------------------------------------------- */
-/*                               Config Maps                                  */
-/* -------------------------------------------------------------------------- */
-
 const ICON_MAP: Record<NotificationType, React.ElementType> = {
   info: Info,
   success: CheckCircle,
@@ -61,17 +49,13 @@ const COLOR_MAP: Record<NotificationType, string> = {
   warning: "bg-amber-100 text-amber-600",
 };
 
-/* -------------------------------------------------------------------------- */
-/*                              Component                                     */
-/* -------------------------------------------------------------------------- */
-
 const Notification = () => {
   return (
-    <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <section className="rounded-2xl p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-800">
       {/* Header */}
       <header className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-slate-900">Notifications</h3>
-        <Bell className="h-5 w-5 text-slate-400" />
+        <h3 className="text-lg font-semibold">Notifications</h3>
+        <Bell className="h-5 w-5 " />
       </header>
 
       {/* Notification List */}
@@ -83,21 +67,15 @@ const Notification = () => {
             <li
               key={notification.id}
               className={`flex items-start gap-3 rounded-xl p-3 transition
-                ${
-                  notification.read
-                    ? "bg-slate-50"
-                    : "bg-slate-100 hover:bg-slate-200"
-                }`}
+                ${notification.read ? "" : " hover:bg-slate-200"}`}
             >
               <div className={`rounded-lg p-2 ${COLOR_MAP[notification.type]}`}>
                 <Icon className="h-4 w-4" />
               </div>
 
               <div className="flex-1">
-                <p className="text-sm font-medium text-slate-900">
-                  {notification.title}
-                </p>
-                <p className="text-sm text-slate-600">{notification.message}</p>
+                <p className="text-sm font-medium ">{notification.title}</p>
+                <p className="text-sm ">{notification.message}</p>
                 <p className="mt-1 text-xs text-slate-400">
                   {notification.time}
                 </p>

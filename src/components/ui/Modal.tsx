@@ -27,7 +27,7 @@ export const Modal = ({
         {/* Overlay */}
         <Dialog.Overlay
           className="
-            fixed inset-0 z-40 bg-black/30 backdrop-blur-sm
+            fixed inset-0 z-40 bg-black/20 backdrop-blur-sm
             data-[state=open]:animate-fade-in
             data-[state=closed]:animate-fade-out
           "
@@ -48,7 +48,7 @@ export const Modal = ({
               relative
               w-full max-w-lg
               max-h-[90vh]
-              rounded-xl bg-white shadow-xl
+              rounded-xl bg-white dark:bg-gray-700 shadow-xl
               overflow-hidden
               data-[state=open]:animate-scale-in
               data-[state=closed]:animate-scale-out
@@ -62,7 +62,7 @@ export const Modal = ({
                 className="
                   absolute right-4 top-4 z-20
                   rounded-md p-1
-                  text-slate-400
+                  text-slate-400 dark:text-slate-200
                   hover:bg-slate-100 hover:text-slate-600
                   focus:outline-none focus:ring-2 focus:ring-indigo-500
                 "
@@ -73,14 +73,14 @@ export const Modal = ({
 
             {/* Header */}
             {(title || description) && (
-              <div className="sticky top-0 z-10 bg-white px-6 pt-6 pb-4 border-b border-gray-200">
+              <div className="sticky top-0 z-10 bg-white dark:bg-gray-700 px-6 pt-6 pb-4 border-b border-gray-200">
                 {title && (
-                  <Dialog.Title className="text-xl font-semibold text-slate-900">
+                  <Dialog.Title className="text-xl font-semibold text-slate-900 dark:text-white ">
                     {title}
                   </Dialog.Title>
                 )}
                 {description && (
-                  <Dialog.Description className="mt-1 text-sm text-slate-500">
+                  <Dialog.Description className="mt-1 text-sm dark:text-slate-200 text-slate-600">
                     {description}
                   </Dialog.Description>
                 )}

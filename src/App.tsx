@@ -1,10 +1,17 @@
 import DashBoardLayout from "./MainLayout/DashBoardLayout";
 import "@radix-ui/themes/styles.css";
+import { ThemeProvider } from "next-themes";
 
 function App() {
   return (
     <>
-      <DashBoardLayout />
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        themes={["light", "dark"]}
+      >
+        <DashBoardLayout />
+      </ThemeProvider>
     </>
   );
 }

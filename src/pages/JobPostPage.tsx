@@ -1,4 +1,3 @@
-// JobPostForm.tsx
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
@@ -19,7 +18,7 @@ const steps = [
   "Review & Publish",
 ];
 
-export default function JobPostForm() {
+export default function JobPostPage() {
   const [step, setStep] = useState(1);
   const [isValidating, setIsValidating] = useState(false);
   const methods = useForm<JobFormValues>({
@@ -44,7 +43,6 @@ export default function JobPostForm() {
     handleSubmit,
     reset,
   } = methods;
-  // Validate only current step fields before allowing "Continue"
   const handleContinue = async () => {
     setIsValidating(true);
 
@@ -84,15 +82,15 @@ export default function JobPostForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50/60 py-6 px-4">
+    <div className="min-h-screen bg-white dark:bg-slate-900 py-6 px-4 transition-colors duration-500 ease-in-out">
       <div>
-        <div className="mb-10 text-left text-[#044635]">
+        <div className="mb-10 text-left text-[#044635] dark:text-[#0af0b4]">
           <h1 className="md:text-3xl text-xl font-bold">Post a New Job</h1>
-          <p className="mt-3 text-lg text-gray-600">
+          <p className="mt-3 text-lg text-gray-600 dark:text-gray-200">
             Fill in the details — we'll guide you step by step.
           </p>
         </div>
-        <div className="overflow-hidden rounded-2xl bg-white shadow-xl ring-1  ring-gray-200/70">
+        <div className="overflow-hidden rounded-2xl bg-white dark:bg-slate-800 shadow-xl ring-1  ring-gray-200/70">
           <div className="px-6 pt-8 pb-10 sm:px-10">
             <FormProvider {...methods}>
               <form

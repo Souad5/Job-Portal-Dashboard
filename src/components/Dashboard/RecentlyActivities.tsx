@@ -61,7 +61,7 @@ const statusColors = {
 
 export const RecentActivity = () => {
   return (
-    <div className="rounded-xl p-6 shadow-sm bg-white">
+    <div className="rounded-xl p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-800">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-foreground">
           Recent Activity

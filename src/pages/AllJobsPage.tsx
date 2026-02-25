@@ -93,10 +93,10 @@ export default function AllJobsPage() {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="px-4 py-6">
+    <div className="px-4 py-6 bg-white dark:bg-slate-900 h-screen transition-colors duration-500 ease-in-out">
       {/* Header */}
       <div className="mb-8 flex sm:flex-row items-start sm:items-center justify-between gap-4">
-        <h1 className="md:text-3xl text-xl font-semibold text-[#044635]">
+        <h1 className="md:text-3xl text-xl font-semibold text-[#044635] dark:text-[#0af0b4]">
           Open Positions
         </h1>
         <NavLink to="/job-post">
@@ -139,10 +139,10 @@ export default function AllJobsPage() {
             alt="No jobs found"
             className="w-56 h-56 opacity-70 rounded-full"
           />
-          <h3 className="text-xl font-semibold text-gray-700">
+          <h3 className="text-xl font-semibold text-gray-700 dark:text-white">
             No jobs match your search.
           </h3>
-          <p className="text-gray-500 text-center max-w-sm">
+          <p className="text-gray-500 dark:text-white text-center max-w-sm">
             Try adjusting your search or filters to find relevant jobs.
           </p>
         </div>
@@ -151,32 +151,32 @@ export default function AllJobsPage() {
           {paginatedJobs.map((job) => (
             <div
               key={job.id}
-              className="group rounded-2xl bg-white p-6 shadow-md ring-1 ring-gray-200 transition-all hover:-translate-y-1 hover:shadow-lg"
+              className="group rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md ring-1 ring-gray-200 transition-all hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="mb-4 flex items-start justify-between">
-                <h2 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600">
                   {job.title}
                 </h2>
                 <span
-                  className={`px-3 py-1 rounded-full text-xs font-semibold ${job.color}`}
+                  className={`px-3 py-1 rounded-full text-xs text-nowrap font-semibold ${job.color}`}
                 >
                   {job.employmentType}
                 </span>
               </div>
-              <div className="mb-2 flex items-center gap-2 text-sm text-gray-600">
+              <div className="mb-2 flex items-center gap-2 text-sm text-gray-600 dark:text-white">
                 <Briefcase size={16} />
                 {job.company}
               </div>
-              <div className="mb-4 flex items-center gap-2 text-sm text-gray-500">
+              <div className="mb-4 flex items-center gap-2 text-sm text-gray-500 dark:text-white">
                 <MapPin size={16} />
                 {job.location}
               </div>
-              <div className="flex items-center gap-1 justify-center pt-4 text-xs text-gray-400">
+              <div className="flex items-center gap-1 justify-center pt-4 text-xs text-gray-400 dark:text-white">
                 <Clock size={14} />
                 {job.postedAt}
                 <button
                   onClick={() => setSelectedJob(job)}
-                  className="text-indigo-600 text-lg hover:underline ml-auto cursor-pointer"
+                  className="text-indigo-600 dark:text-sky-100 text-lg hover:underline ml-auto cursor-pointer"
                 >
                   View Details →
                 </button>
@@ -193,18 +193,18 @@ export default function AllJobsPage() {
           onClick={() => setPageIndex((p) => Math.max(p - 1, 0))}
           disabled={pageIndex === 0}
           className="
-      px-4 py-2 rounded-lg border border-gray-300 bg-white
-      text-gray-700 font-medium
+      px-4 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500
+      text-gray-700 dark:text-white font-medium
       shadow-sm hover:bg-gray-100 hover:border-gray-400
       disabled:opacity-40 disabled:cursor-not-allowed
-      transition-colors duration-150 cursor-pointer
+      transition-colors duration-150 cursor-pointer dark:hover:bg-gray-600
     "
         >
           Prev
         </button>
 
         {/* Page Indicator */}
-        <span className="px-3 py-2 rounded-full bg-gray-100 text-gray-800 font-medium shadow-inner">
+        <span className="px-3 py-2 rounded-full bg-gray-100 dark:bg-slate-500 text-gray-800 dark:text-white font-medium shadow-inner">
           Page {pageIndex + 1} of {totalPages}
         </span>
 
@@ -213,9 +213,9 @@ export default function AllJobsPage() {
           onClick={() => setPageIndex((p) => Math.min(p + 1, totalPages - 1))}
           disabled={pageIndex === totalPages - 1}
           className="
-      px-4 py-2 rounded-lg border border-gray-300 bg-white
-      text-gray-700 font-medium
-      shadow-sm hover:bg-gray-100 hover:border-gray-400
+      px-4 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500
+      text-gray-700 dark:text-white font-medium
+      shadow-sm hover:bg-gray-100 hover:border-gray-400 dark:hover:bg-gray-600
       disabled:opacity-40 disabled:cursor-not-allowed
       transition-colors duration-150 cursor-pointer
     "
@@ -234,7 +234,7 @@ export default function AllJobsPage() {
         description={selectedJob?.company}
       >
         {selectedJob && (
-          <div className="space-y-2 text-md text-gray-600 md:max-h-[90vh]">
+          <div className="space-y-2 text-md text-gray-600 dark:text-white md:max-h-[90vh]">
             <p>
               <strong>Location:</strong> {selectedJob.location}
             </p>

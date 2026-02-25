@@ -47,8 +47,6 @@ const RecruiterPage = () => {
     null,
   );
 
-  /* ---------------- columns ---------------- */
-
   const columns = useMemo<ColumnDef<Recruiter>[]>(
     () => [
       {
@@ -56,8 +54,7 @@ const RecruiterPage = () => {
         header: ({ column }) => (
           <button
             onClick={column.getToggleSortingHandler()}
-            className="flex items-center gap-2 font-medium cursor-pointer select-none
-"
+            className="flex items-center gap-2 font-medium cursor-pointer select-none"
           >
             <span>Recruiter</span>
             <span>
@@ -68,7 +65,7 @@ const RecruiterPage = () => {
           </button>
         ),
         cell: (info) => (
-          <span className="font-medium text-slate-900">
+          <span className="font-medium text-slate-900 dark:text-slate-100">
             {info.getValue() as string}
           </span>
         ),
@@ -86,7 +83,9 @@ const RecruiterPage = () => {
           </button>
         ),
         cell: (info) => (
-          <span className="text-slate-600">{info.getValue() as string}</span>
+          <span className="text-slate-600 dark:text-slate-400">
+            {info.getValue() as string}
+          </span>
         ),
       },
       {
@@ -107,8 +106,8 @@ const RecruiterPage = () => {
             <span
               className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${
                 value === "Active"
-                  ? "bg-emerald-100 text-emerald-700"
-                  : "bg-rose-100 text-rose-700"
+                  ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
+                  : "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300"
               }`}
             >
               {value}
@@ -119,7 +118,11 @@ const RecruiterPage = () => {
       {
         accessorKey: "Actions",
         enableSorting: false,
-        header: () => <div className="text-right">Actions</div>,
+        header: () => (
+          <div className="text-right text-slate-700 dark:text-slate-300">
+            Actions
+          </div>
+        ),
         cell: ({ row }) => (
           <div className="flex justify-end gap-3">
             <button
@@ -128,7 +131,7 @@ const RecruiterPage = () => {
                 editMethods.reset(row.original);
                 setModalType("edit");
               }}
-              className="text-lg font-medium text-indigo-400 hover:text-indigo-600 cursor-pointer"
+              className="text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300"
               title="Edit"
             >
               <AiFillEdit size={25} />
@@ -139,7 +142,7 @@ const RecruiterPage = () => {
                 setModalType("delete");
               }}
               title="Delete"
-              className="text-lg font-medium text-rose-400 hover:text-rose-600 cursor-pointer"
+              className="text-rose-400 hover:text-rose-600 dark:hover:text-rose-300"
             >
               <MdDelete size={25} />
             </button>
@@ -150,8 +153,6 @@ const RecruiterPage = () => {
     [editMethods],
   );
 
-  /* ---------------- table ---------------- */
-
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: DATA,
@@ -161,8 +162,6 @@ const RecruiterPage = () => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
-
-  /* ---------------- form submit ---------------- */
 
   const onSubmit = (data: unknown) => {
     console.log("Form Data:", data);
@@ -175,20 +174,22 @@ const RecruiterPage = () => {
   });
 
   return (
-    <div className="min-h-screen px-4 py-6 bg-slate-50">
+    <div className="min-h-screen px-4 py-6 bg-white dark:bg-slate-900 transition-colors duration-500 ease-in-out">
       {/* Header */}
       <header className="mb-10">
-        <h1 className="text-3xl font-semibold text-[#044635]">
+        <h1 className="text-3xl font-semibold text-[#044635] dark:text-emerald-300">
           Recruiter Management
         </h1>
-        <p className="text-slate-500">
+        <p className="text-slate-500 dark:text-slate-400">
           Create and manage recruiters who can post jobs
         </p>
       </header>
 
       {/* Create Recruiter */}
-      <section className="mb-10 bg-white rounded-2xl p-6 shadow ring-1 ring-blue-200/70">
-        <h2 className="text-lg font-semibold mb-6">Create Recruiter</h2>
+      <section className="mb-10 rounded-2xl p-6 shadow ring-1 ring-blue-200/70 dark:bg-slate-800 dark:ring-blue-900/40">
+        <h2 className="text-lg font-semibold mb-6 text-slate-900 dark:text-slate-100">
+          Create Recruiter
+        </h2>
 
         <FormProvider {...methods}>
           <form
@@ -197,27 +198,23 @@ const RecruiterPage = () => {
           >
             <Input
               name="recruiterName"
-              label="Recruiter Name"
               placeholder="Enter name"
+              label="Recruiter Name"
             />
-
             <Input
               name="recruiterEmail"
-              label="Recruiter Email"
               placeholder="Enter email"
-              type="email"
+              label="Recruiter Email"
             />
-
             <PasswordInput
               name="temPassword"
+              placeholder="Password"
               label="Temporary Password"
-              placeholder="Enter password"
             />
-
             <PasswordInput
               name="confirmPassword"
-              label="Confirm Password"
               placeholder="Confirm password"
+              label="Confirm Password"
             />
 
             <div className="flex justify-end mt-4">
@@ -228,14 +225,19 @@ const RecruiterPage = () => {
       </section>
 
       {/* Recruiter Table */}
-      <section className="bg-white rounded-2xl p-6 shadow ring-1 ring-blue-200/70">
-        <h2 className="text-xl font-semibold mb-5">Recruiter List</h2>
+      <section className="rounded-2xl p-6 shadow ring-1 ring-blue-200/70 bg-white dark:bg-slate-800 dark:ring-blue-900/40">
+        <h2 className="text-xl font-semibold mb-5 text-slate-900 dark:text-slate-100">
+          Recruiter List
+        </h2>
 
         <div className="overflow-x-auto">
           <table className="min-w-full border-separate border-spacing-y-2">
             <thead>
               {table.getHeaderGroups().map((hg) => (
-                <tr key={hg.id} className="text-lg text-slate-500">
+                <tr
+                  key={hg.id}
+                  className="text-lg text-slate-500 dark:text-slate-400"
+                >
                   {hg.headers.map((header) => (
                     <th key={header.id} className="text-left px-4">
                       {flexRender(
@@ -252,7 +254,7 @@ const RecruiterPage = () => {
               {table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className="bg-slate-50 hover:bg-indigo-50/60 transition"
+                  className="bg-slate-50 hover:bg-indigo-50/60 dark:bg-slate-700 dark:hover:bg-zinc-700 transition"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-4">
@@ -269,7 +271,7 @@ const RecruiterPage = () => {
         </div>
       </section>
 
-      {/* Edit Modal */}
+      {/* Modals */}
       <Modal
         open={modalType === "edit"}
         onOpenChange={() => setModalType(null)}
@@ -277,31 +279,14 @@ const RecruiterPage = () => {
         description={`Update details for ${selectedRecruiter?.name}`}
       >
         <FormProvider {...editMethods}>
-          <form
-            onSubmit={editMethods.handleSubmit((data) => {
-              console.log("Edited recruiter:", data);
-              setModalType(null);
-            })}
-            className="space-y-4"
-          >
-            <Input
-              name="name"
-              label="Recruiter Name"
-              placeholder="Enter recruiter name"
-              required
-            />
-
-            <Input
-              name="email"
-              label="Recruiter Email"
-              placeholder="Enter recruiter email"
-              required
-            />
+          <form className="space-y-4">
+            <Input name="name" label="Recruiter Name" />
+            <Input name="email" label="Recruiter Email" />
 
             <div className="flex justify-end gap-3">
               <SecondaryButton
                 value="Cancel"
-                className={"text-black"}
+                className="text-black dark:text-white"
                 onClick={() => setModalType(null)}
               />
               <Button value="Save Changes" type="submit" />
@@ -310,7 +295,6 @@ const RecruiterPage = () => {
         </FormProvider>
       </Modal>
 
-      {/* Delete Modal */}
       <Modal
         open={modalType === "delete"}
         onOpenChange={() => setModalType(null)}
@@ -319,8 +303,8 @@ const RecruiterPage = () => {
       >
         <div className="flex justify-end gap-3">
           <SecondaryButton
-            className={"text-black"}
             value="Cancel"
+            className="text-black dark:text-white"
             onClick={() => setModalType(null)}
           />
           <Button value="Delete" />

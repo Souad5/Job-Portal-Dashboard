@@ -13,14 +13,14 @@ export const jobSchema = z.object({
   ]),
   summary: z
     .string()
-    .min(4, "Please provide a more detailed summary (min 40 characters)")
+    .min(40, "Please provide a more detailed summary (min 40 characters)")
     .max(600),
 
   companyName: z.string().min(3, "Company name is required").max(100),
   location: z.string().min(2, "Location is required").max(100),
   companyDescription: z
     .string()
-    .min(8, "Company description should be at least 80 characters")
+    .min(80, "Company description should be at least 80 characters")
     .max(1500),
 
   experience: z.string().min(1, "Experience level is required"),

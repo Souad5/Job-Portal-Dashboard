@@ -4,8 +4,8 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaUserTie, FaMoon } from "react-icons/fa";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { FaBriefcase } from "react-icons/fa6";
-import { useState } from "react";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
+import { useTheme } from "next-themes";
 
 type SidebarProps = {
   open: boolean;
@@ -13,7 +13,7 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
-  const [darkMode, setDarkMode] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   const btnClass = `flex items-center w-full py-2 h-14 text-xl font-bold
   opacity-90 hover:opacity-100 hover:bg-[#3c7365]
@@ -31,16 +31,15 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       className={`
     fixed top-0 left-0 h-screen z-40 
     transition-all duration-200
-    bg-white
     ${open ? " md:w-20" : "md:w-72"}
     ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0 "}
   `}
     >
-      <nav className="h-full flex flex-col bg-white border-r border-gray-200 shadow-lg">
+      <nav className="h-full flex flex-col transition-colors duration-200 ease-in-out bg-white dark:bg-black border-r border-gray-200 shadow-lg dark:border-black">
         {/* Header */}
         <div className="p-4 flex justify-between  items-center gap-2 h-14">
           <h1
-            className={`font-extrabold text-3xl text-[#044635] ${hideText} relative`}
+            className={`font-extrabold text-3xl text-[#044635] dark:text-[#0af0b4] ${hideText} relative`}
           >
             6FigureJobs
           </h1>
@@ -82,10 +81,13 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
         {/* Footer */}
         <div className="p-4 space-y-4">
-          <button onClick={() => setDarkMode(!darkMode)} className={btnClass}>
-            {darkMode ? <MdOutlineWbSunny /> : <FaMoon />}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className={`${btnClass} cursor-pointer`}
+          >
+            {theme === "dark" ? <MdOutlineWbSunny /> : <FaMoon />}
             <span className={hideText}>
-              {darkMode ? "Light Mode" : "Dark Mode"}
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
             </span>
           </button>
 

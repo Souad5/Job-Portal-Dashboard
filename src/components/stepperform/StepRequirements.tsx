@@ -6,10 +6,10 @@ export default function StepRequirements() {
     <div className="space-y-10">
       {/* Section Header */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
           Role Requirements
         </h2>
-        <p className="text-sm text-gray-500 mt-1 max-w-xl">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 max-w-xl">
           Define the experience and skills required for this role. Clear
           requirements help attract the right candidates and reduce noise.
         </p>
@@ -45,9 +45,11 @@ export default function StepRequirements() {
       />
 
       {/* Guidance Block */}
-      <div className="rounded-md border border-gray-200 bg-gray-50 p-4">
-        <p className="text-sm text-gray-600 leading-relaxed">
-          <span className="font-medium text-gray-800">Best practice:</span>{" "}
+      <div className="rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
+        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          <span className="font-medium text-gray-800 dark:text-gray-100">
+            Best practice:
+          </span>{" "}
           Focus on must-have skills and avoid overly long lists. Clear and
           realistic requirements lead to higher-quality applicants.
         </p>

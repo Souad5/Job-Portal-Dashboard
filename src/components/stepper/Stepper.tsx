@@ -1,4 +1,3 @@
-// Stepper.tsx
 import { Check } from "lucide-react";
 import clsx from "clsx";
 
@@ -49,8 +48,8 @@ const Stepper = ({ steps, currentStep }: StepperProps) => {
                   className={clsx(
                     "mt-3 text-center text-sm transition-colors",
                     isCompleted || isActive
-                      ? "font-medium text-gray-900"
-                      : "font-normal text-gray-500",
+                      ? "font-medium text-gray-900 dark:text-gray-50"
+                      : "font-normal text-gray-500 dark:text-gray-400",
                   )}
                 >
                   {label}

@@ -32,10 +32,10 @@ const Stepper = ({ steps, currentStep }: StepperProps) => {
                     isCompleted &&
                       "bg-blue-600 text-white ring-4 ring-blue-600/20 shadow-sm",
                     isActive &&
-                      "bg-white text-blue-600 ring-4 ring-blue-600/30 shadow",
+                      "bg-white text-blue-600 ring-4 ring-blue-600/30 shadow dark:bg-gray-700 dark:text-blue-400 dark:ring-blue-400/30",
                     !isCompleted &&
                       !isActive &&
-                      "bg-gray-100 text-gray-500 ring-1 ring-gray-300",
+                      "bg-gray-100 text-gray-500 ring-1 ring-gray-300 dark:bg-gray-600 dark:text-gray-300 dark:ring-gray-500",
                   )}
                 >
                   {isCompleted ? (
@@ -44,9 +44,11 @@ const Stepper = ({ steps, currentStep }: StepperProps) => {
                     step
                   )}
                 </span>
+
+                {/* Step Label */}
                 <span
                   className={clsx(
-                    "mt-3 text-center text-sm transition-colors",
+                    "mt-3 text-center text-sm transition-colors hidden md:block",
                     isCompleted || isActive
                       ? "font-medium text-gray-900 dark:text-gray-50"
                       : "font-normal text-gray-500 dark:text-gray-400",
@@ -58,7 +60,7 @@ const Stepper = ({ steps, currentStep }: StepperProps) => {
               {!isLast && (
                 <div
                   className={clsx(
-                    "ml-4 flex-auto h-0.5",
+                    "md:ml-4 flex-auto md:h-0.5 md:-mt-8 hidden md:block",
                     step < currentStep ? "bg-blue-600" : "bg-gray-200",
                   )}
                 />

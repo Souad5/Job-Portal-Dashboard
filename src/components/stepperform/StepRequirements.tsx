@@ -1,5 +1,6 @@
 import Input from "../ui/Input";
 import Textarea from "../ui/Textarea";
+import { PiGlobeStandBold } from "react-icons/pi";
 
 export default function StepRequirements() {
   return (
@@ -46,12 +47,15 @@ export default function StepRequirements() {
 
       {/* Guidance Block */}
       <div className="rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
-        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-          <span className="font-medium text-gray-800 dark:text-gray-100">
+        <p className="text-sm text-gray-600 dark:text-gray-400  selection:bg-red-400 flex items-start gap-2">
+          <span className="font-medium flex items-center gap-1 text-gray-800 dark:text-gray-100 text-nowrap">
+            <PiGlobeStandBold />
             Best practice:
-          </span>{" "}
-          Focus on must-have skills and avoid overly long lists. Clear and
-          realistic requirements lead to higher-quality applicants.
+          </span>
+          <span className="text-nowrap">
+            Focus on must-have skills and avoid overly long lists. Clear and
+            realistic requirements lead to higher-quality applicants.
+          </span>
         </p>
       </div>
     </div>

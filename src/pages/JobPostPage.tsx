@@ -10,6 +10,7 @@ import StepReview from "../components/stepperform/StepReview";
 import StepJobsDetails from "../components/stepperform/StepJobsDetails";
 import SecondaryButton from "../components/ui/SecondaryButton";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 const steps = [
   "Job Details",
@@ -76,7 +77,7 @@ export default function JobPostPage() {
     // Simulate API call
     await new Promise((r) => setTimeout(r, 1400));
     console.log("Job posted:", data);
-    alert("Job published successfully!");
+    toast.success("Job published successfully!");
     reset();
     navigate("/all-jobs");
   };

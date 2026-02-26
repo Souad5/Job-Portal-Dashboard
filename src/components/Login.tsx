@@ -1,7 +1,11 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
+import Input from "../components/ui/Input";
+import PasswordInput from "../components/ui/PasswordInput";
+import Button from "../components/ui/Button";
+import toast from "react-hot-toast";
 
 type LoginFormInputs = {
   email: string;
@@ -9,137 +13,99 @@ type LoginFormInputs = {
   remember: boolean;
 };
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginFormInputs>({
+  const methods = useForm<LoginFormInputs>({
     defaultValues: {
       email: "",
       password: "",
       remember: false,
     },
   });
+  const notify = () => toast.success("Login successful!");
+
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     console.log("Login data:", data);
-
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Redirect after successful login
+    notify();
     navigate("/dashboard");
   };
 
   return (
-    <div className="flex h-screen w-full bg-gray-50">
+    <div className="flex flex-col md:flex-row h-screen w-full bg-gray-50 dark:bg-slate-900 transition-colors duration-500">
       {/* Left Image */}
-      <div className="w-1/2 hidden md:block">
+      <div className="hidden md:flex w-1/2">
         <img
           src="/1311600_678.jpg"
           alt="Login illustration"
-          className="h-full w-full object-cover"
+          className="object-cover w-full h-full"
         />
       </div>
 
       {/* Right Form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center">
-        <motion.form
-          onSubmit={handleSubmit(onSubmit)}
-          initial={{ opacity: 0, y: 40 }}
+      <div className="flex w-full md:w-1/2 items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white shadow-lg rounded-2xl px-8 py-10 w-80 md:w-96"
+          className="bg-white dark:bg-slate-800 shadow-lg rounded-2xl px-6 sm:px-10 py-10 w-full max-w-md"
         >
-          <h1 className="text-3xl font-semibold text-gray-900 text-center">
-            Sign in
+          <h1 className="text-3xl font-semibold text-gray-900 dark:text-gray-50 text-center">
+            Sign In
           </h1>
-          <p className="text-sm text-gray-500 text-center mt-2">
-            Welcome back! Please sign in to continue
+          <p className="text-sm text-gray-500 dark:text-gray-300 text-center mt-1">
+            Welcome back! Please login to your account.
           </p>
 
-          {/* Email */}
-          <div className="mt-8">
-            <input
-              type="email"
-              placeholder="Email address"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Enter a valid email address",
-                },
-              })}
-              className={`w-full h-11 px-5 rounded-full border text-sm outline-none transition
-                ${
-                  errors.email
-                    ? "border-red-400"
-                    : "border-gray-300 focus:border-indigo-500"
-                }`}
-            />
-            {errors.email && (
-              <p className="text-xs text-red-500 mt-1">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-
-          {/* Password */}
-          <div className="mt-5">
-            <input
-              type="password"
-              placeholder="Password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Minimum 6 characters",
-                },
-              })}
-              className={`w-full h-11 px-5 rounded-full border text-sm outline-none transition
-                ${
-                  errors.password
-                    ? "border-red-400"
-                    : "border-gray-300 focus:border-indigo-500"
-                }`}
-            />
-            {errors.password && (
-              <p className="text-xs text-red-500 mt-1">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-
-          {/* Remember & Forgot */}
-          <div className="flex items-center justify-between mt-6 text-sm text-gray-500">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                {...register("remember")}
-                className="accent-indigo-500"
+          <FormProvider {...methods}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="mt-8 flex flex-col gap-5"
+            >
+              <Input
+                name="email"
+                label="Email"
+                placeholder="Email address"
+                type="email"
+                required
               />
-              Remember me
-            </label>
-            <a href="#" className="hover:underline">
-              Forgot password?
-            </a>
-          </div>
 
-          {/* Submit Button */}
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-            disabled={isSubmitting}
-            className="mt-8 w-full h-11 rounded-full bg-indigo-500 text-white font-medium
-                       hover:bg-indigo-600 transition disabled:opacity-60"
-          >
-            {isSubmitting ? "Signing in..." : "Login"}
-          </motion.button>
-        </motion.form>
+              <PasswordInput
+                name="password"
+                label="Password"
+                placeholder="Enter your password"
+              />
+
+              <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500 dark:text-gray-300">
+                <label className="flex items-center gap-2 cursor-pointer mt-2 sm:mt-0">
+                  <input
+                    type="checkbox"
+                    {...methods.register("remember")}
+                    className="accent-indigo-500 w-4 h-4"
+                  />
+                  Remember me
+                </label>
+                <a
+                  href="#"
+                  className="hover:underline mt-2 sm:mt-0 text-indigo-600 dark:text-indigo-400"
+                >
+                  Forgot password?
+                </a>
+              </div>
+
+              <Button
+                value={isSubmitting ? "Signing in..." : "Login"}
+                type="submit"
+              />
+            </form>
+          </FormProvider>
+        </motion.div>
       </div>
     </div>
   );

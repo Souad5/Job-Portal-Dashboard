@@ -20,9 +20,9 @@ import Input from "../components/ui/Input";
 import PasswordInput from "../components/ui/PasswordInput";
 import { Modal } from "../components/ui/Modal";
 import SecondaryButton from "../components/ui/SecondaryButton";
+import toast from "react-hot-toast";
 
 /* ---------------- types ---------------- */
-
 type Recruiter = {
   name: string;
   email: string;
@@ -30,17 +30,14 @@ type Recruiter = {
 };
 
 /* ---------------- mock data ---------------- */
-
 const DATA: Recruiter[] = [
   { name: "John Doe", email: "john@company.com", status: "Active" },
   { name: "Sarah Smith", email: "sarah@company.com", status: "Disabled" },
 ];
 
 /* ---------------- page ---------------- */
-
 const RecruiterPage = () => {
   const editMethods = useForm<Recruiter>();
-
   const [sorting, setSorting] = useState<SortingState>([]);
   const [modalType, setModalType] = useState<"edit" | "delete" | null>(null);
   const [selectedRecruiter, setSelectedRecruiter] = useState<Recruiter | null>(
@@ -54,7 +51,7 @@ const RecruiterPage = () => {
         header: ({ column }) => (
           <button
             onClick={column.getToggleSortingHandler()}
-            className="flex items-center gap-2 font-medium cursor-pointer select-none"
+            className="flex items-center gap-2 font-medium cursor-pointer select-none text-slate-700 dark:text-slate-300"
           >
             <span>Recruiter</span>
             <span>
@@ -75,11 +72,14 @@ const RecruiterPage = () => {
         header: ({ column }) => (
           <button
             onClick={column.getToggleSortingHandler()}
-            className="flex items-center gap-1 font-medium"
+            className="flex items-center gap-2 font-medium cursor-pointer text-slate-700 dark:text-slate-300"
           >
-            Email
-            {column.getIsSorted() === "asc" && "▲"}
-            {column.getIsSorted() === "desc" && "▼"}
+            <span>Email</span>
+            <span>
+              {column.getIsSorted() === "asc" && "▲"}
+              {column.getIsSorted() === "desc" && "▼"}
+              {!column.getIsSorted() && "⇅"}
+            </span>
           </button>
         ),
         cell: (info) => (
@@ -93,11 +93,15 @@ const RecruiterPage = () => {
         header: ({ column }) => (
           <button
             onClick={column.getToggleSortingHandler()}
-            className="flex items-center gap-1 font-medium"
+            className="flex items-center gap-2 cursor-pointer font-medium text-slate-700 dark:text-slate-300"
           >
-            Status
-            {column.getIsSorted() === "asc" && "▲"}
-            {column.getIsSorted() === "desc" && "▼"}
+            <span>Status</span>
+
+            <span>
+              {column.getIsSorted() === "asc" && "▲"}
+              {column.getIsSorted() === "desc" && "▼"}
+              {!column.getIsSorted() && "⇅"}
+            </span>
           </button>
         ),
         cell: (info) => {
@@ -131,7 +135,7 @@ const RecruiterPage = () => {
                 editMethods.reset(row.original);
                 setModalType("edit");
               }}
-              className="text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300"
+              className="text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 cursor-pointer"
               title="Edit"
             >
               <AiFillEdit size={25} />
@@ -142,7 +146,7 @@ const RecruiterPage = () => {
                 setModalType("delete");
               }}
               title="Delete"
-              className="text-rose-400 hover:text-rose-600 dark:hover:text-rose-300"
+              className="text-rose-400 hover:text-rose-600 dark:hover:text-rose-300 cursor-pointer"
             >
               <MdDelete size={25} />
             </button>
@@ -164,6 +168,7 @@ const RecruiterPage = () => {
   });
 
   const onSubmit = (data: unknown) => {
+    toast.success("Recruiter added successfully");
     console.log("Form Data:", data);
   };
 
@@ -177,7 +182,7 @@ const RecruiterPage = () => {
     <div className="min-h-screen px-4 py-6 bg-white dark:bg-slate-900 transition-colors duration-500 ease-in-out">
       {/* Header */}
       <header className="mb-10">
-        <h1 className="text-3xl font-semibold text-[#044635] dark:text-emerald-300">
+        <h1 className="md:text-3xl text-xl font-semibold text-slate-900 dark:text-emerald-300">
           Recruiter Management
         </h1>
         <p className="text-slate-500 dark:text-slate-400">
@@ -254,7 +259,7 @@ const RecruiterPage = () => {
               {table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className="bg-slate-50 hover:bg-indigo-50/60 dark:bg-slate-700 dark:hover:bg-zinc-700 transition"
+                  className="bg-slate-50 hover:bg-indigo-50/60 dark:bg-slate-700 dark:hover:bg-slate-600 transition"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-4">

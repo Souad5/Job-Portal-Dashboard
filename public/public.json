@@ -8,7 +8,7 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "5+ years",
-    "salaryRange": "$150,000 – $180,000",
+    "salaryRange": "$150,000 - $180,000",
     "postedAt": "2 days ago",
     "description": "Lead the development of scalable, high-performance web interfaces for core products.",
     "responsibilities": [
@@ -29,8 +29,7 @@
       "Flexible schedule",
       "Health insurance",
       "401(k) match"
-    ],
-    "color": "bg-indigo-100 text-indigo-800"
+    ]
   },
   {
     "id": "2",
@@ -40,8 +39,8 @@
     "workMode": "Remote",
     "employmentType": "Full-time",
     "department": "Design",
-    "experienceLevel": "3–5 years",
-    "salaryRange": "$110,000 – $135,000",
+    "experienceLevel": "3-5 years",
+    "salaryRange": "$110,000 - $135,000",
     "postedAt": "5 days ago",
     "description": "Design intuitive user-centered designs for cloud-based platforms.",
     "responsibilities": [
@@ -61,8 +60,7 @@
       "Home office stipend",
       "Flexible PTO",
       "Learning budget"
-    ],
-    "color": "bg-green-100 text-green-800"
+    ]
   },
   {
     "id": "3",
@@ -73,7 +71,7 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "4+ years",
-    "salaryRange": "€80,000 – €95,000",
+    "salaryRange": "€80,000 - €95,000",
     "postedAt": "1 week ago",
     "description": "Design and build reliable APIs and services for logistics platform.",
     "responsibilities": [
@@ -92,8 +90,7 @@
       "Relocation assistance",
       "Vacation policy",
       "Transport reimbursement"
-    ],
-    "color": "bg-purple-100 text-purple-800"
+    ]
   },
   {
     "id": "4",
@@ -104,7 +101,7 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "7+ years",
-    "salaryRange": "$170,000 – $200,000",
+    "salaryRange": "$170,000 - $200,000",
     "postedAt": "2 weeks ago",
     "description": "Lead a team of engineers to deliver mission-critical products.",
     "responsibilities": [
@@ -119,8 +116,7 @@
       "Communication skills"
     ],
     "niceToHave": ["Scaling teams experience", "Enterprise SaaS experience"],
-    "benefits": ["Leadership bonus", "Hybrid work", "Health coverage"],
-    "color": "bg-yellow-100 text-yellow-800"
+    "benefits": ["Leadership bonus", "Hybrid work", "Health coverage"]
   },
   {
     "id": "5",
@@ -130,8 +126,8 @@
     "workMode": "On-site",
     "employmentType": "Full-time",
     "department": "Data Science",
-    "experienceLevel": "3–6 years",
-    "salaryRange": "£70,000 – £90,000",
+    "experienceLevel": "3-6 years",
+    "salaryRange": "£70,000 - £90,000",
     "postedAt": "3 days ago",
     "description": "Build predictive models and extract insights from datasets.",
     "responsibilities": [
@@ -145,8 +141,7 @@
       "Data communication skills"
     ],
     "niceToHave": ["Deep learning experience", "AI startups experience"],
-    "benefits": ["Performance bonuses", "Conference budget", "Flexible hours"],
-    "color": "bg-pink-100 text-pink-800"
+    "benefits": ["Performance bonuses", "Conference budget", "Flexible hours"]
   },
   {
     "id": "6",
@@ -157,7 +152,7 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "1–2 years",
-    "salaryRange": "$90,000 – $110,000",
+    "salaryRange": "$90,000 - $110,000",
     "postedAt": "1 day ago",
     "description": "Assist in developing web applications using React and TypeScript.",
     "responsibilities": [
@@ -167,8 +162,7 @@
     ],
     "requirements": ["React basics", "HTML/CSS knowledge", "Git usage"],
     "niceToHave": ["Next.js exposure"],
-    "benefits": ["Mentorship", "Flexible schedule", "Health insurance"],
-    "color": "bg-indigo-50 text-indigo-800"
+    "benefits": ["Mentorship", "Flexible schedule", "Health insurance"]
   },
   {
     "id": "7",
@@ -179,7 +173,7 @@
     "employmentType": "Part-time",
     "department": "Design",
     "experienceLevel": "2–4 years",
-    "salaryRange": "$60,000 – $80,000",
+    "salaryRange": "$60,000 - $80,000",
     "postedAt": "4 days ago",
     "description": "Create visually appealing and user-friendly interfaces.",
     "responsibilities": [
@@ -189,8 +183,7 @@
     ],
     "requirements": ["Figma experience", "UI/UX principles knowledge"],
     "niceToHave": ["SaaS product design"],
-    "benefits": ["Remote work", "Flexible hours", "Learning budget"],
-    "color": "bg-green-50 text-green-800"
+    "benefits": ["Remote work", "Flexible hours", "Learning budget"]
   },
   {
     "id": "8",
@@ -201,7 +194,7 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "3+ years",
-    "salaryRange": "€70,000 – €85,000",
+    "salaryRange": "€70,000 - €85,000",
     "postedAt": "5 days ago",
     "description": "Manage CI/CD pipelines and cloud infrastructure.",
     "responsibilities": [
@@ -211,8 +204,7 @@
     ],
     "requirements": ["AWS/GCP knowledge", "CI/CD experience", "Linux skills"],
     "niceToHave": ["Docker/Kubernetes"],
-    "benefits": ["Health insurance", "Flexible hours"],
-    "color": "bg-purple-50 text-purple-800"
+    "benefits": ["Health insurance", "Flexible hours"]
   },
   {
     "id": "9",
@@ -223,7 +215,7 @@
     "employmentType": "Full-time",
     "department": "Marketing",
     "experienceLevel": "5+ years",
-    "salaryRange": "$120,000 – $140,000",
+    "salaryRange": "$120,000 - $140,000",
     "postedAt": "1 week ago",
     "description": "Lead marketing campaigns and brand strategy.",
     "responsibilities": [
@@ -233,8 +225,7 @@
     ],
     "requirements": ["Marketing experience", "Analytical skills", "Leadership"],
     "niceToHave": ["SaaS marketing experience"],
-    "benefits": ["Bonus program", "Hybrid work", "Flexible PTO"],
-    "color": "bg-yellow-50 text-yellow-800"
+    "benefits": ["Bonus program", "Hybrid work", "Flexible PTO"]
   },
   {
     "id": "10",
@@ -245,14 +236,13 @@
     "employmentType": "Contract",
     "department": "Engineering",
     "experienceLevel": "2–5 years",
-    "salaryRange": "£50,000 – £65,000",
+    "salaryRange": "£50,000 - £65,000",
     "postedAt": "2 days ago",
     "description": "Test software for quality and reliability.",
     "responsibilities": ["Write test cases", "Automate testing", "Report bugs"],
     "requirements": ["Selenium/Jest experience", "Attention to detail"],
     "niceToHave": ["CI/CD experience"],
-    "benefits": ["Flexible hours", "Remote options"],
-    "color": "bg-pink-50 text-pink-800"
+    "benefits": ["Flexible hours", "Remote options"]
   },
 
   {
@@ -270,8 +260,7 @@
     "responsibilities": ["Write small features", "Fix bugs", "Learn React"],
     "requirements": ["Basic HTML/CSS", "Interest in React"],
     "niceToHave": ["TypeScript knowledge"],
-    "benefits": ["Mentorship", "Flexible schedule"],
-    "color": "bg-indigo-100 text-indigo-800"
+    "benefits": ["Mentorship", "Flexible schedule"]
   },
 
   {
@@ -282,7 +271,7 @@
     "workMode": "On-site",
     "employmentType": "Internship",
     "department": "Engineering",
-    "experienceLevel": "0–1 years",
+    "experienceLevel": "0-1 years",
     "salaryRange": "€20/hr",
     "postedAt": "3 days ago",
     "description": "Assist backend engineers in building APIs and services.",
@@ -293,8 +282,7 @@
     ],
     "requirements": ["Interest in Node.js/Java", "Basic SQL knowledge"],
     "niceToHave": ["Cloud basics"],
-    "benefits": ["Mentorship", "Flexible hours"],
-    "color": "bg-purple-100 text-purple-800"
+    "benefits": ["Mentorship", "Flexible hours"]
   },
 
   {
@@ -305,8 +293,8 @@
     "workMode": "Remote",
     "employmentType": "Part-time",
     "department": "Marketing",
-    "experienceLevel": "2–4 years",
-    "salaryRange": "$40,000 – $60,000",
+    "experienceLevel": "2-4 years",
+    "salaryRange": "$40,000 - $60,000",
     "postedAt": "1 week ago",
     "description": "Write engaging content for product blogs and marketing campaigns.",
     "responsibilities": [
@@ -316,8 +304,7 @@
     ],
     "requirements": ["Writing skills", "SEO knowledge"],
     "niceToHave": ["Experience with SaaS"],
-    "benefits": ["Remote work", "Flexible hours"],
-    "color": "bg-green-100 text-green-800"
+    "benefits": ["Remote work", "Flexible hours"]
   },
 
   {
@@ -329,7 +316,7 @@
     "employmentType": "Full-time",
     "department": "HR",
     "experienceLevel": "5+ years",
-    "salaryRange": "$90,000 – $110,000",
+    "salaryRange": "$90,000 - $110,000",
     "postedAt": "2 weeks ago",
     "description": "Manage recruitment and employee engagement programs.",
     "responsibilities": [
@@ -339,8 +326,7 @@
     ],
     "requirements": ["HR experience", "Leadership skills"],
     "niceToHave": ["SaaS HR experience"],
-    "benefits": ["Health insurance", "Flexible PTO"],
-    "color": "bg-yellow-100 text-yellow-800"
+    "benefits": ["Health insurance", "Flexible PTO"]
   },
 
   {
@@ -352,7 +338,7 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "3–5 years",
-    "salaryRange": "£80,000 – £100,000",
+    "salaryRange": "£80,000 - £100,000",
     "postedAt": "3 days ago",
     "description": "Build high-quality mobile applications for iOS and Android.",
     "responsibilities": [
@@ -365,10 +351,8 @@
       "Mobile debugging skills"
     ],
     "niceToHave": ["App Store/Play Store deployment experience"],
-    "benefits": ["Remote work", "Flexible schedule"],
-    "color": "bg-pink-100 text-pink-800"
+    "benefits": ["Remote work", "Flexible schedule"]
   },
-
   {
     "id": "16",
     "title": "QA Intern",
@@ -388,8 +372,7 @@
     ],
     "requirements": ["Basic understanding of QA", "Attention to detail"],
     "niceToHave": ["Automation testing basics"],
-    "benefits": ["Mentorship", "Flexible hours"],
-    "color": "bg-indigo-100 text-indigo-800"
+    "benefits": ["Mentorship", "Flexible hours"]
   },
 
   {
@@ -401,7 +384,7 @@
     "employmentType": "Full-time",
     "department": "Customer Success",
     "experienceLevel": "3–5 years",
-    "salaryRange": "$70,000 – $90,000",
+    "salaryRange": "$70,000 - $90,000",
     "postedAt": "1 week ago",
     "description": "Ensure customers achieve value with our SaaS products.",
     "responsibilities": [
@@ -411,8 +394,7 @@
     ],
     "requirements": ["Customer success experience", "Communication skills"],
     "niceToHave": ["SaaS experience"],
-    "benefits": ["Remote work", "Bonuses", "Flexible schedule"],
-    "color": "bg-green-100 text-green-800"
+    "benefits": ["Remote work", "Bonuses", "Flexible schedule"]
   },
 
   {
@@ -424,7 +406,7 @@
     "employmentType": "Full-time",
     "department": "Data Science",
     "experienceLevel": "2–4 years",
-    "salaryRange": "€50,000 – €70,000",
+    "salaryRange": "€50,000 - €70,000",
     "postedAt": "5 days ago",
     "description": "Analyze datasets and provide actionable insights.",
     "responsibilities": [
@@ -434,8 +416,7 @@
     ],
     "requirements": ["SQL", "Python", "Excel"],
     "niceToHave": ["Power BI/Tableau"],
-    "benefits": ["Health insurance", "Flexible hours"],
-    "color": "bg-purple-100 text-purple-800"
+    "benefits": ["Health insurance", "Flexible hours"]
   },
 
   {
@@ -457,8 +438,7 @@
     ],
     "requirements": ["Linux basics", "Interest in DevOps"],
     "niceToHave": ["Docker knowledge"],
-    "benefits": ["Mentorship", "Flexible schedule"],
-    "color": "bg-yellow-100 text-yellow-800"
+    "benefits": ["Mentorship", "Flexible schedule"]
   },
 
   {
@@ -480,7 +460,6 @@
     ],
     "requirements": ["Interest in HR", "Good communication skills"],
     "niceToHave": ["Familiarity with HR tools"],
-    "benefits": ["Mentorship", "Flexible schedule"],
-    "color": "bg-pink-100 text-pink-800"
+    "benefits": ["Mentorship", "Flexible schedule"]
   }
 ]

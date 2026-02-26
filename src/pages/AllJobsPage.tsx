@@ -1,4 +1,12 @@
-import { Briefcase, MapPin, Clock } from "lucide-react";
+import {
+  Briefcase,
+  MapPin,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import Button from "../components/ui/Button";
@@ -33,9 +41,7 @@ export default function AllJobsPage() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   const pageSize = 9;
-
   const methods = useForm({
     defaultValues: {
       search: "",
@@ -46,6 +52,34 @@ export default function AllJobsPage() {
   const { watch } = methods;
   const searchQuery = watch("search");
   const filterEmploymentType = watch("employmentType");
+
+  const employmentTypeColors: Record<string, string> = {
+    "Full-time":
+      "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200",
+    "Part-time":
+      "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200",
+    Contract:
+      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200",
+    Internship:
+      "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200",
+  };
+  const handleApprove = (job: Job | null) => {
+    if (!job) return;
+    console.log("Approved:", job.id);
+    // API call to approve
+  };
+
+  const handleReject = (job: Job | null) => {
+    if (!job) return;
+    console.log("Rejected:", job.id);
+    // API call to reject
+  };
+
+  const handleDelete = (job: Job | null) => {
+    if (!job) return;
+    console.log("Deleted:", job.id);
+    // API call to delete
+  };
 
   // Fetch jobs
   useEffect(() => {
@@ -65,16 +99,13 @@ export default function AllJobsPage() {
     fetchJobs();
   }, []);
 
-  // Filtered & searched jobs
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch =
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.company.toLowerCase().includes(searchQuery.toLowerCase());
-
     const matchesEmploymentType =
       filterEmploymentType === "All" ||
       job.employmentType === filterEmploymentType;
-
     return matchesSearch && matchesEmploymentType;
   });
 
@@ -84,16 +115,21 @@ export default function AllJobsPage() {
     (pageIndex + 1) * pageSize,
   );
 
+  const goToFirst = () => setPageIndex(0);
+  const goToLast = () => setPageIndex(totalPages - 1);
+  const goPrev = () => setPageIndex((p) => Math.max(p - 1, 0));
+  const goNext = () => setPageIndex((p) => Math.min(p + 1, totalPages - 1));
+
   if (loading)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-32 border-t-2 border-b-2 border-blue-900"></div>
+      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-12 w-32 border-t-2 border-b-2 border-blue-900 dark:border-sky-400"></div>
       </div>
     );
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="px-4 py-6 bg-white dark:bg-slate-900 h-screen transition-colors duration-500 ease-in-out">
+    <div className="px-4 py-6 bg-white dark:bg-slate-900 transition-colors duration-500 ease-in-out min-h-screen">
       {/* Header */}
       <div className="mb-8 flex sm:flex-row items-start sm:items-center justify-between gap-4">
         <h1 className="md:text-3xl text-xl font-semibold text-[#044635] dark:text-[#0af0b4]">
@@ -106,8 +142,8 @@ export default function AllJobsPage() {
 
       {/* Search & Filters */}
       <FormProvider {...methods}>
-        <form className="py-4 flex flex-col justify-center items-center sm:flex-row gap-4 w-full">
-          <div className="w-full">
+        <form className="py-4 flex flex-col justify-between items-center sm:flex-row gap-4 w-full">
+          <div className="md:w-md w-full">
             <Input
               name="search"
               label="Search"
@@ -115,7 +151,7 @@ export default function AllJobsPage() {
               placeholder="Search by title or company"
             />
           </div>
-          <div className="w-full">
+          <div className="md:w-md w-full">
             <Select
               name="employmentType"
               label="Employment Type"
@@ -151,14 +187,14 @@ export default function AllJobsPage() {
           {paginatedJobs.map((job) => (
             <div
               key={job.id}
-              className="group rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md ring-1 ring-gray-200 transition-all hover:-translate-y-1 hover:shadow-lg"
+              className="group rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md ring-1 ring-gray-200 dark:ring-slate-700 transition-all hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="mb-4 flex items-start justify-between">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white/80 group-dark:hover:text-slate-50">
                   {job.title}
                 </h2>
                 <span
-                  className={`px-3 py-1 rounded-full text-xs text-nowrap font-semibold ${job.color}`}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${employmentTypeColors[job.employmentType]}`}
                 >
                   {job.employmentType}
                 </span>
@@ -187,114 +223,154 @@ export default function AllJobsPage() {
       )}
 
       {/* Pagination */}
-      <div className="mt-10 flex items-center justify-center gap-3">
-        {/* Prev Button */}
+      <div className="mt-10 flex items-center justify-center gap-2 flex-wrap">
         <button
-          onClick={() => setPageIndex((p) => Math.max(p - 1, 0))}
+          onClick={goToFirst}
           disabled={pageIndex === 0}
-          className="
-      px-4 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500
-      text-gray-700 dark:text-white font-medium
-      shadow-sm hover:bg-gray-100 hover:border-gray-400
-      disabled:opacity-40 disabled:cursor-not-allowed
-      transition-colors duration-150 cursor-pointer dark:hover:bg-gray-600
-    "
+          className="px-3 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
         >
-          Prev
+          <ChevronsLeft size={16} /> First
+        </button>
+        <button
+          onClick={goPrev}
+          disabled={pageIndex === 0}
+          className="px-3 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
+        >
+          <ChevronLeft size={16} /> Prev
         </button>
 
-        {/* Page Indicator */}
-        <span className="px-3 py-2 rounded-full bg-gray-100 dark:bg-slate-500 text-gray-800 dark:text-white font-medium shadow-inner">
-          Page {pageIndex + 1} of {totalPages}
-        </span>
+        {/* Page numbers */}
+        {Array.from({ length: totalPages }).map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setPageIndex(idx)}
+            className={`px-3 py-2 rounded-lg border shadow-sm font-medium ${
+              idx === pageIndex
+                ? "bg-sky-600 text-white border-sky-600"
+                : "bg-white dark:bg-slate-500 text-gray-700 dark:text-white border-gray-300 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer"
+            }`}
+          >
+            {idx + 1}
+          </button>
+        ))}
 
-        {/* Next Button */}
         <button
-          onClick={() => setPageIndex((p) => Math.min(p + 1, totalPages - 1))}
+          onClick={goNext}
           disabled={pageIndex === totalPages - 1}
-          className="
-      px-4 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500
-      text-gray-700 dark:text-white font-medium
-      shadow-sm hover:bg-gray-100 hover:border-gray-400 dark:hover:bg-gray-600
-      disabled:opacity-40 disabled:cursor-not-allowed
-      transition-colors duration-150 cursor-pointer
-    "
+          className="px-3 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex cursor-pointer items-center gap-1"
         >
-          Next
+          Next <ChevronRight size={16} />
+        </button>
+        <button
+          onClick={goToLast}
+          disabled={pageIndex === totalPages - 1}
+          className="px-3 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex cursor-pointer items-center gap-1"
+        >
+          Last <ChevronsRight size={16} />
         </button>
       </div>
 
-      {/* Job Modal */}
       <Modal
         open={!!selectedJob}
-        onOpenChange={(open) => {
-          if (!open) setSelectedJob(null);
-        }}
+        onOpenChange={() => setSelectedJob(null)}
         title={selectedJob?.title}
         description={selectedJob?.company}
       >
-        {selectedJob && (
-          <div className="space-y-2 text-md text-gray-600 dark:text-white md:max-h-[90vh]">
-            <p>
-              <strong>Location:</strong> {selectedJob.location}
-            </p>
-            <p>
-              <strong>Employment Type:</strong> {selectedJob.employmentType}
-            </p>
-            <p>
-              <strong>Work Mode:</strong> {selectedJob.workMode}
-            </p>
-            <p>
-              <strong>Department:</strong> {selectedJob.department}
-            </p>
-            <p>
-              <strong>Experience Level:</strong> {selectedJob.experienceLevel}
-            </p>
-            <p>
-              <strong>Salary Range:</strong> {selectedJob.salaryRange}
-            </p>
-            <p>
-              <strong>Description:</strong> {selectedJob.description}
-            </p>
-            <div>
-              <strong>Responsibilities:</strong>
-              <ul className="list-disc ml-6">
-                {selectedJob.responsibilities.map((r, i) => (
-                  <li key={i}>{r}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <strong>Requirements:</strong>
-              <ul className="list-disc ml-6">
-                {selectedJob.requirements.map((r, i) => (
-                  <li key={i}>{r}</li>
-                ))}
-              </ul>
-            </div>
-            {selectedJob.niceToHave.length > 0 && (
-              <div>
-                <strong>Nice-to-Have:</strong>
-                <ul className="list-disc ml-6">
-                  {selectedJob.niceToHave.map((r, i) => (
-                    <li key={i}>{r}</li>
-                  ))}
-                </ul>
+        <div className="flex flex-col space-y-4 text-gray-800 dark:text-gray-100 max-h-[70vh] overflow-y-auto">
+          {/* Basic Job Info */}
+          {selectedJob && (
+            <>
+              <p>
+                <strong>Location:</strong> {selectedJob.location}
+              </p>
+              <p>
+                <strong>Employment Type:</strong> {selectedJob.employmentType}
+              </p>
+              <p>
+                <strong>Department:</strong> {selectedJob.department}
+              </p>
+              <p>
+                <strong>Experience Level:</strong> {selectedJob.experienceLevel}
+              </p>
+              <p>
+                <strong>Salary Range:</strong> {selectedJob.salaryRange}
+              </p>
+              <p>
+                <strong>Description:</strong> {selectedJob.description}
+              </p>
+
+              {/* Responsibilities */}
+              {selectedJob.responsibilities?.length > 0 && (
+                <div>
+                  <strong>Responsibilities:</strong>
+                  <ul className="list-disc ml-6">
+                    {selectedJob.responsibilities.map((r, i) => (
+                      <li key={i}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Requirements */}
+              {selectedJob.requirements?.length > 0 && (
+                <div>
+                  <strong>Requirements:</strong>
+                  <ul className="list-disc ml-6">
+                    {selectedJob.requirements.map((r, i) => (
+                      <li key={i}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Nice-to-Have */}
+              {selectedJob.niceToHave?.length > 0 && (
+                <div>
+                  <strong>Nice-to-Have:</strong>
+                  <ul className="list-disc ml-6">
+                    {selectedJob.niceToHave.map((r, i) => (
+                      <li key={i}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Benefits */}
+              {selectedJob.benefits?.length > 0 && (
+                <div>
+                  <strong>Benefits:</strong>
+                  <ul className="list-disc ml-6">
+                    {selectedJob.benefits.map((r, i) => (
+                      <li key={i}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Admin Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-end pt-4 border-t border-gray-200 dark:border-gray-600">
+                <button
+                  onClick={() => handleApprove(selectedJob)}
+                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition cursor-pointer"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => handleReject(selectedJob)}
+                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-amber-500 text-white font-medium hover:bg-amber-600 transition cursor-pointer"
+                >
+                  Reject
+                </button>
+                <button
+                  onClick={() => handleDelete(selectedJob)}
+                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-rose-600 text-white font-medium hover:bg-rose-700 transition cursor-pointer"
+                >
+                  Delete
+                </button>
               </div>
-            )}
-            {selectedJob.benefits.length > 0 && (
-              <div>
-                <strong>Benefits:</strong>
-                <ul className="list-disc ml-6">
-                  {selectedJob.benefits.map((r, i) => (
-                    <li key={i}>{r}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <Button value="Apply" />
-          </div>
-        )}
+            </>
+          )}
+        </div>
       </Modal>
     </div>
   );

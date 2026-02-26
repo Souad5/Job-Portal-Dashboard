@@ -29,7 +29,7 @@ const DashBoardLayout = () => {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen((prev) => !prev)}
-            className="absolute -top-1 left-6 md:hidden font-semibold cursor-pointer active:scale-95"
+            className="absolute -top-2 left-6 md:hidden font-semibold cursor-pointer active:scale-95"
           >
             <GiHamburgerMenu size={25} />
           </button>

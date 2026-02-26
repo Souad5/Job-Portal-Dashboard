@@ -37,7 +37,7 @@ export default function Input({
         value={value}
         placeholder={placeholder}
         {...register(name)}
-        className={`min-w-full rounded-md bg-white dark:bg-slate-700 border border-gray-300 px-3 py-2 text-md
+        className={`w-full rounded-md bg-white dark:bg-slate-700 border border-gray-300 px-3 py-2 text-md
           focus:outline-none focus:ring-2 transition-all duration-200 focus:ring-blue-200 ${disabled ? "cursor-not-allowed font-bold text-gray-400" : ""}`}
         disabled={disabled}
       />

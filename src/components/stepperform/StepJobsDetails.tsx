@@ -1,6 +1,7 @@
 import Input from "../ui/Input";
 import Select from "../ui/Select";
 import Textarea from "../ui/Textarea";
+import { MdOutlineTipsAndUpdates } from "react-icons/md";
 
 export default function StepJobDetails() {
   return (
@@ -46,12 +47,15 @@ export default function StepJobDetails() {
 
       {/* Guidance Note */}
       <div className="rounded-md bg-gray-50 dark:bg-gray-800 border dark:text-gray-500 border-gray-200 p-4">
-        <p className="text-md text-gray-600 leading-relaxed selection:bg-red-400 dark:text-gray-400">
-          <span className="font-medium text-gray-800 dark:text-gray-50">
+        <p className="text-sm text-gray-600 dark:text-gray-400  selection:bg-red-400 flex items-start gap-2">
+          <span className="flex items-center gap-1 font-medium text-gray-800 dark:text-gray-50">
+            <MdOutlineTipsAndUpdates className="text-lg" />
             Tip:
           </span>
-          Job postings with a clear title and concise summary receive
-          significantly more qualified applicants.
+          <span>
+            Job postings with a clear title and concise summary receive
+            significantly more qualified applicants.
+          </span>
         </p>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import Input from "../ui/Input";
 import Textarea from "../ui/Textarea";
+import { SiMatternet } from "react-icons/si";
 
 export default function StepCompanyInfo() {
   return (
@@ -43,12 +44,15 @@ export default function StepCompanyInfo() {
 
       {/* Trust / Guidance Block */}
       <div className="rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
-        <p className="text-md text-gray-600 dark:text-gray-300 leading-relaxed">
-          <span className="font-medium text-gray-800 dark:text-gray-100">
+        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex items-start gap-2">
+          <span className="flex items-center gap-1 text-nowrap font-medium text-gray-800 dark:text-gray-100">
+            <SiMatternet className="text-lg" />
             Why this matters:
-          </span>{" "}
-          Candidates are more likely to apply when they understand your mission,
-          values, and work environment.
+          </span>
+          <span>
+            Candidates are more likely to apply when they understand your
+            mission, values, and work environment.
+          </span>
         </p>
       </div>
     </div>

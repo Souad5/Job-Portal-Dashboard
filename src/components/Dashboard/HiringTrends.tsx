@@ -1,3 +1,5 @@
+"use client";
+
 import {
   BarChart,
   Bar,
@@ -9,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
+import { useEffect, useState } from "react";
 
 // Sample data
 const data = [
@@ -22,45 +25,95 @@ const data = [
 ];
 
 export default function HiringBarChart() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="h-52 sm:h-full w-full">
       <ResponsiveContainer width="100%" height="90%">
         <BarChart
           data={data}
-          margin={{ top: 50, right: 20, left: 20, bottom: 10 }}
+          margin={{ top: 40, right: 20, left: 20, bottom: 10 }}
+          barGap={8}
+          barCategoryGap="20%"
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-
-          <XAxis dataKey="name" tick={{ fontSize: 12 }} axisLine={false} />
-
-          <YAxis yAxisId="left" tick={{ fontSize: 12 }} axisLine={false} />
-
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            tick={{ fontSize: 12 }}
-            axisLine={false}
+          {/* Grid */}
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke={isDark ? "#374151" : "#E5E7EB"}
           />
 
-          <Tooltip />
+          {/* X Axis */}
+          <XAxis
+            dataKey="name"
+            axisLine={false}
+            tick={{
+              fontSize: 12,
+              fill: isDark ? "#D1D5DB" : "#374151",
+            }}
+          />
+
+          {/* SINGLE Y AXIS */}
+          <YAxis
+            axisLine={false}
+            tickCount={5}
+            domain={[0, "dataMax"]}
+            tick={{
+              fontSize: 12,
+              fill: isDark ? "#D1D5DB" : "#374151",
+            }}
+          />
+
+          {/* Tooltip */}
+          <Tooltip
+            cursor={{
+              fill: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
+            }}
+            contentStyle={{
+              backgroundColor: isDark ? "#111827" : "#FFFFFF",
+              border: `1px solid ${isDark ? "#374151" : "#E5E7EB"}`,
+              borderRadius: "8px",
+            }}
+            labelStyle={{
+              color: isDark ? "#E5E7EB" : "#111827",
+              fontWeight: 500,
+            }}
+            itemStyle={{
+              color: isDark ? "#E5E7EB" : "#111827",
+            }}
+          />
+
           <Legend />
 
+          {/* Bars - SAME SCALE */}
           <Bar
-            yAxisId="left"
             dataKey="Application"
             name="Applications"
-            fill="#6366F1" // indigo
+            fill="#6366F1"
             radius={[6, 6, 0, 0]}
-            barSize={40}
+            barSize={36}
           />
 
           <Bar
-            yAxisId="right"
             dataKey="Hire"
             name="Hires"
-            fill="#10B981" // emerald
+            fill="#10B981"
             radius={[6, 6, 0, 0]}
-            barSize={40}
+            barSize={36}
           />
 
           <RechartsDevtools />

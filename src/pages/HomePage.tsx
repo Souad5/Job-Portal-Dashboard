@@ -8,6 +8,7 @@ import RecentJobs from "../components/Dashboard/RecentJobs";
 import { IoPeopleOutline } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
+import { Link } from "react-router";
 
 const stats = [
   {
@@ -42,6 +43,42 @@ const stats = [
   },
 ];
 
+const ACCENT_CLASSES: Record<
+  string,
+  { bg: string; text: string; darkBg?: string; darkText?: string }
+> = {
+  indigo: {
+    bg: "bg-indigo-100",
+    text: "text-indigo-600",
+    darkBg: "dark:bg-indigo-500/20",
+    darkText: "dark:text-indigo-400",
+  },
+  yellow: {
+    bg: "bg-yellow-100",
+    text: "text-yellow-600",
+    darkBg: "dark:bg-yellow-500/20",
+    darkText: "dark:text-yellow-400",
+  },
+  emerald: {
+    bg: "bg-emerald-100",
+    text: "text-emerald-600",
+    darkBg: "dark:bg-emerald-500/20",
+    darkText: "dark:text-emerald-400",
+  },
+  rose: {
+    bg: "bg-rose-100",
+    text: "text-rose-600",
+    darkBg: "dark:bg-rose-500/20",
+    darkText: "dark:text-rose-400",
+  },
+  amber: {
+    bg: "bg-amber-100",
+    text: "text-amber-600",
+    darkBg: "dark:bg-amber-500/20",
+    darkText: "dark:text-amber-400",
+  },
+};
+
 const HomePage = () => {
   return (
     <section className="px-4 py-6 space-y-10 dark:bg-slate-900 transition-colors duration-500 ease-in-out">
@@ -73,44 +110,54 @@ const HomePage = () => {
             </span>
           </div>
           <div>
-            <p
+            <Link
+              to="/login"
               className="font-medium text-slate-900 cursor-pointer opacity-70 dark:opacity-80 hover:opacity-105"
               title="Logout"
             >
               <IoIosLogOut size={25} className="dark:text-white" />
-            </p>
+            </Link>
           </div>
         </div>
       </header>
 
       {/* Stats */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6 dark:bg-slate-800">
-        {stats.map((s, i) => (
-          <div
-            key={i}
-            className={`
-               rounded-2xl p-6
-              shadow-[0_10px_40px_rgba(0,0,0,0.06)]
-              ring-1 ring-slate-200/70
-              transition hover:-translate-y-1 hover:shadow-lg
-            `}
-          >
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6">
+        {stats.map((s, i) => {
+          const accent = ACCENT_CLASSES[s.accent];
+          return (
             <div
-              className={`w-12 h-12 rounded-xl flex items-center justify-center
-              bg-${s.accent}-100 text-${s.accent}-600 mb-4`}
+              key={i}
+              className={`
+              rounded-2xl p-6
+              shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+              ring-1 ring-slate-200/70 dark:ring-slate-700
+              transition-all hover:-translate-y-1 duration-200 hover:shadow-lg
+              dark:bg-slate-800
+            `}
             >
-              {s.icon}
+              <div
+                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4
+                ${accent.bg} ${accent.text} ${accent.darkBg} ${accent.darkText}
+              `}
+              >
+                {s.icon}
+              </div>
+              <p className="text-sm text-slate-700 dark:text-slate-300">
+                {s.label}
+              </p>
+              <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                {s.value}
+              </h2>
             </div>
-            <p className="text-sm">{s.label}</p>
-            <h2 className="text-2xl font-semibold">{s.value}</h2>
-          </div>
-        ))}
+          );
+        })}
       </section>
 
       {/* Main Content Grid */}
       <section className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         {/* Hiring Trends */}
-        <div className="xl:col-span-7 dark:bg-slate-800 rounded-2xl p-6 shadow-sm ring-1 ring-slate-200">
+        <div className="xl:col-span-7 dark:bg-slate-800 rounded-2xl p-6 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700">
           <h3 className="text-lg font-semibold mb-4">Hiring Trends</h3>
           <BiaxiaLineChart />
         </div>

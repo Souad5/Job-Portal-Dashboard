@@ -20,14 +20,14 @@ export default function Select({ name, label, options }: SelectProps) {
         value={selectedValue}
         onValueChange={(val) => setValue(name, val)}
       >
-        <SelectPrimitive.Trigger className="w-full mt-1.5 flex justify-between items-center px-3 py-2 border border-gray-200 rounded-md text-md focus:outline-none focus:ring-2 focus:ring-slate-200 bg-white dark:bg-slate-700 cursor-pointer">
+        <SelectPrimitive.Trigger className="w-full mt-1.5 flex justify-between items-center px-3 py-2 border border-gray-200 dark:border-slate-700 rounded-md text-md focus:outline-none focus:ring-2 focus:ring-slate-200 bg-white dark:bg-slate-700 cursor-pointer">
           <SelectPrimitive.Value>{selectedValue}</SelectPrimitive.Value>
           <SelectPrimitive.Icon>
             <ChevronDown className="w-4 h-4 text-gray-500 dark:text-white" />
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
 
-        <SelectPrimitive.Content className="overflow-hidden rounded-md border border-gray-200 bg-white dark:bg-slate-500 shadow-lg z-50 ">
+        <SelectPrimitive.Content className="overflow-hidden rounded-md border border-gray-200 bg-white dark:bg-slate-500  shadow-lg z-50 ">
           <SelectPrimitive.Viewport className="p-1">
             {options.map((opt) => (
               <SelectPrimitive.Item

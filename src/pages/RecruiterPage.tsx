@@ -62,7 +62,7 @@ const RecruiterPage = () => {
           </button>
         ),
         cell: (info) => (
-          <span className="font-medium text-slate-900 dark:text-slate-100">
+          <span className="font-medium text-slate-600 dark:text-slate-400">
             {info.getValue() as string}
           </span>
         ),
@@ -72,7 +72,7 @@ const RecruiterPage = () => {
         header: ({ column }) => (
           <button
             onClick={column.getToggleSortingHandler()}
-            className="flex items-center gap-2 font-medium cursor-pointer text-slate-700 dark:text-slate-300"
+            className="flex items-center gap-2 font-medium cursor-pointer select-none text-slate-700 dark:text-slate-300"
           >
             <span>Email</span>
             <span>
@@ -93,7 +93,7 @@ const RecruiterPage = () => {
         header: ({ column }) => (
           <button
             onClick={column.getToggleSortingHandler()}
-            className="flex items-center gap-2 cursor-pointer font-medium text-slate-700 dark:text-slate-300"
+            className="flex items-center gap-2 font-medium cursor-pointer select-none text-slate-700 dark:text-slate-300"
           >
             <span>Status</span>
 
@@ -123,7 +123,7 @@ const RecruiterPage = () => {
         accessorKey: "Actions",
         enableSorting: false,
         header: () => (
-          <div className="text-right text-slate-700 dark:text-slate-300">
+          <div className="text-right text-slate-700 font-medium dark:text-slate-300">
             Actions
           </div>
         ),

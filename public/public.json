@@ -8,58 +8,67 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "5+ years",
-    "salaryRange": "$150,000 - $180,000",
-    "postedAt": "2 days ago",
-    "description": "Lead the development of scalable, high-performance web interfaces for core products.",
+    "salaryRange": "$180,000 - $250,000",
+    "postedAt": "3 days ago",
+    "description": "Lead frontend architecture and development of high-performance, scalable web applications using modern JavaScript frameworks for our core SaaS platform.",
     "responsibilities": [
-      "Build and maintain complex web applications using React and TypeScript",
-      "Collaborate with product and design teams",
-      "Optimize applications for performance",
-      "Mentor junior engineers"
+      "Architect and build complex React-based applications with TypeScript",
+      "Collaborate closely with product managers, designers, and backend teams",
+      "Drive performance optimizations, accessibility, and SEO improvements",
+      "Mentor junior and mid-level engineers on best practices and code reviews"
     ],
     "requirements": [
-      "Strong experience with React, TypeScript",
-      "Solid understanding of HTML/CSS",
-      "Experience with REST APIs",
-      "Problem-solving skills"
+      "5+ years of professional experience with React and TypeScript",
+      "Deep knowledge of modern HTML5, CSS3, responsive design, and accessibility (a11y)",
+      "Strong experience integrating REST/GraphQL APIs and state management",
+      "Proven problem-solving and debugging skills in production environments"
     ],
-    "niceToHave": ["Next.js experience", "Tailwind CSS knowledge"],
+    "niceToHave": [
+      "Next.js or Remix experience",
+      "Tailwind CSS or styled-components",
+      "Web performance tooling (Lighthouse, Core Web Vitals)",
+      "AI-assisted UI development exposure"
+    ],
     "benefits": [
-      "Equity",
-      "Flexible schedule",
-      "Health insurance",
-      "401(k) match"
+      "Competitive equity package",
+      "Flexible hybrid schedule (3 days in-office)",
+      "Comprehensive health, dental, and vision insurance",
+      "401(k) with company match up to 6%"
     ]
   },
   {
     "id": "2",
     "title": "Product Designer",
     "company": "Nimbus Labs",
-    "location": "Remote",
+    "location": "Remote (US)",
     "workMode": "Remote",
     "employmentType": "Full-time",
     "department": "Design",
     "experienceLevel": "3-5 years",
-    "salaryRange": "$110,000 - $135,000",
-    "postedAt": "5 days ago",
-    "description": "Design intuitive user-centered designs for cloud-based platforms.",
+    "salaryRange": "$130,000 - $165,000",
+    "postedAt": "4 days ago",
+    "description": "Create intuitive, user-centered designs for our cloud-based SaaS tools, focusing on seamless experiences across web and mobile platforms.",
     "responsibilities": [
-      "Design user flows and high-fidelity mockups",
-      "Collaborate with engineers",
-      "Conduct usability testing",
-      "Maintain design system"
+      "Create user flows, wireframes, prototypes, and high-fidelity designs in Figma",
+      "Partner with product managers and engineers throughout the development cycle",
+      "Conduct user research, usability testing, and A/B test analysis",
+      "Contribute to and evolve our scalable design system"
     ],
     "requirements": [
-      "Portfolio of product design",
-      "Figma skills",
-      "UX principles knowledge"
+      "Strong portfolio showcasing end-to-end product design work",
+      "Advanced proficiency in Figma and prototyping tools",
+      "Solid understanding of UX principles, interaction design, and accessibility standards"
     ],
-    "niceToHave": ["SaaS design experience", "Frontend basics"],
+    "niceToHave": [
+      "Experience designing SaaS/B2B products",
+      "Basic HTML/CSS/JavaScript for handoff",
+      "User research facilitation and analytics tools experience"
+    ],
     "benefits": [
-      "Remote work",
-      "Home office stipend",
-      "Flexible PTO",
-      "Learning budget"
+      "Fully remote with async-friendly culture",
+      "Home office setup stipend",
+      "Unlimited PTO with manager approval",
+      "Annual learning & development budget"
     ]
   },
   {
@@ -71,25 +80,30 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "4+ years",
-    "salaryRange": "€80,000 - €95,000",
-    "postedAt": "1 week ago",
-    "description": "Design and build reliable APIs and services for logistics platform.",
+    "salaryRange": "€75,000 - €95,000",
+    "postedAt": "6 days ago",
+    "description": "Design, implement, and maintain robust backend services and APIs powering our global logistics platform with high reliability and scalability.",
     "responsibilities": [
-      "Develop and maintain backend services",
-      "Design scalable data models",
-      "Ensure reliability",
-      "Collaborate with frontend team"
+      "Develop scalable RESTful/GraphQL APIs and microservices in Node.js/Java/Go",
+      "Design efficient data models and optimize database queries/performance",
+      "Ensure high availability, security, and fault tolerance",
+      "Collaborate with frontend, DevOps, and product teams on feature delivery"
     ],
     "requirements": [
-      "Node.js or Java",
-      "Databases knowledge",
-      "Distributed systems"
+      "4+ years professional experience with Node.js, Java, or Go",
+      "Strong experience with relational (PostgreSQL) and NoSQL databases (MongoDB)",
+      "Understanding of distributed systems, caching, and message queues"
     ],
-    "niceToHave": ["AWS/GCP experience", "Docker/Kubernetes knowledge"],
+    "niceToHave": [
+      "AWS or GCP cloud experience",
+      "Docker, Kubernetes, or CI/CD pipelines",
+      "Event-driven architecture and Kafka/RabbitMQ knowledge"
+    ],
     "benefits": [
-      "Relocation assistance",
-      "Vacation policy",
-      "Transport reimbursement"
+      "Relocation support for international candidates",
+      "30+ days vacation + public holidays",
+      "Public transport ticket reimbursement",
+      "German language courses and team events"
     ]
   },
   {
@@ -101,22 +115,31 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "7+ years",
-    "salaryRange": "$170,000 - $200,000",
-    "postedAt": "2 weeks ago",
-    "description": "Lead a team of engineers to deliver mission-critical products.",
+    "salaryRange": "$190,000 - $260,000",
+    "postedAt": "10 days ago",
+    "description": "Lead and grow a high-performing engineering team building mission-critical SaaS products in a fast-paced, innovative environment.",
     "responsibilities": [
-      "Manage and mentor engineering teams",
-      "Drive technical strategy",
-      "Partner with leadership",
-      "Ensure code quality"
+      "Manage, mentor, and grow a team of 8-12 engineers across full-stack",
+      "Define technical strategy, architecture, and roadmap alignment with business goals",
+      "Partner with product, design, and executive leadership on prioritization",
+      "Maintain engineering standards, code quality, velocity, and hiring processes"
     ],
     "requirements": [
-      "Proven engineering leadership",
-      "Technical background",
-      "Communication skills"
+      "Proven track record leading engineering teams (5+ direct reports)",
+      "Strong technical background in full-stack or backend development",
+      "Excellent communication, stakeholder management, and conflict resolution skills"
     ],
-    "niceToHave": ["Scaling teams experience", "Enterprise SaaS experience"],
-    "benefits": ["Leadership bonus", "Hybrid work", "Health coverage"]
+    "niceToHave": [
+      "Experience scaling teams from 10 to 50+",
+      "Enterprise SaaS or fintech background",
+      "People management training or certification"
+    ],
+    "benefits": [
+      "Performance-based leadership bonus",
+      "Hybrid work model (3 days in-office)",
+      "Premium health coverage + wellness stipend",
+      "Equity refresh program"
+    ]
   },
   {
     "id": "5",
@@ -127,21 +150,31 @@
     "employmentType": "Full-time",
     "department": "Data Science",
     "experienceLevel": "3-6 years",
-    "salaryRange": "£70,000 - £90,000",
-    "postedAt": "3 days ago",
-    "description": "Build predictive models and extract insights from datasets.",
+    "salaryRange": "£75,000 - £100,000",
+    "postedAt": "2 days ago",
+    "description": "Develop predictive models and derive actionable insights from complex datasets to drive AI-powered business decisions and product features.",
     "responsibilities": [
-      "Analyze large datasets",
-      "Collaborate with teams",
-      "Deploy ML models"
+      "Analyze and process large-scale structured/unstructured data using Python/SQL",
+      "Build, validate, tune, and deploy machine learning models (scikit-learn/PyTorch)",
+      "Collaborate with engineering and product teams on model integration and monitoring",
+      "Present findings, visualizations, and recommendations to stakeholders"
     ],
     "requirements": [
-      "Statistics knowledge",
-      "Python experience",
-      "Data communication skills"
+      "Strong foundation in statistics, probability, and experimental design",
+      "Proficiency in Python (pandas, numpy, scikit-learn) and SQL",
+      "Excellent data storytelling, visualization (Matplotlib/Seaborn/Tableau), and communication skills"
     ],
-    "niceToHave": ["Deep learning experience", "AI startups experience"],
-    "benefits": ["Performance bonuses", "Conference budget", "Flexible hours"]
+    "niceToHave": [
+      "Experience with deep learning frameworks (PyTorch/TensorFlow)",
+      "Background in AI/ML startups or fintech",
+      "Cloud data tools (BigQuery, Snowflake, Databricks)"
+    ],
+    "benefits": [
+      "Performance bonuses tied to model impact",
+      "Conference and training budget",
+      "Flexible working hours",
+      "Private health insurance and pension contribution"
+    ]
   },
   {
     "id": "6",
@@ -152,17 +185,29 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "1–2 years",
-    "salaryRange": "$90,000 - $110,000",
+    "salaryRange": "$110,000 - $145,000",
     "postedAt": "1 day ago",
-    "description": "Assist in developing web applications using React and TypeScript.",
+    "description": "Contribute to building responsive and performant web applications while growing under senior guidance in a supportive team environment.",
     "responsibilities": [
-      "Write clean, maintainable code",
-      "Collaborate with senior engineers",
-      "Fix bugs and issues"
+      "Implement UI components and features using React/TypeScript",
+      "Work closely with senior engineers on code reviews, pair programming, and architecture",
+      "Debug and resolve issues across frontend and integration layers",
+      "Participate in agile ceremonies, sprint planning, and retrospectives"
     ],
-    "requirements": ["React basics", "HTML/CSS knowledge", "Git usage"],
-    "niceToHave": ["Next.js exposure"],
-    "benefits": ["Mentorship", "Flexible schedule", "Health insurance"]
+    "requirements": [
+      "1–2 years professional React experience or strong equivalent projects",
+      "Solid HTML5, CSS3, JavaScript fundamentals, and responsive design",
+      "Comfortable with Git, basic CI/CD workflows, and pull requests"
+    ],
+    "niceToHave": [
+      "Exposure to Next.js or modern state management (Zustand/Redux Toolkit)",
+      "Basic testing experience (Jest, React Testing Library)"
+    ],
+    "benefits": [
+      "Structured mentorship and career growth program",
+      "Flexible hybrid schedule",
+      "Full health benefits from day 1"
+    ]
   },
   {
     "id": "7",
@@ -173,17 +218,26 @@
     "employmentType": "Part-time",
     "department": "Design",
     "experienceLevel": "2–4 years",
-    "salaryRange": "$60,000 - $80,000",
-    "postedAt": "4 days ago",
-    "description": "Create visually appealing and user-friendly interfaces.",
+    "salaryRange": "$65,000 - $85,000 (pro-rated for 20-30 hrs/week)",
+    "postedAt": "5 days ago",
+    "description": "Craft clean, accessible, and delightful user interfaces for our growing product suite in a collaborative remote setting.",
     "responsibilities": [
-      "Design wireframes",
-      "Create mockups",
-      "Collaborate with engineers"
+      "Design wireframes, interactive prototypes, and production-ready assets in Figma",
+      "Iterate on designs based on user feedback, testing results, and metrics",
+      "Collaborate with developers to ensure high-fidelity implementation and handoff"
     ],
-    "requirements": ["Figma experience", "UI/UX principles knowledge"],
-    "niceToHave": ["SaaS product design"],
-    "benefits": ["Remote work", "Flexible hours", "Learning budget"]
+    "requirements": [
+      "2+ years professional experience using Figma at scale",
+      "Strong grasp of UI/UX principles, design systems, and WCAG accessibility"
+    ],
+    "niceToHave": [
+      "SaaS or B2B design portfolio pieces",
+      "Motion design or advanced prototyping (Framer, Principle)"
+    ],
+    "benefits": [
+      "Fully remote and flexible part-time hours",
+      "Learning stipend for design tools/courses"
+    ]
   },
   {
     "id": "8",
@@ -194,17 +248,29 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "3+ years",
-    "salaryRange": "€70,000 - €85,000",
-    "postedAt": "5 days ago",
-    "description": "Manage CI/CD pipelines and cloud infrastructure.",
+    "salaryRange": "€72,000 - €92,000",
+    "postedAt": "1 week ago",
+    "description": "Build and maintain reliable CI/CD pipelines, cloud infrastructure, and monitoring for high-traffic services.",
     "responsibilities": [
-      "Deploy and monitor systems",
-      "Automate processes",
-      "Ensure system reliability"
+      "Automate deployments, infrastructure provisioning (IaC), and scaling",
+      "Monitor system health, performance, logs, and incident response",
+      "Improve reliability, security, observability, and cost efficiency"
     ],
-    "requirements": ["AWS/GCP knowledge", "CI/CD experience", "Linux skills"],
-    "niceToHave": ["Docker/Kubernetes"],
-    "benefits": ["Health insurance", "Flexible hours"]
+    "requirements": [
+      "Hands-on experience with AWS or GCP in production",
+      "Strong CI/CD tooling (GitHub Actions, GitLab CI, Jenkins)",
+      "Linux administration, scripting (Bash/Python), and container basics"
+    ],
+    "niceToHave": [
+      "Kubernetes orchestration and Helm",
+      "Terraform or Pulumi for IaC",
+      "Monitoring tools (Prometheus, Grafana, ELK)"
+    ],
+    "benefits": [
+      "Comprehensive health insurance",
+      "Flexible working hours and home office options",
+      "Team events and professional development"
+    ]
   },
   {
     "id": "9",
@@ -215,17 +281,25 @@
     "employmentType": "Full-time",
     "department": "Marketing",
     "experienceLevel": "5+ years",
-    "salaryRange": "$120,000 - $140,000",
-    "postedAt": "1 week ago",
-    "description": "Lead marketing campaigns and brand strategy.",
+    "salaryRange": "$125,000 - $155,000",
+    "postedAt": "8 days ago",
+    "description": "Develop and execute go-to-market strategies, campaigns, and brand initiatives for our SaaS products in competitive B2B markets.",
     "responsibilities": [
-      "Manage campaigns",
-      "Coordinate with teams",
-      "Analyze performance"
+      "Lead multi-channel marketing campaigns (content, email, paid, events)",
+      "Coordinate cross-functional teams (content, product, sales, design)",
+      "Track KPIs, attribution, and optimize for ROI and customer acquisition"
     ],
-    "requirements": ["Marketing experience", "Analytical skills", "Leadership"],
-    "niceToHave": ["SaaS marketing experience"],
-    "benefits": ["Bonus program", "Hybrid work", "Flexible PTO"]
+    "requirements": [
+      "5+ years in B2B/SaaS marketing with proven campaign results",
+      "Strong analytical skills and proficiency in tools like Google Analytics, HubSpot",
+      "Leadership experience managing budgets and small teams"
+    ],
+    "niceToHave": ["Demand generation, ABM, and product-led growth experience"],
+    "benefits": [
+      "Performance bonus structure",
+      "Hybrid flexibility (3 days in-office)",
+      "Unlimited PTO policy"
+    ]
   },
   {
     "id": "10",
@@ -236,15 +310,24 @@
     "employmentType": "Contract",
     "department": "Engineering",
     "experienceLevel": "2–5 years",
-    "salaryRange": "£50,000 - £65,000",
-    "postedAt": "2 days ago",
-    "description": "Test software for quality and reliability.",
-    "responsibilities": ["Write test cases", "Automate testing", "Report bugs"],
-    "requirements": ["Selenium/Jest experience", "Attention to detail"],
-    "niceToHave": ["CI/CD experience"],
-    "benefits": ["Flexible hours", "Remote options"]
+    "salaryRange": "£55,000 - £75,000 (pro-rated)",
+    "postedAt": "4 days ago",
+    "description": "Ensure the quality and reliability of AI-driven software through comprehensive manual and automated testing strategies.",
+    "responsibilities": [
+      "Design and execute end-to-end test plans and cases",
+      "Automate regression, integration, and API tests",
+      "Track, report, verify bugs, and collaborate on fixes"
+    ],
+    "requirements": [
+      "Experience with automation frameworks (Cypress, Selenium, Playwright, Jest)",
+      "Strong attention to detail, analytical mindset, and bug reporting skills"
+    ],
+    "niceToHave": [
+      "API testing (Postman/Newman)",
+      "CI/CD integration and test environments"
+    ],
+    "benefits": ["Flexible hours", "Potential for extension to permanent role"]
   },
-
   {
     "id": "11",
     "title": "Frontend Intern",
@@ -254,15 +337,28 @@
     "employmentType": "Internship",
     "department": "Engineering",
     "experienceLevel": "0–1 years",
-    "salaryRange": "$25/hr",
+    "salaryRange": "$25 - $35/hr",
     "postedAt": "1 day ago",
-    "description": "Support frontend development under guidance of senior engineers.",
-    "responsibilities": ["Write small features", "Fix bugs", "Learn React"],
-    "requirements": ["Basic HTML/CSS", "Interest in React"],
-    "niceToHave": ["TypeScript knowledge"],
-    "benefits": ["Mentorship", "Flexible schedule"]
+    "description": "Support frontend development under guidance of senior engineers while gaining hands-on experience with modern web technologies.",
+    "responsibilities": [
+      "Implement small features and UI components in React",
+      "Fix bugs and participate in code reviews",
+      "Learn best practices in TypeScript, testing, and performance"
+    ],
+    "requirements": [
+      "Basic HTML/CSS/JavaScript knowledge and enthusiasm for frontend",
+      "Interest in React and modern web development",
+      "Currently pursuing or recently completed relevant degree"
+    ],
+    "niceToHave": [
+      "TypeScript or Next.js exposure",
+      "Personal projects or GitHub portfolio"
+    ],
+    "benefits": [
+      "Structured mentorship program",
+      "Flexible schedule and potential full-time conversion"
+    ]
   },
-
   {
     "id": "12",
     "title": "Backend Intern",
@@ -272,19 +368,25 @@
     "employmentType": "Internship",
     "department": "Engineering",
     "experienceLevel": "0-1 years",
-    "salaryRange": "€20/hr",
+    "salaryRange": "€20 - €28/hr",
     "postedAt": "3 days ago",
-    "description": "Assist backend engineers in building APIs and services.",
+    "description": "Assist backend engineers in building and maintaining APIs and services while learning production-grade development.",
     "responsibilities": [
-      "Fix small bugs",
-      "Write unit tests",
-      "Learn backend frameworks"
+      "Fix small bugs and implement minor features",
+      "Write unit/integration tests",
+      "Learn backend frameworks, databases, and deployment"
     ],
-    "requirements": ["Interest in Node.js/Java", "Basic SQL knowledge"],
-    "niceToHave": ["Cloud basics"],
-    "benefits": ["Mentorship", "Flexible hours"]
+    "requirements": [
+      "Interest in Node.js, Java, or similar backend technologies",
+      "Basic SQL and API understanding",
+      "Enthusiasm for learning in a team setting"
+    ],
+    "niceToHave": ["Cloud basics (AWS/GCP)", "Git proficiency"],
+    "benefits": [
+      "Dedicated mentorship",
+      "Flexible hours and learning resources"
+    ]
   },
-
   {
     "id": "13",
     "title": "Content Writer",
@@ -294,19 +396,27 @@
     "employmentType": "Part-time",
     "department": "Marketing",
     "experienceLevel": "2-4 years",
-    "salaryRange": "$40,000 - $60,000",
+    "salaryRange": "$45,000 - $65,000 (pro-rated)",
     "postedAt": "1 week ago",
-    "description": "Write engaging content for product blogs and marketing campaigns.",
+    "description": "Write engaging, SEO-optimized content for product blogs, website, and marketing campaigns in the SaaS space.",
     "responsibilities": [
-      "Create blog posts",
-      "Social media content",
-      "Collaborate with designers"
+      "Create blog posts, case studies, and thought leadership articles",
+      "Develop social media content and email newsletters",
+      "Collaborate with designers and product team for cohesive messaging"
     ],
-    "requirements": ["Writing skills", "SEO knowledge"],
-    "niceToHave": ["Experience with SaaS"],
-    "benefits": ["Remote work", "Flexible hours"]
+    "requirements": [
+      "Strong writing and editing skills with portfolio",
+      "SEO best practices and keyword research experience"
+    ],
+    "niceToHave": [
+      "SaaS or tech industry writing experience",
+      "Familiarity with tools like Ahrefs or SEMrush"
+    ],
+    "benefits": [
+      "Fully remote and flexible part-time schedule",
+      "Learning stipend"
+    ]
   },
-
   {
     "id": "14",
     "title": "HR Manager",
@@ -316,19 +426,27 @@
     "employmentType": "Full-time",
     "department": "HR",
     "experienceLevel": "5+ years",
-    "salaryRange": "$90,000 - $110,000",
+    "salaryRange": "$95,000 - $120,000",
     "postedAt": "2 weeks ago",
-    "description": "Manage recruitment and employee engagement programs.",
+    "description": "Manage recruitment, employee engagement, and HR programs in a growing tech company.",
     "responsibilities": [
-      "Recruitment",
-      "Employee engagement",
-      "Policy management"
+      "Lead full-cycle recruitment and talent acquisition",
+      "Develop employee engagement initiatives and retention strategies",
+      "Manage HR policies, compliance, and performance processes"
     ],
-    "requirements": ["HR experience", "Leadership skills"],
-    "niceToHave": ["SaaS HR experience"],
-    "benefits": ["Health insurance", "Flexible PTO"]
+    "requirements": [
+      "5+ years HR experience, preferably in tech/SaaS",
+      "Strong leadership, communication, and organizational skills"
+    ],
+    "niceToHave": [
+      "Experience with HRIS tools (Workday/BambooHR)",
+      "DEI program implementation"
+    ],
+    "benefits": [
+      "Health insurance and wellness programs",
+      "Flexible PTO and hybrid work"
+    ]
   },
-
   {
     "id": "15",
     "title": "Mobile App Developer",
@@ -338,20 +456,26 @@
     "employmentType": "Full-time",
     "department": "Engineering",
     "experienceLevel": "3–5 years",
-    "salaryRange": "£80,000 - £100,000",
+    "salaryRange": "£80,000 - £105,000",
     "postedAt": "3 days ago",
-    "description": "Build high-quality mobile applications for iOS and Android.",
+    "description": "Build high-quality, performant mobile applications for iOS and Android using cross-platform frameworks.",
     "responsibilities": [
-      "Develop apps",
-      "Test on multiple devices",
-      "Collaborate with designers"
+      "Develop and maintain cross-platform mobile apps (Flutter/React Native)",
+      "Test on multiple devices and OS versions",
+      "Collaborate with designers and backend teams for API integration"
     ],
     "requirements": [
-      "Flutter/React Native experience",
-      "Mobile debugging skills"
+      "3+ years experience with Flutter or React Native",
+      "Strong mobile debugging, performance optimization, and deployment skills"
     ],
-    "niceToHave": ["App Store/Play Store deployment experience"],
-    "benefits": ["Remote work", "Flexible schedule"]
+    "niceToHave": [
+      "App Store and Google Play deployment experience",
+      "Offline-first and push notification implementation"
+    ],
+    "benefits": [
+      "Fully remote with flexible schedule",
+      "Professional development budget"
+    ]
   },
   {
     "id": "16",
@@ -362,19 +486,24 @@
     "employmentType": "Internship",
     "department": "Engineering",
     "experienceLevel": "0–1 years",
-    "salaryRange": "$20/hr",
+    "salaryRange": "$22 - $30/hr",
     "postedAt": "2 days ago",
-    "description": "Assist QA engineers in testing web applications.",
+    "description": "Assist QA engineers in testing web applications and learning quality assurance processes.",
     "responsibilities": [
-      "Write test cases",
-      "Report bugs",
-      "Learn QA processes"
+      "Write and execute manual test cases",
+      "Report and track bugs in Jira",
+      "Learn automated testing basics"
     ],
-    "requirements": ["Basic understanding of QA", "Attention to detail"],
-    "niceToHave": ["Automation testing basics"],
-    "benefits": ["Mentorship", "Flexible hours"]
+    "requirements": [
+      "Basic understanding of QA principles and software testing",
+      "Strong attention to detail and methodical approach"
+    ],
+    "niceToHave": [
+      "Exposure to automation tools (Cypress/Selenium)",
+      "Interest in web technologies"
+    ],
+    "benefits": ["Hands-on mentorship", "Flexible hours"]
   },
-
   {
     "id": "17",
     "title": "Customer Success Manager",
@@ -384,19 +513,25 @@
     "employmentType": "Full-time",
     "department": "Customer Success",
     "experienceLevel": "3–5 years",
-    "salaryRange": "$70,000 - $90,000",
+    "salaryRange": "$75,000 - $95,000",
     "postedAt": "1 week ago",
-    "description": "Ensure customers achieve value with our SaaS products.",
+    "description": "Ensure customers achieve maximum value with our SaaS products through proactive support and relationship management.",
     "responsibilities": [
-      "Onboard clients",
-      "Provide support",
-      "Collaborate with product team"
+      "Onboard new clients and create success plans",
+      "Provide ongoing support, training, and feature adoption guidance",
+      "Collaborate with product and engineering on feedback and improvements"
     ],
-    "requirements": ["Customer success experience", "Communication skills"],
-    "niceToHave": ["SaaS experience"],
-    "benefits": ["Remote work", "Bonuses", "Flexible schedule"]
+    "requirements": [
+      "3+ years in customer success or account management",
+      "Excellent communication, problem-solving, and relationship-building skills"
+    ],
+    "niceToHave": ["SaaS experience and CRM proficiency (Salesforce/HubSpot)"],
+    "benefits": [
+      "Fully remote work",
+      "Performance bonuses",
+      "Flexible schedule"
+    ]
   },
-
   {
     "id": "18",
     "title": "Data Analyst",
@@ -406,19 +541,24 @@
     "employmentType": "Full-time",
     "department": "Data Science",
     "experienceLevel": "2–4 years",
-    "salaryRange": "€50,000 - €70,000",
+    "salaryRange": "€55,000 - €75,000",
     "postedAt": "5 days ago",
-    "description": "Analyze datasets and provide actionable insights.",
+    "description": "Analyze datasets, create reports, and provide actionable insights to support business and product decisions.",
     "responsibilities": [
-      "Data cleaning",
-      "Reporting",
-      "Collaborate with teams"
+      "Data cleaning, transformation, and visualization",
+      "Build dashboards and recurring reports",
+      "Collaborate with stakeholders to answer business questions"
     ],
-    "requirements": ["SQL", "Python", "Excel"],
-    "niceToHave": ["Power BI/Tableau"],
-    "benefits": ["Health insurance", "Flexible hours"]
+    "requirements": [
+      "Strong SQL proficiency and experience with Python/R",
+      "Excel/Google Sheets advanced usage and BI tools (Tableau/Power BI)"
+    ],
+    "niceToHave": [
+      "Experience with BigQuery or Snowflake",
+      "Basic statistics knowledge"
+    ],
+    "benefits": ["Health insurance", "Flexible hours and team events"]
   },
-
   {
     "id": "19",
     "title": "DevOps Intern",
@@ -428,19 +568,21 @@
     "employmentType": "Internship",
     "department": "Engineering",
     "experienceLevel": "0–1 years",
-    "salaryRange": "$18/hr",
+    "salaryRange": "$20 - $28/hr",
     "postedAt": "3 days ago",
-    "description": "Assist DevOps engineers in deployment and monitoring.",
+    "description": "Assist DevOps engineers with deployment, monitoring, and infrastructure tasks while learning cloud and automation.",
     "responsibilities": [
-      "Deploy small tasks",
-      "Monitor systems",
-      "Learn CI/CD"
+      "Support deployment of small tasks and updates",
+      "Monitor systems and alert on issues",
+      "Learn CI/CD pipelines and IaC tools"
     ],
-    "requirements": ["Linux basics", "Interest in DevOps"],
-    "niceToHave": ["Docker knowledge"],
-    "benefits": ["Mentorship", "Flexible schedule"]
+    "requirements": [
+      "Basic Linux/command-line knowledge",
+      "Interest in DevOps, cloud, and automation"
+    ],
+    "niceToHave": ["Docker basics or scripting experience"],
+    "benefits": ["Dedicated mentorship", "Flexible schedule"]
   },
-
   {
     "id": "20",
     "title": "HR Intern",
@@ -450,16 +592,19 @@
     "employmentType": "Internship",
     "department": "HR",
     "experienceLevel": "0–1 years",
-    "salaryRange": "£15/hr",
+    "salaryRange": "£15 - £22/hr",
     "postedAt": "2 days ago",
-    "description": "Support HR team with recruitment and employee onboarding.",
+    "description": "Support the HR team with recruitment, onboarding, and administrative tasks in a dynamic AI company.",
     "responsibilities": [
-      "Assist recruitment",
-      "Document processes",
-      "Learn HR tasks"
+      "Assist with candidate sourcing and scheduling",
+      "Help document processes and maintain records",
+      "Support employee onboarding and events"
     ],
-    "requirements": ["Interest in HR", "Good communication skills"],
-    "niceToHave": ["Familiarity with HR tools"],
-    "benefits": ["Mentorship", "Flexible schedule"]
+    "requirements": [
+      "Interest in HR and people operations",
+      "Good communication and organizational skills"
+    ],
+    "niceToHave": ["Familiarity with HR tools (Greenhouse, Workable)"],
+    "benefits": ["Remote flexibility", "Mentorship and learning opportunities"]
   }
 ]

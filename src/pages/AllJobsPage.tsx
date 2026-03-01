@@ -2,12 +2,15 @@ import {
   Briefcase,
   MapPin,
   Clock,
+  CheckCircle,
+  XCircle,
+  Hourglass,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import Button from "../components/ui/Button";
 import { Modal } from "../components/ui/Modal";
@@ -33,7 +36,10 @@ interface Job {
   niceToHave: string[];
   benefits: string[];
   color: string;
+  status?: JobStatus;
 }
+
+type JobStatus = "approved" | "rejected" | "pending";
 
 export default function AllJobsPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -161,6 +167,9 @@ export default function AllJobsPage() {
                 "Part-time",
                 "Contract",
                 "Internship",
+                "Pending",
+                "Approve",
+                "Reject",
               ]}
             />
           </div>
@@ -184,41 +193,93 @@ export default function AllJobsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-          {paginatedJobs.map((job) => (
-            <div
-              key={job.id}
-              className="group rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md ring-1 ring-gray-200 dark:ring-slate-700 transition-all hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="mb-4 flex items-start justify-between">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white/80 group-dark:hover:text-slate-50">
-                  {job.title}
-                </h2>
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${employmentTypeColors[job.employmentType]}`}
-                >
-                  {job.employmentType}
-                </span>
+          {paginatedJobs.map((job) => {
+            const status: JobStatus = job.status ?? "pending";
+
+            const statusConfig: Record<
+              JobStatus,
+              {
+                icon: JSX.Element;
+                styles: string;
+                label: string;
+              }
+            > = {
+              approved: {
+                icon: <CheckCircle size={16} />,
+                styles:
+                  "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400",
+                label: "Approved",
+              },
+              rejected: {
+                icon: <XCircle size={16} />,
+                styles:
+                  "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-400",
+                label: "Rejected",
+              },
+              pending: {
+                icon: <Hourglass size={16} />,
+                styles:
+                  "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400",
+                label: "Pending",
+              },
+            };
+
+            const currentStatus = statusConfig[status];
+
+            return (
+              <div
+                key={job.id}
+                className="group relative rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md ring-1 ring-gray-200 dark:ring-slate-700 transition-all hover:-translate-y-1 hover:shadow-lg"
+              >
+                {/* Header */}
+                <div className="mb-4 flex items-start justify-between gap-3">
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white dark:group-hover:text-slate-200 transition">
+                    {job.title}
+                  </h2>
+
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${employmentTypeColors[job.employmentType]}`}
+                  >
+                    {job.employmentType}
+                  </span>
+                </div>
+
+                {/* Company */}
+                <div className="mb-2 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                  <Briefcase size={16} />
+                  {job.company}
+                </div>
+
+                {/* Location */}
+                <div className="mb-4 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                  <MapPin size={16} />
+                  {job.location}
+                </div>
+
+                {/* Status Badge with Icon */}
+                <div className="mb-4">
+                  <span
+                    className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${currentStatus.styles}`}
+                  >
+                    {currentStatus.label}
+                  </span>
+                </div>
+
+                {/* Footer */}
+                <div className="flex items-center gap-1 pt-4 border-t border-gray-100 dark:border-slate-700 text-xs text-gray-400 dark:text-gray-500">
+                  <Clock size={14} />
+                  {job.postedAt}
+
+                  <button
+                    onClick={() => setSelectedJob(job)}
+                    className="ml-auto inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-medium hover:underline transition cursor-pointer text-[16px]"
+                  >
+                    View Details →
+                  </button>
+                </div>
               </div>
-              <div className="mb-2 flex items-center gap-2 text-sm text-gray-600 dark:text-white">
-                <Briefcase size={16} />
-                {job.company}
-              </div>
-              <div className="mb-4 flex items-center gap-2 text-sm text-gray-500 dark:text-white">
-                <MapPin size={16} />
-                {job.location}
-              </div>
-              <div className="flex items-center gap-1 justify-center pt-4 text-xs text-gray-400 dark:text-white">
-                <Clock size={14} />
-                {job.postedAt}
-                <button
-                  onClick={() => setSelectedJob(job)}
-                  className="text-indigo-600 dark:text-sky-100 text-lg hover:underline ml-auto cursor-pointer"
-                >
-                  View Details →
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
@@ -227,16 +288,16 @@ export default function AllJobsPage() {
         <button
           onClick={goToFirst}
           disabled={pageIndex === 0}
-          className="px-3 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
+          className="px-2 py-3 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
         >
-          <ChevronsLeft size={16} /> First
+          <ChevronsLeft size={16} />
         </button>
         <button
           onClick={goPrev}
           disabled={pageIndex === 0}
-          className="px-3 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
+          className="px-2 py-3 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
         >
-          <ChevronLeft size={16} /> Prev
+          <ChevronLeft size={16} />
         </button>
 
         {/* Page numbers */}
@@ -257,16 +318,16 @@ export default function AllJobsPage() {
         <button
           onClick={goNext}
           disabled={pageIndex === totalPages - 1}
-          className="px-3 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex cursor-pointer items-center gap-1"
+          className="px-2 py-3 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex cursor-pointer items-center gap-1"
         >
-          Next <ChevronRight size={16} />
+          <ChevronRight size={16} />
         </button>
         <button
           onClick={goToLast}
           disabled={pageIndex === totalPages - 1}
-          className="px-3 py-2 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex cursor-pointer items-center gap-1"
+          className="px-2 py-3 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex cursor-pointer items-center gap-1"
         >
-          Last <ChevronsRight size={16} />
+          <ChevronsRight size={16} />
         </button>
       </div>
 
@@ -279,33 +340,89 @@ export default function AllJobsPage() {
         <div className="flex flex-col space-y-4 text-gray-800 dark:text-gray-100 max-h-[70vh] overflow-y-auto">
           {/* Basic Job Info */}
           {selectedJob && (
-            <>
-              <p>
-                <strong>Location:</strong> {selectedJob.location}
-              </p>
-              <p>
-                <strong>Employment Type:</strong> {selectedJob.employmentType}
-              </p>
-              <p>
-                <strong>Department:</strong> {selectedJob.department}
-              </p>
-              <p>
-                <strong>Experience Level:</strong> {selectedJob.experienceLevel}
-              </p>
-              <p>
-                <strong>Salary Range:</strong> {selectedJob.salaryRange}
-              </p>
-              <p>
-                <strong>Description:</strong> {selectedJob.description}
-              </p>
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 space-y-8">
+              {/* Header */}
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                  Job Details
+                </h2>
+
+                {/* Meta Info Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
+                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Location
+                    </p>
+                    <p className="text-base font-semibold text-gray-800 dark:text-gray-100">
+                      {selectedJob.location}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
+                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Employment Type
+                    </p>
+                    <p className="text-base font-semibold text-indigo-600 dark:text-indigo-400">
+                      {selectedJob.employmentType}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
+                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Department
+                    </p>
+                    <p className="text-base font-semibold text-gray-800 dark:text-gray-100">
+                      {selectedJob.department}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
+                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Experience Level
+                    </p>
+                    <p className="text-base font-semibold text-gray-800 dark:text-gray-100">
+                      {selectedJob.experienceLevel}
+                    </p>
+                  </div>
+
+                  <div className="sm:col-span-2 bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
+                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Salary Range
+                    </p>
+                    <p className="text-base font-semibold text-emerald-600 dark:text-emerald-400">
+                      {selectedJob.salaryRange}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  Description
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  {selectedJob.description}
+                </p>
+              </div>
 
               {/* Responsibilities */}
               {selectedJob.responsibilities?.length > 0 && (
                 <div>
-                  <strong>Responsibilities:</strong>
-                  <ul className="list-disc ml-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Responsibilities
+                  </h3>
+                  <ul className="space-y-2">
                     {selectedJob.responsibilities.map((r, i) => (
-                      <li key={i}>{r}</li>
+                      <li
+                        key={i}
+                        className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"
+                      >
+                        <span className="mt-1 w-2 h-2 bg-emerald-500 rounded-full"></span>
+                        <span className="text-gray-700 dark:text-gray-300">
+                          {r}
+                        </span>
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -314,22 +431,42 @@ export default function AllJobsPage() {
               {/* Requirements */}
               {selectedJob.requirements?.length > 0 && (
                 <div>
-                  <strong>Requirements:</strong>
-                  <ul className="list-disc ml-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Requirements
+                  </h3>
+                  <ul className="space-y-2">
                     {selectedJob.requirements.map((r, i) => (
-                      <li key={i}>{r}</li>
+                      <li
+                        key={i}
+                        className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"
+                      >
+                        <span className="mt-1 w-2 h-2 bg-indigo-500 rounded-full"></span>
+                        <span className="text-gray-700 dark:text-gray-300">
+                          {r}
+                        </span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {/* Nice-to-Have */}
+              {/* Nice to Have */}
               {selectedJob.niceToHave?.length > 0 && (
                 <div>
-                  <strong>Nice-to-Have:</strong>
-                  <ul className="list-disc ml-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Nice to Have
+                  </h3>
+                  <ul className="space-y-2">
                     {selectedJob.niceToHave.map((r, i) => (
-                      <li key={i}>{r}</li>
+                      <li
+                        key={i}
+                        className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"
+                      >
+                        <span className="mt-1 w-2 h-2 bg-amber-500 rounded-full"></span>
+                        <span className="text-gray-700 dark:text-gray-300">
+                          {r}
+                        </span>
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -338,37 +475,49 @@ export default function AllJobsPage() {
               {/* Benefits */}
               {selectedJob.benefits?.length > 0 && (
                 <div>
-                  <strong>Benefits:</strong>
-                  <ul className="list-disc ml-6">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                    Benefits
+                  </h3>
+                  <ul className="space-y-2">
                     {selectedJob.benefits.map((r, i) => (
-                      <li key={i}>{r}</li>
+                      <li
+                        key={i}
+                        className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"
+                      >
+                        <span className="mt-1 w-2 h-2 bg-rose-500 rounded-full"></span>
+                        <span className="text-gray-700 dark:text-gray-300">
+                          {r}
+                        </span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               )}
 
               {/* Admin Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-end pt-4 border-t border-gray-200 dark:border-gray-600">
+              <div className="flex flex-col sm:flex-row gap-4 justify-end pt-6 border-t border-gray-200 dark:border-gray-700">
                 <button
                   onClick={() => handleApprove(selectedJob)}
-                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 active:scale-95 transition-all shadow-md cursor-pointer"
                 >
                   Approve
                 </button>
+
                 <button
                   onClick={() => handleReject(selectedJob)}
-                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-amber-500 text-white font-medium hover:bg-amber-600 transition cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 active:scale-95 transition-all shadow-md cursor-pointer"
                 >
                   Reject
                 </button>
+
                 <button
                   onClick={() => handleDelete(selectedJob)}
-                  className="w-full sm:w-auto px-4 py-2 rounded-lg bg-rose-600 text-white font-medium hover:bg-rose-700 transition cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-rose-600 text-white font-medium hover:bg-rose-700 active:scale-95 transition-all shadow-md cursor-pointer"
                 >
                   Delete
                 </button>
               </div>
-            </>
+            </div>
           )}
         </div>
       </Modal>

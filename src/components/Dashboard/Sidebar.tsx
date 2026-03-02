@@ -26,6 +26,12 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const isActive = ({ isActive }: { isActive: boolean }) =>
     `${btnClass} ${isActive ? "bg-[#044635] text-white " : ""}`;
 
+  const handleMobileClose = () => {
+    if (window.innerWidth < 640) {
+      setOpen(false);
+    }
+  };
+
   return (
     <aside
       className={`
@@ -63,17 +69,29 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
         {/* Menu */}
         <div className="p-4 flex-1 space-y-4">
-          <NavLink to="/dashboard" className={isActive}>
+          <NavLink
+            to="/dashboard"
+            className={isActive}
+            onClick={() => handleMobileClose()}
+          >
             <MdSpaceDashboard />
             <span className={hideText}>Dashboard</span>
           </NavLink>
 
-          <NavLink to="/recruiter-page" className={isActive}>
+          <NavLink
+            to="/recruiter-page"
+            className={isActive}
+            onClick={() => handleMobileClose()}
+          >
             <FaUserTie />
             <span className={hideText}>Recruiters</span>
           </NavLink>
 
-          <NavLink to="/all-jobs" className={isActive}>
+          <NavLink
+            to="/all-jobs"
+            className={isActive}
+            onClick={() => handleMobileClose()}
+          >
             <FaBriefcase />
             <span className={hideText}>All Jobs</span>
           </NavLink>
@@ -91,7 +109,11 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
             </span>
           </button>
 
-          <NavLink to="/profile" className={isActive}>
+          <NavLink
+            to="/profile"
+            className={isActive}
+            onClick={() => handleMobileClose()}
+          >
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s"
               alt=""

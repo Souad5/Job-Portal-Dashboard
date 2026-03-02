@@ -71,7 +71,7 @@ const ProfilePage = () => {
           description="Update your personal information"
         >
           <FormProvider {...methods}>
-            <form className="space-y-4">
+            <form className="space-y-4 px-4 py-6">
               {/* Profile Upload */}
               <div className="flex flex-col items-center gap-2">
                 <img

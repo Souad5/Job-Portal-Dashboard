@@ -42,14 +42,14 @@ const Login = () => {
       {/* Left Image */}
       <div className="hidden md:flex w-1/2">
         <img
-          src="/1311600_678.jpg"
+          src="/1.jpg"
           alt="Login illustration"
           className="object-cover w-full h-full"
         />
       </div>
 
       {/* Right Form */}
-      <div className="flex w-full md:w-1/2 items-center justify-center px-4">
+      <div className="flex w-full md:w-1/2 items-center justify-center px-4 min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -73,7 +73,6 @@ const Login = () => {
                 label="Email"
                 placeholder="Email address"
                 type="email"
-                required
               />
 
               <PasswordInput

@@ -18,6 +18,7 @@ import axios from "axios";
 import Select from "../components/ui/Select";
 import { FormProvider, useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
+import SecondaryButton from "../components/ui/SecondaryButton";
 
 interface Job {
   id: string;
@@ -47,6 +48,18 @@ export default function AllJobsPage() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [editableJob, setEditableJob] = useState<any>(null);
+
+  useEffect(() => {
+    if (selectedJob) {
+      setEditableJob(selectedJob);
+      setIsEditing(false);
+    }
+  }, [selectedJob]);
+
   const pageSize = 9;
   const methods = useForm({
     defaultValues: {
@@ -167,9 +180,6 @@ export default function AllJobsPage() {
                 "Part-time",
                 "Contract",
                 "Internship",
-                "Pending",
-                "Approve",
-                "Reject",
               ]}
             />
           </div>
@@ -331,195 +341,186 @@ export default function AllJobsPage() {
         </button>
       </div>
 
+      {/* Job Detail Modal */}
       <Modal
         open={!!selectedJob}
         onOpenChange={() => setSelectedJob(null)}
-        title={selectedJob?.title}
-        description={selectedJob?.company}
+        title={
+          isEditing ? "Edit Job Details" : (selectedJob?.title ?? "Job Details")
+        }
+        description={
+          isEditing
+            ? "Editing Mode"
+            : `${selectedJob?.company} • ${selectedJob?.location}`
+        }
       >
-        <div className="flex flex-col space-y-4 text-gray-800 dark:text-gray-100 max-h-[70vh] overflow-y-auto">
-          {/* Basic Job Info */}
-          {selectedJob && (
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 space-y-8">
-              {/* Header */}
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                  Job Details
+        {editableJob && (
+          <div className="max-h-[75vh] space-y-8 overflow-y-auto p-1 pr-2 text-slate-800 dark:text-slate-100">
+            <div className="space-y-8 rounded-2xl bg-white p-6 dark:bg-slate-800 relative">
+              {/* EDIT BUTTON */}
+              <button
+                onClick={() => setIsEditing(!isEditing)}
+                className="absolute top-6 right-6 rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer"
+                title="Edit"
+              >
+                ✏️
+              </button>
+
+              <section>
+                <h2 className="mb-5 text-2xl font-bold text-slate-900 dark:text-white">
+                  Job Overview
                 </h2>
 
-                {/* Meta Info Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
-                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      Location
-                    </p>
-                    <p className="text-base font-semibold text-gray-800 dark:text-gray-100">
-                      {selectedJob.location}
-                    </p>
-                  </div>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {[
+                    { label: "Location", field: "location" },
+                    { label: "Employment Type", field: "employmentType" },
+                    { label: "Department", field: "department" },
+                    { label: "Experience Level", field: "experienceLevel" },
+                    { label: "Salary Range", field: "salaryRange", span: true },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className={`rounded-xl bg-slate-50 p-4 dark:bg-slate-700/60 ${
+                        item.span ? "sm:col-span-2" : ""
+                      }`}
+                    >
+                      <p className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                        {item.label}
+                      </p>
 
-                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
-                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      Employment Type
-                    </p>
-                    <p className="text-base font-semibold text-indigo-600 dark:text-indigo-400">
-                      {selectedJob.employmentType}
-                    </p>
-                  </div>
-
-                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
-                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      Department
-                    </p>
-                    <p className="text-base font-semibold text-gray-800 dark:text-gray-100">
-                      {selectedJob.department}
-                    </p>
-                  </div>
-
-                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
-                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      Experience Level
-                    </p>
-                    <p className="text-base font-semibold text-gray-800 dark:text-gray-100">
-                      {selectedJob.experienceLevel}
-                    </p>
-                  </div>
-
-                  <div className="sm:col-span-2 bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
-                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      Salary Range
-                    </p>
-                    <p className="text-base font-semibold text-emerald-600 dark:text-emerald-400">
-                      {selectedJob.salaryRange}
-                    </p>
-                  </div>
+                      {isEditing ? (
+                        <input
+                          value={editableJob[item.field] || ""}
+                          onChange={(e) =>
+                            setEditableJob({
+                              ...editableJob,
+                              [item.field]: e.target.value,
+                            })
+                          }
+                          className="mt-1 w-full bg-transparent font-semibold outline-none text-slate-900 dark:text-slate-100"
+                        />
+                      ) : (
+                        <p className="mt-1 font-semibold text-slate-900 dark:text-slate-100">
+                          {editableJob[item.field]}
+                        </p>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              </div>
+              </section>
 
-              {/* Description */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+              <section>
+                <h3 className="mb-3 text-xl font-semibold text-slate-900 dark:text-white">
                   Description
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  {selectedJob.description}
-                </p>
-              </div>
 
-              {/* Responsibilities */}
-              {selectedJob.responsibilities?.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    Responsibilities
-                  </h3>
-                  <ul className="space-y-2">
-                    {selectedJob.responsibilities.map((r, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"
-                      >
-                        <span className="mt-1 w-2 h-2 bg-emerald-500 rounded-full"></span>
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {r}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {isEditing ? (
+                  <textarea
+                    value={editableJob.description || ""}
+                    onChange={(e) =>
+                      setEditableJob({
+                        ...editableJob,
+                        description: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-lg bg-slate-50 p-3 outline-none dark:bg-slate-800/60"
+                    rows={4}
+                  />
+                ) : (
+                  <p className="whitespace-pre-line leading-relaxed text-slate-700 dark:text-slate-300">
+                    {editableJob.description}
+                  </p>
+                )}
+              </section>
+
+              {[
+                { title: "Responsibilities", field: "responsibilities" },
+                { title: "Requirements", field: "requirements" },
+                { title: "Nice to Have", field: "niceToHave" },
+                { title: "Benefits", field: "benefits" },
+              ].map(
+                (section) =>
+                  editableJob[section.field]?.length > 0 && (
+                    <section key={section.title}>
+                      <h3 className="mb-3 text-xl font-semibold text-slate-900 dark:text-white">
+                        {section.title}
+                      </h3>
+
+                      <ul className="space-y-2.5">
+                        {editableJob[section.field].map(
+                          (item: string, i: number) => (
+                            <li
+                              key={i}
+                              className="flex items-start gap-3 rounded-lg bg-slate-50 p-3 dark:bg-slate-800/60"
+                            >
+                              {isEditing ? (
+                                <input
+                                  value={item}
+                                  onChange={(e) => {
+                                    const updated = [
+                                      ...editableJob[section.field],
+                                    ];
+                                    updated[i] = e.target.value;
+                                    setEditableJob({
+                                      ...editableJob,
+                                      [section.field]: updated,
+                                    });
+                                  }}
+                                  className="w-full bg-transparent outline-none text-slate-700 dark:text-slate-300"
+                                />
+                              ) : (
+                                <>
+                                  <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-slate-400" />
+                                  <span className="text-slate-700 dark:text-slate-300">
+                                    {item}
+                                  </span>
+                                </>
+                              )}
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </section>
+                  ),
               )}
 
-              {/* Requirements */}
-              {selectedJob.requirements?.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    Requirements
-                  </h3>
-                  <ul className="space-y-2">
-                    {selectedJob.requirements.map((r, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"
-                      >
-                        <span className="mt-1 w-2 h-2 bg-indigo-500 rounded-full"></span>
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {r}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Nice to Have */}
-              {selectedJob.niceToHave?.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    Nice to Have
-                  </h3>
-                  <ul className="space-y-2">
-                    {selectedJob.niceToHave.map((r, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"
-                      >
-                        <span className="mt-1 w-2 h-2 bg-amber-500 rounded-full"></span>
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {r}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Benefits */}
-              {selectedJob.benefits?.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    Benefits
-                  </h3>
-                  <ul className="space-y-2">
-                    {selectedJob.benefits.map((r, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg"
-                      >
-                        <span className="mt-1 w-2 h-2 bg-rose-500 rounded-full"></span>
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {r}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Admin Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-end pt-6 border-t border-gray-200 dark:border-gray-700">
-                <button
-                  onClick={() => handleApprove(selectedJob)}
-                  className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 active:scale-95 transition-all shadow-md cursor-pointer"
-                >
-                  Approve
-                </button>
-
-                <button
-                  onClick={() => handleReject(selectedJob)}
-                  className="px-5 py-2.5 rounded-xl bg-amber-500 text-white font-medium hover:bg-amber-600 active:scale-95 transition-all shadow-md cursor-pointer"
-                >
-                  Reject
-                </button>
-
-                <button
-                  onClick={() => handleDelete(selectedJob)}
-                  className="px-5 py-2.5 rounded-xl bg-rose-600 text-white font-medium hover:bg-rose-700 active:scale-95 transition-all shadow-md cursor-pointer"
-                >
-                  Delete
-                </button>
+              {/* ACTION BUTTONS */}
+              <div
+                className={`flex flex-col gap-3 border-t border-slate-200 pt-6 dark:border-slate-700 sm:flex-row ${isEditing ? "sm:justify-end" : "justify-between"}`}
+              >
+                {isEditing ? (
+                  <Button
+                    onClick={() => {
+                      console.log("Updated Job:", editableJob);
+                      setIsEditing(false);
+                    }}
+                    value="Save Changes"
+                  ></Button>
+                ) : (
+                  <>
+                    <div className="space-x-4">
+                      <Button
+                        value="Approve"
+                        onClick={() => handleApprove(selectedJob)}
+                      />
+                      <SecondaryButton
+                        onClick={() => handleReject(selectedJob)}
+                        value="Reject"
+                      />
+                    </div>
+                    <button
+                      onClick={() => handleDelete(selectedJob)}
+                      className="rounded-lg bg-rose-600 px-6 py-2.5 font-medium text-white shadow hover:bg-rose-700 cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </Modal>
     </div>
   );

@@ -284,14 +284,14 @@ const RecruiterPage = () => {
         description={`Update details for ${selectedRecruiter?.name}`}
       >
         <FormProvider {...editMethods}>
-          <form className="space-y-4">
+          <form className="space-y-4 px-4 py-6">
             <Input name="name" label="Recruiter Name" />
             <Input name="email" label="Recruiter Email" />
 
             <div className="flex justify-end gap-3">
               <SecondaryButton
                 value="Cancel"
-                className="text-black dark:text-white"
+                className="text-black dark:text-white "
                 onClick={() => setModalType(null)}
               />
               <Button value="Save Changes" type="submit" />
@@ -306,7 +306,7 @@ const RecruiterPage = () => {
         title="Delete Recruiter"
         description="This action cannot be undone"
       >
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-end gap-3 px-4 py-6">
           <SecondaryButton
             value="Cancel"
             className="text-black dark:text-white"

@@ -61,7 +61,7 @@ export const Modal = ({
 
             {/* Header */}
             {(title || description) && (
-              <div className="sticky top-0 z-10 px-6 pt-6 pb-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+              <div className="sticky top-0 z-10 px-6 pt-6 pb-4 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-gray-700">
                 {title && (
                   <Dialog.Title className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
                     {title}
@@ -76,7 +76,7 @@ export const Modal = ({
             )}
 
             {/* Body */}
-            <div className="px-6 py-4 overflow-y-auto flex-1 max-h-[calc(90vh-6rem)] sm:max-h-[calc(85vh-6rem)]">
+            <div className="overflow-y-auto flex-1 max-h-[calc(90vh-6rem)] sm:max-h-[calc(85vh-6rem)]">
               {children}
             </div>
           </div>

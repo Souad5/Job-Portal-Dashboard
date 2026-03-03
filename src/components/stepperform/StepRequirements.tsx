@@ -19,13 +19,17 @@ export default function StepRequirements() {
       {/* Experience Level */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <Input
-          placeholder=""
+          placeholder="Enter experience level"
           required
           name="experience"
           label="Experience Level"
         />
 
-        <Input placeholder="" name="education" label="Education (Optional)" />
+        <Input
+          placeholder="Enter education field"
+          name="education"
+          label="Education (Optional)"
+        />
       </div>
 
       {/* Skills */}
@@ -52,7 +56,7 @@ export default function StepRequirements() {
             <PiGlobeStandBold />
             Best practice:
           </span>
-          <span className="text-nowrap">
+          <span>
             Focus on must-have skills and avoid overly long lists. Clear and
             realistic requirements lead to higher-quality applicants.
           </span>

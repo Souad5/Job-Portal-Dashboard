@@ -22,6 +22,7 @@ function ReviewItem({ label, value }: ReviewItemProps) {
 export default function StepReview() {
   const { getValues } = useFormContext<JobFormValues>();
   const values = getValues();
+  console.log(values);
 
   return (
     <div className="space-y-8">

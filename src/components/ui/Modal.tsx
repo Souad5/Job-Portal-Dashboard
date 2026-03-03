@@ -5,8 +5,8 @@ import { ReactNode } from "react";
 interface ModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  title?: string;
-  description?: string;
+  title?: string | ReactNode;
+  description?: ReactNode;
   children: ReactNode;
   trigger?: ReactNode;
 }

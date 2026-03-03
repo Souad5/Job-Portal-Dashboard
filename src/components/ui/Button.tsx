@@ -21,13 +21,15 @@ const Button = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`relative px-6 py-2.5 rounded-lg font-medium inline-block cursor-pointer text-[#044635] dark:text-[#0af0b4] transition-all duration-200
+      className={`relative px-6 py-2.5 rounded-lg font-medium inline-flex items-center justify-center cursor-pointer text-white transition-all duration-200
         disabled:opacity-50 disabled:cursor-not-allowed ${className} active:scale-95`}
     >
-      {/* Background layers */}
-      <span className="absolute inset-0 rounded-lg bg-linear-to-br from-[#1e5849]/40 to-[#1e5849] filter blur-sm opacity-50"></span>
-      <span className="absolute inset-0 rounded-lg bg-linear-to-br from-green-600 to-green-500 transition-all duration-200 group-hover:blur-sm"></span>
-      <span className="relative text-white">{value}</span>
+      {/* Background */}
+      <span className="absolute inset-0 rounded-lg bg-linear-to-br from-green-600 to-green-500 filter blur-sm opacity-50"></span>
+      <span className="absolute inset-0 rounded-lg bg-linear-to-br from-green-600 to-green-500 transition-all duration-200"></span>
+
+      {/* Text */}
+      <span className="relative">{value}</span>
     </button>
   );
 };

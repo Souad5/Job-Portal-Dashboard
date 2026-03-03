@@ -18,7 +18,7 @@ export default function StepJobDetails() {
       </div>
 
       {/* Core Fields */}
-      <div className="grid grid-cols-1 gap-8">
+      <div className="grid grid-cols-1 space-y-4">
         <Input
           placeholder="Enter Title"
           name="title"
@@ -36,6 +36,15 @@ export default function StepJobDetails() {
             "Remote",
           ]}
         />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <Select
+            name="currency"
+            label="Currency"
+            options={["USD", "EUR", "GBP", "INR"]}
+          />
+          <Input name="salaryMin" label="Min Salary" type="number" />
+          <Input name="salaryMax" label="Max Salary" type="number" />
+        </div>
         <Textarea
           name="summary"
           label="Job Summary"
@@ -46,7 +55,7 @@ export default function StepJobDetails() {
       </div>
 
       {/* Guidance Note */}
-      <div className="rounded-md bg-gray-50 dark:bg-gray-800 border dark:text-gray-500 border-gray-200 p-4">
+      <div className="rounded-md bg-gray-50 dark:bg-gray-800 dark:text-gray-500 border border-gray-200 dark:border-gray-700 p-4">
         <p className="text-sm text-gray-600 dark:text-gray-400  selection:bg-red-400 flex items-start gap-2">
           <span className="flex items-center gap-1 font-medium text-gray-800 dark:text-gray-50">
             <MdOutlineTipsAndUpdates className="text-lg" />

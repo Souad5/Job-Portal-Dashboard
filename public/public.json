@@ -1,610 +1,311 @@
 [
   {
-    "id": "1",
-    "title": "Senior Frontend Engineer",
-    "company": "Acme Technologies",
-    "location": "San Francisco, CA",
-    "workMode": "Hybrid",
+    "id": "JOB-001",
+    "jobTitle": "Senior Full Stack Developer",
     "employmentType": "Full-time",
-    "department": "Engineering",
-    "experienceLevel": "5+ years",
-    "salaryRange": "$180,000 - $250,000",
-    "postedAt": "3 days ago",
-    "description": "Lead frontend architecture and development of high-performance, scalable web applications using modern JavaScript frameworks for our core SaaS platform.",
-    "responsibilities": [
-      "Architect and build complex React-based applications with TypeScript",
-      "Collaborate closely with product managers, designers, and backend teams",
-      "Drive performance optimizations, accessibility, and SEO improvements",
-      "Mentor junior and mid-level engineers on best practices and code reviews"
-    ],
-    "requirements": [
-      "5+ years of professional experience with React and TypeScript",
-      "Deep knowledge of modern HTML5, CSS3, responsive design, and accessibility (a11y)",
-      "Strong experience integrating REST/GraphQL APIs and state management",
-      "Proven problem-solving and debugging skills in production environments"
+    "salaryRange": {
+      "min": 140000,
+      "max": 185000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Build and maintain scalable web applications using modern JavaScript frameworks. Collaborate with product, design, and DevOps teams to deliver features for a SaaS platform serving enterprise clients.",
+    "companyName": "CloudPeak Solutions",
+    "location": {
+      "city": "Remote",
+      "country": "USA",
+      "timezonePreference": "US time zones"
+    },
+    "companyDescription": "CloudPeak is a growing SaaS provider of workflow automation tools, backed by top VCs, serving mid-market and enterprise customers across North America.",
+    "experienceLevel": "Senior",
+    "education": "Bachelor's in Computer Science or equivalent experience",
+    "requiredSkills": [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "AWS",
+      "REST/GraphQL APIs",
+      "Git",
+      "CI/CD"
     ],
     "niceToHave": [
-      "Next.js or Remix experience",
-      "Tailwind CSS or styled-components",
-      "Web performance tooling (Lighthouse, Core Web Vitals)",
-      "AI-assisted UI development exposure"
-    ],
-    "benefits": [
-      "Competitive equity package",
-      "Flexible hybrid schedule (3 days in-office)",
-      "Comprehensive health, dental, and vision insurance",
-      "401(k) with company match up to 6%"
+      "Next.js",
+      "Docker/Kubernetes",
+      "Redis",
+      "Terraform",
+      "Previous SaaS experience"
     ]
   },
   {
-    "id": "2",
-    "title": "Product Designer",
-    "company": "Nimbus Labs",
+    "id": "JOB-002",
+    "jobTitle": "Data Scientist",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 125000,
+      "max": 170000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Develop machine learning models to drive insights and personalization features. Work closely with engineering and business teams to deploy models into production.",
+    "companyName": "InsightFlow AI",
+    "location": "Remote (Worldwide)",
+    "companyDescription": "InsightFlow AI specializes in predictive analytics for e-commerce and retail, helping brands optimize inventory and customer experience.",
+    "experienceLevel": "Mid-Senior",
+    "education": "Master's in Data Science, Statistics, or related field preferred",
+    "requiredSkills": [
+      "Python",
+      "SQL",
+      "Scikit-learn",
+      "TensorFlow/PyTorch",
+      "Pandas & NumPy",
+      "A/B testing",
+      "Data visualization (Tableau/Power BI)"
+    ],
+    "niceToHave": [
+      "MLflow",
+      "Snowflake",
+      "BigQuery",
+      "NLP experience",
+      "AWS SageMaker"
+    ]
+  },
+  {
+    "id": "JOB-003",
+    "jobTitle": "Backend Engineer (Go)",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 130000,
+      "max": 175000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Design and implement high-performance APIs and microservices for a fintech platform processing millions of transactions daily.",
+    "companyName": "PayForge",
+    "location": "Remote",
+    "companyDescription": "PayForge provides secure payment infrastructure for startups and scale-ups in emerging markets.",
+    "experienceLevel": "Senior",
+    "education": "Bachelor's degree or equivalent",
+    "requiredSkills": [
+      "Go (Golang)",
+      "PostgreSQL",
+      "gRPC / REST",
+      "Docker",
+      "Kubernetes",
+      "Microservices architecture",
+      "Unit testing"
+    ],
+    "niceToHave": ["Kafka", "Redis", "AWS/GCP", "Fintech domain knowledge"]
+  },
+  {
+    "id": "JOB-004",
+    "jobTitle": "AI/ML Engineer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 150000,
+      "max": 210000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Build and deploy large language models and computer vision solutions for customer-facing products in healthcare.",
+    "companyName": "MediAI Labs",
+    "location": "Remote (US preferred)",
+    "companyDescription": "MediAI Labs develops AI tools to assist clinicians with diagnostics and patient data analysis.",
+    "experienceLevel": "Senior",
+    "education": "Master's/PhD in CS, AI, or related",
+    "requiredSkills": [
+      "PyTorch",
+      "Transformers",
+      "Python",
+      "MLOps",
+      "Docker",
+      "Cloud (AWS/GCP/Azure)",
+      "Model fine-tuning"
+    ],
+    "niceToHave": [
+      "LangChain",
+      "Hugging Face",
+      "Computer vision (OpenCV)",
+      "Healthcare data experience"
+    ]
+  },
+  {
+    "id": "JOB-005",
+    "jobTitle": "DevOps Engineer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 135000,
+      "max": 180000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Automate infrastructure, CI/CD pipelines, and monitoring for a high-traffic consumer app. Ensure reliability and scalability.",
+    "companyName": "StreamVibe",
+    "location": "Remote",
+    "companyDescription": "StreamVibe is a video streaming platform focused on live events and interactive content.",
+    "experienceLevel": "Mid-Senior",
+    "education": "Bachelor's or relevant experience",
+    "requiredSkills": [
+      "Terraform",
+      "Kubernetes",
+      "AWS",
+      "Jenkins/GitHub Actions",
+      "Prometheus/Grafana",
+      "Linux",
+      "Scripting (Bash/Python)"
+    ],
+    "niceToHave": [
+      "ArgoCD",
+      "Istio",
+      "Security scanning tools",
+      "High-availability setups"
+    ]
+  },
+  {
+    "id": "JOB-006",
+    "jobTitle": "Frontend Developer (React)",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 110000,
+      "max": 155000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Create responsive, performant user interfaces for a B2B analytics dashboard used by Fortune 500 companies.",
+    "companyName": "DataVista",
+    "location": "Remote",
+    "companyDescription": "DataVista delivers real-time business intelligence and visualization tools to enterprise teams.",
+    "experienceLevel": "Mid-level",
+    "education": "Bachelor's preferred",
+    "requiredSkills": [
+      "React",
+      "TypeScript",
+      "Redux / Zustand",
+      "Tailwind CSS",
+      "Jest",
+      "Responsive design",
+      "API integration"
+    ],
+    "niceToHave": [
+      "D3.js or Chart.js",
+      "Storybook",
+      "Next.js",
+      "Accessibility (a11y)"
+    ]
+  },
+  {
+    "id": "JOB-007",
+    "jobTitle": "Machine Learning Engineer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 145000,
+      "max": 195000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Optimize recommendation systems and fraud detection models for an e-commerce marketplace.",
+    "companyName": "ShopSphere",
+    "location": "Remote (Worldwide)",
+    "companyDescription": "ShopSphere is a global online marketplace connecting independent sellers with millions of buyers.",
+    "experienceLevel": "Senior",
+    "education": "Master's in CS/ML preferred",
+    "requiredSkills": [
+      "Python",
+      "TensorFlow/PyTorch",
+      "Spark",
+      "SQL",
+      "MLOps tools",
+      "A/B experimentation"
+    ],
+    "niceToHave": [
+      "Recommendation systems",
+      "Fraud detection",
+      "Airflow",
+      "BigQuery"
+    ]
+  },
+  {
+    "id": "JOB-008",
+    "jobTitle": "Cloud Software Engineer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 140000,
+      "max": 190000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Develop cloud-native applications and services on AWS for a cybersecurity platform.",
+    "companyName": "SecureLayer",
     "location": "Remote (US)",
-    "workMode": "Remote",
-    "employmentType": "Full-time",
-    "department": "Design",
-    "experienceLevel": "3-5 years",
-    "salaryRange": "$130,000 - $165,000",
-    "postedAt": "4 days ago",
-    "description": "Create intuitive, user-centered designs for our cloud-based SaaS tools, focusing on seamless experiences across web and mobile platforms.",
-    "responsibilities": [
-      "Create user flows, wireframes, prototypes, and high-fidelity designs in Figma",
-      "Partner with product managers and engineers throughout the development cycle",
-      "Conduct user research, usability testing, and A/B test analysis",
-      "Contribute to and evolve our scalable design system"
-    ],
-    "requirements": [
-      "Strong portfolio showcasing end-to-end product design work",
-      "Advanced proficiency in Figma and prototyping tools",
-      "Solid understanding of UX principles, interaction design, and accessibility standards"
+    "companyDescription": "SecureLayer protects organizations from advanced threats using AI-driven security analytics.",
+    "experienceLevel": "Senior",
+    "education": "Bachelor's in CS or equivalent",
+    "requiredSkills": [
+      "AWS (Lambda, ECS, RDS)",
+      "Python / Go",
+      "Infrastructure as Code",
+      "Microservices",
+      "Security best practices"
     ],
     "niceToHave": [
-      "Experience designing SaaS/B2B products",
-      "Basic HTML/CSS/JavaScript for handoff",
-      "User research facilitation and analytics tools experience"
-    ],
-    "benefits": [
-      "Fully remote with async-friendly culture",
-      "Home office setup stipend",
-      "Unlimited PTO with manager approval",
-      "Annual learning & development budget"
+      "Serverless architecture",
+      "Zero Trust",
+      "CIS benchmarks",
+      "SIEM integration"
     ]
   },
   {
-    "id": "3",
-    "title": "Backend Engineer",
-    "company": "Atlas Systems",
-    "location": "Berlin, Germany",
-    "workMode": "On-site",
+    "id": "JOB-009",
+    "jobTitle": "Mid-Level Full Stack Engineer (Java/Spring)",
     "employmentType": "Full-time",
-    "department": "Engineering",
-    "experienceLevel": "4+ years",
-    "salaryRange": "€75,000 - €95,000",
-    "postedAt": "6 days ago",
-    "description": "Design, implement, and maintain robust backend services and APIs powering our global logistics platform with high reliability and scalability.",
-    "responsibilities": [
-      "Develop scalable RESTful/GraphQL APIs and microservices in Node.js/Java/Go",
-      "Design efficient data models and optimize database queries/performance",
-      "Ensure high availability, security, and fault tolerance",
-      "Collaborate with frontend, DevOps, and product teams on feature delivery"
-    ],
-    "requirements": [
-      "4+ years professional experience with Node.js, Java, or Go",
-      "Strong experience with relational (PostgreSQL) and NoSQL databases (MongoDB)",
-      "Understanding of distributed systems, caching, and message queues"
-    ],
-    "niceToHave": [
-      "AWS or GCP cloud experience",
-      "Docker, Kubernetes, or CI/CD pipelines",
-      "Event-driven architecture and Kafka/RabbitMQ knowledge"
-    ],
-    "benefits": [
-      "Relocation support for international candidates",
-      "30+ days vacation + public holidays",
-      "Public transport ticket reimbursement",
-      "German language courses and team events"
-    ]
-  },
-  {
-    "id": "4",
-    "title": "Engineering Manager",
-    "company": "Vertex Corp",
-    "location": "New York, NY",
-    "workMode": "Hybrid",
-    "employmentType": "Full-time",
-    "department": "Engineering",
-    "experienceLevel": "7+ years",
-    "salaryRange": "$190,000 - $260,000",
-    "postedAt": "10 days ago",
-    "description": "Lead and grow a high-performing engineering team building mission-critical SaaS products in a fast-paced, innovative environment.",
-    "responsibilities": [
-      "Manage, mentor, and grow a team of 8-12 engineers across full-stack",
-      "Define technical strategy, architecture, and roadmap alignment with business goals",
-      "Partner with product, design, and executive leadership on prioritization",
-      "Maintain engineering standards, code quality, velocity, and hiring processes"
-    ],
-    "requirements": [
-      "Proven track record leading engineering teams (5+ direct reports)",
-      "Strong technical background in full-stack or backend development",
-      "Excellent communication, stakeholder management, and conflict resolution skills"
-    ],
-    "niceToHave": [
-      "Experience scaling teams from 10 to 50+",
-      "Enterprise SaaS or fintech background",
-      "People management training or certification"
-    ],
-    "benefits": [
-      "Performance-based leadership bonus",
-      "Hybrid work model (3 days in-office)",
-      "Premium health coverage + wellness stipend",
-      "Equity refresh program"
-    ]
-  },
-  {
-    "id": "5",
-    "title": "Data Scientist",
-    "company": "Aurora AI",
-    "location": "London, UK",
-    "workMode": "On-site",
-    "employmentType": "Full-time",
-    "department": "Data Science",
-    "experienceLevel": "3-6 years",
-    "salaryRange": "£75,000 - £100,000",
-    "postedAt": "2 days ago",
-    "description": "Develop predictive models and derive actionable insights from complex datasets to drive AI-powered business decisions and product features.",
-    "responsibilities": [
-      "Analyze and process large-scale structured/unstructured data using Python/SQL",
-      "Build, validate, tune, and deploy machine learning models (scikit-learn/PyTorch)",
-      "Collaborate with engineering and product teams on model integration and monitoring",
-      "Present findings, visualizations, and recommendations to stakeholders"
-    ],
-    "requirements": [
-      "Strong foundation in statistics, probability, and experimental design",
-      "Proficiency in Python (pandas, numpy, scikit-learn) and SQL",
-      "Excellent data storytelling, visualization (Matplotlib/Seaborn/Tableau), and communication skills"
-    ],
-    "niceToHave": [
-      "Experience with deep learning frameworks (PyTorch/TensorFlow)",
-      "Background in AI/ML startups or fintech",
-      "Cloud data tools (BigQuery, Snowflake, Databricks)"
-    ],
-    "benefits": [
-      "Performance bonuses tied to model impact",
-      "Conference and training budget",
-      "Flexible working hours",
-      "Private health insurance and pension contribution"
-    ]
-  },
-  {
-    "id": "6",
-    "title": "Junior Frontend Engineer",
-    "company": "Acme Technologies",
-    "location": "San Francisco, CA",
-    "workMode": "Hybrid",
-    "employmentType": "Full-time",
-    "department": "Engineering",
-    "experienceLevel": "1–2 years",
-    "salaryRange": "$110,000 - $145,000",
-    "postedAt": "1 day ago",
-    "description": "Contribute to building responsive and performant web applications while growing under senior guidance in a supportive team environment.",
-    "responsibilities": [
-      "Implement UI components and features using React/TypeScript",
-      "Work closely with senior engineers on code reviews, pair programming, and architecture",
-      "Debug and resolve issues across frontend and integration layers",
-      "Participate in agile ceremonies, sprint planning, and retrospectives"
-    ],
-    "requirements": [
-      "1–2 years professional React experience or strong equivalent projects",
-      "Solid HTML5, CSS3, JavaScript fundamentals, and responsive design",
-      "Comfortable with Git, basic CI/CD workflows, and pull requests"
-    ],
-    "niceToHave": [
-      "Exposure to Next.js or modern state management (Zustand/Redux Toolkit)",
-      "Basic testing experience (Jest, React Testing Library)"
-    ],
-    "benefits": [
-      "Structured mentorship and career growth program",
-      "Flexible hybrid schedule",
-      "Full health benefits from day 1"
-    ]
-  },
-  {
-    "id": "7",
-    "title": "UI/UX Designer",
-    "company": "Nimbus Labs",
+    "salaryRange": {
+      "min": 115000,
+      "max": 155000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Build enterprise-grade backend services and modern frontend for internal tools and client portals.",
+    "companyName": "EnterpriseFlow",
     "location": "Remote",
-    "workMode": "Remote",
+    "companyDescription": "EnterpriseFlow provides workflow and automation software to large organizations in finance and insurance.",
+    "experienceLevel": "Mid-level",
+    "education": "Bachelor's preferred",
+    "requiredSkills": [
+      "Java 17+",
+      "Spring Boot",
+      "React",
+      "PostgreSQL",
+      "Docker",
+      "Git",
+      "Agile/Scrum"
+    ],
+    "niceToHave": ["Kafka", "Microservices", "Jenkins", "Angular"]
+  },
+  {
+    "id": "JOB-010",
+    "jobTitle": "Senior Software Engineer - Backend (Python)",
     "employmentType": "Part-time",
-    "department": "Design",
-    "experienceLevel": "2–4 years",
-    "salaryRange": "$65,000 - $85,000 (pro-rated for 20-30 hrs/week)",
-    "postedAt": "5 days ago",
-    "description": "Craft clean, accessible, and delightful user interfaces for our growing product suite in a collaborative remote setting.",
-    "responsibilities": [
-      "Design wireframes, interactive prototypes, and production-ready assets in Figma",
-      "Iterate on designs based on user feedback, testing results, and metrics",
-      "Collaborate with developers to ensure high-fidelity implementation and handoff"
-    ],
-    "requirements": [
-      "2+ years professional experience using Figma at scale",
-      "Strong grasp of UI/UX principles, design systems, and WCAG accessibility"
-    ],
-    "niceToHave": [
-      "SaaS or B2B design portfolio pieces",
-      "Motion design or advanced prototyping (Framer, Principle)"
-    ],
-    "benefits": [
-      "Fully remote and flexible part-time hours",
-      "Learning stipend for design tools/courses"
-    ]
-  },
-  {
-    "id": "8",
-    "title": "DevOps Engineer",
-    "company": "Atlas Systems",
-    "location": "Berlin, Germany",
-    "workMode": "On-site",
-    "employmentType": "Full-time",
-    "department": "Engineering",
-    "experienceLevel": "3+ years",
-    "salaryRange": "€72,000 - €92,000",
-    "postedAt": "1 week ago",
-    "description": "Build and maintain reliable CI/CD pipelines, cloud infrastructure, and monitoring for high-traffic services.",
-    "responsibilities": [
-      "Automate deployments, infrastructure provisioning (IaC), and scaling",
-      "Monitor system health, performance, logs, and incident response",
-      "Improve reliability, security, observability, and cost efficiency"
-    ],
-    "requirements": [
-      "Hands-on experience with AWS or GCP in production",
-      "Strong CI/CD tooling (GitHub Actions, GitLab CI, Jenkins)",
-      "Linux administration, scripting (Bash/Python), and container basics"
-    ],
-    "niceToHave": [
-      "Kubernetes orchestration and Helm",
-      "Terraform or Pulumi for IaC",
-      "Monitoring tools (Prometheus, Grafana, ELK)"
-    ],
-    "benefits": [
-      "Comprehensive health insurance",
-      "Flexible working hours and home office options",
-      "Team events and professional development"
-    ]
-  },
-  {
-    "id": "9",
-    "title": "Marketing Manager",
-    "company": "Vertex Corp",
-    "location": "New York, NY",
-    "workMode": "Hybrid",
-    "employmentType": "Full-time",
-    "department": "Marketing",
-    "experienceLevel": "5+ years",
-    "salaryRange": "$125,000 - $155,000",
-    "postedAt": "8 days ago",
-    "description": "Develop and execute go-to-market strategies, campaigns, and brand initiatives for our SaaS products in competitive B2B markets.",
-    "responsibilities": [
-      "Lead multi-channel marketing campaigns (content, email, paid, events)",
-      "Coordinate cross-functional teams (content, product, sales, design)",
-      "Track KPIs, attribution, and optimize for ROI and customer acquisition"
-    ],
-    "requirements": [
-      "5+ years in B2B/SaaS marketing with proven campaign results",
-      "Strong analytical skills and proficiency in tools like Google Analytics, HubSpot",
-      "Leadership experience managing budgets and small teams"
-    ],
-    "niceToHave": ["Demand generation, ABM, and product-led growth experience"],
-    "benefits": [
-      "Performance bonus structure",
-      "Hybrid flexibility (3 days in-office)",
-      "Unlimited PTO policy"
-    ]
-  },
-  {
-    "id": "10",
-    "title": "QA Engineer",
-    "company": "Aurora AI",
-    "location": "London, UK",
-    "workMode": "On-site",
-    "employmentType": "Contract",
-    "department": "Engineering",
-    "experienceLevel": "2–5 years",
-    "salaryRange": "£55,000 - £75,000 (pro-rated)",
-    "postedAt": "4 days ago",
-    "description": "Ensure the quality and reliability of AI-driven software through comprehensive manual and automated testing strategies.",
-    "responsibilities": [
-      "Design and execute end-to-end test plans and cases",
-      "Automate regression, integration, and API tests",
-      "Track, report, verify bugs, and collaborate on fixes"
-    ],
-    "requirements": [
-      "Experience with automation frameworks (Cypress, Selenium, Playwright, Jest)",
-      "Strong attention to detail, analytical mindset, and bug reporting skills"
-    ],
-    "niceToHave": [
-      "API testing (Postman/Newman)",
-      "CI/CD integration and test environments"
-    ],
-    "benefits": ["Flexible hours", "Potential for extension to permanent role"]
-  },
-  {
-    "id": "11",
-    "title": "Frontend Intern",
-    "company": "Acme Technologies",
-    "location": "San Francisco, CA",
-    "workMode": "On-site",
-    "employmentType": "Internship",
-    "department": "Engineering",
-    "experienceLevel": "0–1 years",
-    "salaryRange": "$25 - $35/hr",
-    "postedAt": "1 day ago",
-    "description": "Support frontend development under guidance of senior engineers while gaining hands-on experience with modern web technologies.",
-    "responsibilities": [
-      "Implement small features and UI components in React",
-      "Fix bugs and participate in code reviews",
-      "Learn best practices in TypeScript, testing, and performance"
-    ],
-    "requirements": [
-      "Basic HTML/CSS/JavaScript knowledge and enthusiasm for frontend",
-      "Interest in React and modern web development",
-      "Currently pursuing or recently completed relevant degree"
-    ],
-    "niceToHave": [
-      "TypeScript or Next.js exposure",
-      "Personal projects or GitHub portfolio"
-    ],
-    "benefits": [
-      "Structured mentorship program",
-      "Flexible schedule and potential full-time conversion"
-    ]
-  },
-  {
-    "id": "12",
-    "title": "Backend Intern",
-    "company": "Atlas Systems",
-    "location": "Berlin, Germany",
-    "workMode": "On-site",
-    "employmentType": "Internship",
-    "department": "Engineering",
-    "experienceLevel": "0-1 years",
-    "salaryRange": "€20 - €28/hr",
-    "postedAt": "3 days ago",
-    "description": "Assist backend engineers in building and maintaining APIs and services while learning production-grade development.",
-    "responsibilities": [
-      "Fix small bugs and implement minor features",
-      "Write unit/integration tests",
-      "Learn backend frameworks, databases, and deployment"
-    ],
-    "requirements": [
-      "Interest in Node.js, Java, or similar backend technologies",
-      "Basic SQL and API understanding",
-      "Enthusiasm for learning in a team setting"
-    ],
-    "niceToHave": ["Cloud basics (AWS/GCP)", "Git proficiency"],
-    "benefits": [
-      "Dedicated mentorship",
-      "Flexible hours and learning resources"
-    ]
-  },
-  {
-    "id": "13",
-    "title": "Content Writer",
-    "company": "Nimbus Labs",
+    "salaryRange": {
+      "min": 145000,
+      "max": 195000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Lead backend development for a high-scale API serving real-time data to mobile and web clients.",
+    "companyName": "PulseData",
     "location": "Remote",
-    "workMode": "Remote",
-    "employmentType": "Part-time",
-    "department": "Marketing",
-    "experienceLevel": "2-4 years",
-    "salaryRange": "$45,000 - $65,000 (pro-rated)",
-    "postedAt": "1 week ago",
-    "description": "Write engaging, SEO-optimized content for product blogs, website, and marketing campaigns in the SaaS space.",
-    "responsibilities": [
-      "Create blog posts, case studies, and thought leadership articles",
-      "Develop social media content and email newsletters",
-      "Collaborate with designers and product team for cohesive messaging"
+    "companyDescription": "PulseData delivers real-time analytics and monitoring for IoT and smart devices.",
+    "experienceLevel": "Senior",
+    "education": "Bachelor's or equivalent experience",
+    "requiredSkills": [
+      "Python (FastAPI/Flask)",
+      "PostgreSQL / TimescaleDB",
+      "Redis",
+      "AWS",
+      "asyncio",
+      "API design",
+      "Testing"
     ],
-    "requirements": [
-      "Strong writing and editing skills with portfolio",
-      "SEO best practices and keyword research experience"
-    ],
-    "niceToHave": [
-      "SaaS or tech industry writing experience",
-      "Familiarity with tools like Ahrefs or SEMrush"
-    ],
-    "benefits": [
-      "Fully remote and flexible part-time schedule",
-      "Learning stipend"
-    ]
-  },
-  {
-    "id": "14",
-    "title": "HR Manager",
-    "company": "Vertex Corp",
-    "location": "New York, NY",
-    "workMode": "Hybrid",
-    "employmentType": "Full-time",
-    "department": "HR",
-    "experienceLevel": "5+ years",
-    "salaryRange": "$95,000 - $120,000",
-    "postedAt": "2 weeks ago",
-    "description": "Manage recruitment, employee engagement, and HR programs in a growing tech company.",
-    "responsibilities": [
-      "Lead full-cycle recruitment and talent acquisition",
-      "Develop employee engagement initiatives and retention strategies",
-      "Manage HR policies, compliance, and performance processes"
-    ],
-    "requirements": [
-      "5+ years HR experience, preferably in tech/SaaS",
-      "Strong leadership, communication, and organizational skills"
-    ],
-    "niceToHave": [
-      "Experience with HRIS tools (Workday/BambooHR)",
-      "DEI program implementation"
-    ],
-    "benefits": [
-      "Health insurance and wellness programs",
-      "Flexible PTO and hybrid work"
-    ]
-  },
-  {
-    "id": "15",
-    "title": "Mobile App Developer",
-    "company": "Aurora AI",
-    "location": "London, UK",
-    "workMode": "Remote",
-    "employmentType": "Full-time",
-    "department": "Engineering",
-    "experienceLevel": "3–5 years",
-    "salaryRange": "£80,000 - £105,000",
-    "postedAt": "3 days ago",
-    "description": "Build high-quality, performant mobile applications for iOS and Android using cross-platform frameworks.",
-    "responsibilities": [
-      "Develop and maintain cross-platform mobile apps (Flutter/React Native)",
-      "Test on multiple devices and OS versions",
-      "Collaborate with designers and backend teams for API integration"
-    ],
-    "requirements": [
-      "3+ years experience with Flutter or React Native",
-      "Strong mobile debugging, performance optimization, and deployment skills"
-    ],
-    "niceToHave": [
-      "App Store and Google Play deployment experience",
-      "Offline-first and push notification implementation"
-    ],
-    "benefits": [
-      "Fully remote with flexible schedule",
-      "Professional development budget"
-    ]
-  },
-  {
-    "id": "16",
-    "title": "QA Intern",
-    "company": "Acme Technologies",
-    "location": "San Francisco, CA",
-    "workMode": "On-site",
-    "employmentType": "Internship",
-    "department": "Engineering",
-    "experienceLevel": "0–1 years",
-    "salaryRange": "$22 - $30/hr",
-    "postedAt": "2 days ago",
-    "description": "Assist QA engineers in testing web applications and learning quality assurance processes.",
-    "responsibilities": [
-      "Write and execute manual test cases",
-      "Report and track bugs in Jira",
-      "Learn automated testing basics"
-    ],
-    "requirements": [
-      "Basic understanding of QA principles and software testing",
-      "Strong attention to detail and methodical approach"
-    ],
-    "niceToHave": [
-      "Exposure to automation tools (Cypress/Selenium)",
-      "Interest in web technologies"
-    ],
-    "benefits": ["Hands-on mentorship", "Flexible hours"]
-  },
-  {
-    "id": "17",
-    "title": "Customer Success Manager",
-    "company": "Nimbus Labs",
-    "location": "Remote",
-    "workMode": "Remote",
-    "employmentType": "Full-time",
-    "department": "Customer Success",
-    "experienceLevel": "3–5 years",
-    "salaryRange": "$75,000 - $95,000",
-    "postedAt": "1 week ago",
-    "description": "Ensure customers achieve maximum value with our SaaS products through proactive support and relationship management.",
-    "responsibilities": [
-      "Onboard new clients and create success plans",
-      "Provide ongoing support, training, and feature adoption guidance",
-      "Collaborate with product and engineering on feedback and improvements"
-    ],
-    "requirements": [
-      "3+ years in customer success or account management",
-      "Excellent communication, problem-solving, and relationship-building skills"
-    ],
-    "niceToHave": ["SaaS experience and CRM proficiency (Salesforce/HubSpot)"],
-    "benefits": [
-      "Fully remote work",
-      "Performance bonuses",
-      "Flexible schedule"
-    ]
-  },
-  {
-    "id": "18",
-    "title": "Data Analyst",
-    "company": "Atlas Systems",
-    "location": "Berlin, Germany",
-    "workMode": "On-site",
-    "employmentType": "Full-time",
-    "department": "Data Science",
-    "experienceLevel": "2–4 years",
-    "salaryRange": "€55,000 - €75,000",
-    "postedAt": "5 days ago",
-    "description": "Analyze datasets, create reports, and provide actionable insights to support business and product decisions.",
-    "responsibilities": [
-      "Data cleaning, transformation, and visualization",
-      "Build dashboards and recurring reports",
-      "Collaborate with stakeholders to answer business questions"
-    ],
-    "requirements": [
-      "Strong SQL proficiency and experience with Python/R",
-      "Excel/Google Sheets advanced usage and BI tools (Tableau/Power BI)"
-    ],
-    "niceToHave": [
-      "Experience with BigQuery or Snowflake",
-      "Basic statistics knowledge"
-    ],
-    "benefits": ["Health insurance", "Flexible hours and team events"]
-  },
-  {
-    "id": "19",
-    "title": "DevOps Intern",
-    "company": "Vertex Corp",
-    "location": "New York, NY",
-    "workMode": "On-site",
-    "employmentType": "Internship",
-    "department": "Engineering",
-    "experienceLevel": "0–1 years",
-    "salaryRange": "$20 - $28/hr",
-    "postedAt": "3 days ago",
-    "description": "Assist DevOps engineers with deployment, monitoring, and infrastructure tasks while learning cloud and automation.",
-    "responsibilities": [
-      "Support deployment of small tasks and updates",
-      "Monitor systems and alert on issues",
-      "Learn CI/CD pipelines and IaC tools"
-    ],
-    "requirements": [
-      "Basic Linux/command-line knowledge",
-      "Interest in DevOps, cloud, and automation"
-    ],
-    "niceToHave": ["Docker basics or scripting experience"],
-    "benefits": ["Dedicated mentorship", "Flexible schedule"]
-  },
-  {
-    "id": "20",
-    "title": "HR Intern",
-    "company": "Aurora AI",
-    "location": "London, UK",
-    "workMode": "Remote",
-    "employmentType": "Internship",
-    "department": "HR",
-    "experienceLevel": "0–1 years",
-    "salaryRange": "£15 - £22/hr",
-    "postedAt": "2 days ago",
-    "description": "Support the HR team with recruitment, onboarding, and administrative tasks in a dynamic AI company.",
-    "responsibilities": [
-      "Assist with candidate sourcing and scheduling",
-      "Help document processes and maintain records",
-      "Support employee onboarding and events"
-    ],
-    "requirements": [
-      "Interest in HR and people operations",
-      "Good communication and organizational skills"
-    ],
-    "niceToHave": ["Familiarity with HR tools (Greenhouse, Workable)"],
-    "benefits": ["Remote flexibility", "Mentorship and learning opportunities"]
+    "niceToHave": ["GraphQL", "Celery", "IoT protocols", "Real-time systems"]
   }
 ]

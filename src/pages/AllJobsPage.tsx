@@ -10,8 +10,8 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
-import { JSX, useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { useEffect, useState } from "react";
+import { Link } from "react-router"; // corrected import (assuming react-router-dom)
 import Button from "../components/ui/Button";
 import { Modal } from "../components/ui/Modal";
 import axios from "axios";
@@ -19,28 +19,24 @@ import Select from "../components/ui/Select";
 import { FormProvider, useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
 import SecondaryButton from "../components/ui/SecondaryButton";
+import { MdEditOff, MdModeEdit } from "react-icons/md";
+// import { jobSchema } from "../types/job";
 
 interface Job {
+  summary: string;
   id: string;
   title: string;
   company: string;
   location: string;
-  workMode: string;
   employmentType: string;
-  department: string;
   experienceLevel: string;
   salaryRange: string;
   postedAt: string;
   description: string;
-  responsibilities: string[];
   requirements: string[];
   niceToHave: string[];
-  benefits: string[];
-  color: string;
-  status?: JobStatus;
+  status?: "approved" | "rejected" | "pending";
 }
-
-type JobStatus = "approved" | "rejected" | "pending";
 
 export default function AllJobsPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -49,9 +45,7 @@ export default function AllJobsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [editableJob, setEditableJob] = useState<any>(null);
+  const [editableJob, setEditableJob] = useState<Job | null>(null);
 
   useEffect(() => {
     if (selectedJob) {
@@ -61,6 +55,7 @@ export default function AllJobsPage() {
   }, [selectedJob]);
 
   const pageSize = 9;
+
   const methods = useForm({
     defaultValues: {
       search: "",
@@ -82,31 +77,59 @@ export default function AllJobsPage() {
     Internship:
       "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200",
   };
+
   const handleApprove = (job: Job | null) => {
     if (!job) return;
     console.log("Approved:", job.id);
-    // API call to approve
+    // TODO: API call
   };
 
   const handleReject = (job: Job | null) => {
     if (!job) return;
     console.log("Rejected:", job.id);
-    // API call to reject
+    // TODO: API call
   };
 
   const handleDelete = (job: Job | null) => {
     if (!job) return;
     console.log("Deleted:", job.id);
-    // API call to delete
+    // TODO: API call
   };
 
-  // Fetch jobs
+  // Fetch & transform jobs
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         setLoading(true);
-        const response = await axios.get<Job[]>("/public.json");
-        setJobs(response.data);
+        // Change path if your JSON is elsewhere (public/jobs.json, src/data/jobs.json, etc.)
+        const response = await axios.get("/public.json"); // ← your 10-job array file
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const transformed = response.data.map((raw: any) => ({
+          id: raw.id,
+          title: raw.jobTitle,
+          company: raw.companyName,
+          location:
+            typeof raw.location === "object"
+              ? `${raw.location.city || ""} ${raw.location.country || ""}`.trim() ||
+                "Remote"
+              : raw.location || "Remote",
+          employmentType: raw.employmentType || "Full-time",
+          experienceLevel: raw.experienceLevel || "Not specified",
+          salaryRange: raw.salaryRange
+            ? `$${raw.salaryRange.min.toLocaleString()} – $${raw.salaryRange.max.toLocaleString()} ${raw.salaryRange.currency || "USD"} / ${raw.salaryRange.period || "year"}`
+            : "Not disclosed",
+          postedAt: "March 2026", // placeholder – add real field if available
+          description:
+            raw.jobSummary ||
+            raw.companyDescription ||
+            "No description available",
+          requirements: raw.requiredSkills || [],
+          niceToHave: raw.niceToHave || [],
+          status: raw.status || "pending",
+        }));
+
+        setJobs(transformed);
         setError(null);
       } catch (err) {
         console.error(err);
@@ -115,6 +138,7 @@ export default function AllJobsPage() {
         setLoading(false);
       }
     };
+
     fetchJobs();
   }, []);
 
@@ -139,38 +163,39 @@ export default function AllJobsPage() {
   const goPrev = () => setPageIndex((p) => Math.max(p - 1, 0));
   const goNext = () => setPageIndex((p) => Math.min(p + 1, totalPages - 1));
 
-  if (loading)
+  if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-white dark:bg-slate-900">
-        <div className="animate-spin rounded-full h-12 w-32 border-t-2 border-b-2 border-blue-900 dark:border-sky-400"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-900 dark:border-sky-400" />
       </div>
     );
-  if (error) return <p className="text-red-500">{error}</p>;
+  }
+
+  if (error) return <p className="text-red-500 text-center py-10">{error}</p>;
 
   return (
-    <div className="px-4 py-6 bg-white dark:bg-slate-900 transition-colors duration-500 ease-in-out min-h-screen">
+    <div className="px-4 py-6 bg-white dark:bg-slate-900 min-h-screen transition-colors">
       {/* Header */}
-      <div className="mb-8 flex sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h1 className="md:text-3xl text-xl font-semibold text-[#044635] dark:text-[#0af0b4]">
           Open Positions
         </h1>
-        <NavLink to="/job-post">
+        <Link to="/job-post">
           <Button value="Create Job" />
-        </NavLink>
+        </Link>
       </div>
 
-      {/* Search & Filters */}
+      {/* Filters */}
       <FormProvider {...methods}>
-        <form className="py-4 flex flex-col justify-between items-center sm:flex-row gap-4 w-full">
-          <div className="md:w-md w-full">
+        <form className="py-4 flex flex-col sm:flex-row gap-4 w-full">
+          <div className="w-full sm:w-80 md:w-96">
             <Input
               name="search"
               label="Search"
-              type="text"
-              placeholder="Search by title or company"
+              placeholder="Search by title or company..."
             />
           </div>
-          <div className="md:w-md w-full">
+          <div className="w-full sm:w-64 md:w-72">
             <Select
               name="employmentType"
               label="Employment Type"
@@ -186,7 +211,7 @@ export default function AllJobsPage() {
         </form>
       </FormProvider>
 
-      {/* Job Cards */}
+      {/* Job Grid */}
       {paginatedJobs.length === 0 ? (
         <div className="mt-20 flex flex-col items-center justify-center gap-4">
           <img
@@ -197,23 +222,16 @@ export default function AllJobsPage() {
           <h3 className="text-xl font-semibold text-gray-700 dark:text-white">
             No jobs match your search.
           </h3>
-          <p className="text-gray-500 dark:text-white text-center max-w-sm">
-            Try adjusting your search or filters to find relevant jobs.
+          <p className="text-gray-500 dark:text-gray-300 text-center max-w-sm">
+            Try adjusting your search or filters.
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {paginatedJobs.map((job) => {
-            const status: JobStatus = job.status ?? "pending";
+            const status = job.status ?? "pending";
 
-            const statusConfig: Record<
-              JobStatus,
-              {
-                icon: JSX.Element;
-                styles: string;
-                label: string;
-              }
-            > = {
+            const statusConfig = {
               approved: {
                 icon: <CheckCircle size={16} />,
                 styles:
@@ -239,50 +257,43 @@ export default function AllJobsPage() {
             return (
               <div
                 key={job.id}
-                className="group relative rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md ring-1 ring-gray-200 dark:ring-slate-700 transition-all hover:-translate-y-1 hover:shadow-lg"
+                className="group relative rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md ring-1 ring-gray-200 dark:ring-slate-700 hover:-translate-y-1 hover:shadow-lg transition-all"
               >
-                {/* Header */}
                 <div className="mb-4 flex items-start justify-between gap-3">
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white dark:group-hover:text-slate-200 transition">
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white dark:hover:text-slate-200 transition">
                     {job.title}
                   </h2>
-
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${employmentTypeColors[job.employmentType]}`}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${employmentTypeColors[job.employmentType] || "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"}`}
                   >
                     {job.employmentType}
                   </span>
                 </div>
 
-                {/* Company */}
                 <div className="mb-2 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                   <Briefcase size={16} />
                   {job.company}
                 </div>
 
-                {/* Location */}
                 <div className="mb-4 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                   <MapPin size={16} />
                   {job.location}
                 </div>
 
-                {/* Status Badge with Icon */}
                 <div className="mb-4">
                   <span
                     className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${currentStatus.styles}`}
                   >
-                    {currentStatus.label}
+                    {currentStatus.icon} {currentStatus.label}
                   </span>
                 </div>
 
-                {/* Footer */}
-                <div className="flex items-center gap-1 pt-4 border-t border-gray-100 dark:border-slate-700 text-xs text-gray-400 dark:text-gray-500">
+                <div className="flex items-center gap-1 pt-4 border-t border-gray-100 dark:border-slate-700 text-xs text-gray-400 dark:text-gray-500 ">
                   <Clock size={14} />
                   {job.postedAt}
-
                   <button
                     onClick={() => setSelectedJob(job)}
-                    className="ml-auto inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-medium hover:underline transition cursor-pointer text-[16px]"
+                    className="ml-auto text-indigo-600 dark:text-indigo-400 font-medium hover:underline text-base cursor-pointer"
                   >
                     View Details →
                   </button>
@@ -294,115 +305,180 @@ export default function AllJobsPage() {
       )}
 
       {/* Pagination */}
-      <div className="mt-10 flex items-center justify-center gap-2 flex-wrap">
-        <button
-          onClick={goToFirst}
-          disabled={pageIndex === 0}
-          className="px-2 py-3 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
-        >
-          <ChevronsLeft size={16} />
-        </button>
-        <button
-          onClick={goPrev}
-          disabled={pageIndex === 0}
-          className="px-2 py-3 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 cursor-pointer"
-        >
-          <ChevronLeft size={16} />
-        </button>
-
-        {/* Page numbers */}
-        {Array.from({ length: totalPages }).map((_, idx) => (
+      {totalPages > 1 && (
+        <div className="mt-10 flex items-center justify-center gap-2 flex-wrap">
           <button
-            key={idx}
-            onClick={() => setPageIndex(idx)}
-            className={`px-3 py-2 rounded-lg border shadow-sm font-medium ${
-              idx === pageIndex
-                ? "bg-sky-600 text-white border-sky-600"
-                : "bg-white dark:bg-slate-500 text-gray-700 dark:text-white border-gray-300 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer"
-            }`}
+            onClick={goToFirst}
+            disabled={pageIndex === 0}
+            className="cursor-pointer"
           >
-            {idx + 1}
+            <ChevronsLeft size={16} />
           </button>
-        ))}
+          <button
+            onClick={goPrev}
+            disabled={pageIndex === 0}
+            className="cursor-pointer"
+          >
+            <ChevronLeft size={16} />
+          </button>
 
-        <button
-          onClick={goNext}
-          disabled={pageIndex === totalPages - 1}
-          className="px-2 py-3 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex cursor-pointer items-center gap-1"
-        >
-          <ChevronRight size={16} />
-        </button>
-        <button
-          onClick={goToLast}
-          disabled={pageIndex === totalPages - 1}
-          className="px-2 py-3 rounded-lg border border-gray-300 bg-white dark:bg-slate-500 text-gray-700 dark:text-white font-medium shadow-sm hover:bg-gray-100 dark:hover:bg-gray-600 disabled:opacity-40 disabled:cursor-not-allowed flex cursor-pointer items-center gap-1"
-        >
-          <ChevronsRight size={16} />
-        </button>
-      </div>
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setPageIndex(idx)}
+              className={`px-3 py-2 rounded-lg border shadow-sm font-medium ${
+                idx === pageIndex
+                  ? "bg-sky-600 text-white border-sky-600"
+                  : "bg-white dark:bg-slate-600 text-gray-700 dark:text-white border-gray-300 dark:border-slate-500 hover:bg-gray-100 dark:hover:bg-slate-500 cursor-pointer"
+              }`}
+            >
+              {idx + 1}
+            </button>
+          ))}
 
-      {/* Job Detail Modal */}
+          <button
+            onClick={goNext}
+            disabled={pageIndex === totalPages - 1}
+            className="cursor-pointer"
+          >
+            <ChevronRight size={16} />
+          </button>
+          <button
+            onClick={goToLast}
+            disabled={pageIndex === totalPages - 1}
+            className="cursor-pointer"
+          >
+            <ChevronsRight size={16} />
+          </button>
+        </div>
+      )}
+
+      {/* Modal – simplified version (you can extend editing further) */}
       <Modal
         open={!!selectedJob}
-        onOpenChange={() => setSelectedJob(null)}
+        onOpenChange={() => {
+          setSelectedJob(null);
+          setIsEditing(false);
+        }}
         title={
-          isEditing ? "Edit Job Details" : (selectedJob?.title ?? "Job Details")
+          isEditing ? (
+            <input
+              value={editableJob?.title ?? ""}
+              onChange={(e) =>
+                setEditableJob((prev) =>
+                  prev ? { ...prev, title: e.target.value } : null,
+                )
+              }
+              className="w-full bg-transparent border-b border-slate-300 
+                       dark:border-slate-600 
+                       focus:border-indigo-500 
+                       outline-none font-mediums"
+              placeholder="Job Title"
+            />
+          ) : (
+            editableJob?.title
+          )
         }
         description={
-          isEditing
-            ? "Editing Mode"
-            : `${selectedJob?.company} • ${selectedJob?.location}`
+          isEditing ? (
+            <div className="flex gap-2">
+              <input
+                value={editableJob?.company ?? ""}
+                onChange={(e) =>
+                  setEditableJob((prev) =>
+                    prev ? { ...prev, company: e.target.value } : null,
+                  )
+                }
+                className="bg-transparent border-b border-slate-300 focus:outline-none 
+                       dark:border-slate-600 
+                       focus:border-indigo-500 "
+                placeholder="Company Name"
+              />
+              <input
+                value={editableJob?.location ?? ""}
+                onChange={(e) =>
+                  setEditableJob((prev) =>
+                    prev ? { ...prev, location: e.target.value } : null,
+                  )
+                }
+                className="bg-transparent border-b border-slate-300 dark:border-slate-600 focus:outline-none focus:border-indigo-500"
+                placeholder="Location"
+              />
+            </div>
+          ) : (
+            `${editableJob?.company} • ${editableJob?.location}`
+          )
         }
       >
         {editableJob && (
-          <div className="max-h-[75vh] space-y-8 overflow-y-auto p-1 pr-2 text-slate-800 dark:text-slate-100">
-            <div className="space-y-8 rounded-2xl bg-white p-6 dark:bg-slate-800 relative">
-              {/* EDIT BUTTON */}
+          <div className="max-h-[75vh] overflow-y-auto p-1 space-y-8 text-slate-800 dark:text-slate-100 custom-scrollbar">
+            <div className="p-6 relative space-y-6">
+              {/* Edit Toggle Button */}
               <button
                 onClick={() => setIsEditing(!isEditing)}
-                className="absolute top-6 right-6 rounded-lg p-2 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer"
-                title="Edit"
+                className="absolute top-5 right-5 p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                title={isEditing ? "Cancel Edit" : "Edit Job"}
+                aria-label={isEditing ? "Cancel editing" : "Edit job details"}
               >
-                ✏️
+                {isEditing ? (
+                  <span>
+                    <MdEditOff size={22} />
+                  </span>
+                ) : (
+                  <span>
+                    <MdModeEdit size={22} />
+                  </span>
+                )}
               </button>
 
-              <section>
-                <h2 className="mb-5 text-2xl font-bold text-slate-900 dark:text-white">
-                  Job Overview
+              {/* Job Overview */}
+              <section className="space-y-4">
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
+                  Overview
                 </h2>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid sm:grid-cols-2 gap-6">
                   {[
-                    { label: "Location", field: "location" },
-                    { label: "Employment Type", field: "employmentType" },
-                    { label: "Department", field: "department" },
-                    { label: "Experience Level", field: "experienceLevel" },
-                    { label: "Salary Range", field: "salaryRange", span: true },
-                  ].map((item, idx) => (
+                    {
+                      label: "Employment Type",
+                      field: "employmentType" as const,
+                    },
+                    {
+                      label: "Experience Level",
+                      field: "experienceLevel" as const,
+                    },
+                    { label: "Salary Range", field: "salaryRange" as const },
+                    { label: "Posted At", field: "postedAt" as const },
+                  ].map((item) => (
                     <div
-                      key={idx}
-                      className={`rounded-xl bg-slate-50 p-4 dark:bg-slate-700/60 ${
-                        item.span ? "sm:col-span-2" : ""
-                      }`}
+                      key={item.field}
+                      className="p-5 rounded-xl bg-linear-to-br from-slate-50 to-white 
+                   dark:from-slate-800 dark:to-slate-900 
+                   border border-slate-200/60 dark:border-slate-700 
+                   shadow-sm"
                     >
-                      <p className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                      <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
                         {item.label}
                       </p>
 
-                      {isEditing ? (
+                      {isEditing && item.field !== "postedAt" ? (
                         <input
-                          value={editableJob[item.field] || ""}
+                          value={editableJob?.[item.field] ?? ""}
                           onChange={(e) =>
-                            setEditableJob({
-                              ...editableJob,
-                              [item.field]: e.target.value,
-                            })
+                            setEditableJob((prev) =>
+                              prev
+                                ? { ...prev, [item.field]: e.target.value }
+                                : null,
+                            )
                           }
-                          className="mt-1 w-full bg-transparent font-semibold outline-none text-slate-900 dark:text-slate-100"
+                          className="w-full bg-transparent border-b border-slate-300 
+                       dark:border-slate-600 
+                       focus:border-indigo-500 
+                       outline-none font-medium"
                         />
                       ) : (
-                        <p className="mt-1 font-semibold text-slate-900 dark:text-slate-100">
-                          {editableJob[item.field]}
+                        <p className="font-semibold text-slate-900 dark:text-white">
+                          {editableJob?.[item.field] || "—"}
                         </p>
                       )}
                     </div>
@@ -410,108 +486,149 @@ export default function AllJobsPage() {
                 </div>
               </section>
 
-              <section>
-                <h3 className="mb-3 text-xl font-semibold text-slate-900 dark:text-white">
-                  Description
+              {/* Job Summary */}
+              <section className="space-y-4 mt-4">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
+                  Job Summary
                 </h3>
 
                 {isEditing ? (
                   <textarea
-                    value={editableJob.description || ""}
+                    value={editableJob?.description ?? ""}
                     onChange={(e) =>
-                      setEditableJob({
-                        ...editableJob,
-                        description: e.target.value,
-                      })
+                      setEditableJob((prev) =>
+                        prev ? { ...prev, description: e.target.value } : null,
+                      )
                     }
-                    className="w-full rounded-lg bg-slate-50 p-3 outline-none dark:bg-slate-800/60"
-                    rows={4}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-600 p-4 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+                    rows={5}
                   />
                 ) : (
-                  <p className="whitespace-pre-line leading-relaxed text-slate-700 dark:text-slate-300">
-                    {editableJob.description}
+                  <p className="leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line">
+                    {editableJob?.description || "No summary provided."}
                   </p>
                 )}
               </section>
 
+              {/* Lists: Requirements & Nice to Have */}
               {[
-                { title: "Responsibilities", field: "responsibilities" },
-                { title: "Requirements", field: "requirements" },
-                { title: "Nice to Have", field: "niceToHave" },
-                { title: "Benefits", field: "benefits" },
-              ].map(
-                (section) =>
-                  editableJob[section.field]?.length > 0 && (
+                { title: "Requirements", field: "requirements" as const },
+                { title: "Nice to Have", field: "niceToHave" as const },
+              ].map((section) => {
+                const fieldValue = editableJob[section.field];
+                return (
+                  (fieldValue?.length > 0 || isEditing) && (
                     <section key={section.title}>
-                      <h3 className="mb-3 text-xl font-semibold text-slate-900 dark:text-white">
+                      <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
                         {section.title}
                       </h3>
-
-                      <ul className="space-y-2.5">
-                        {editableJob[section.field].map(
-                          (item: string, i: number) => (
-                            <li
-                              key={i}
-                              className="flex items-start gap-3 rounded-lg bg-slate-50 p-3 dark:bg-slate-800/60"
-                            >
-                              {isEditing ? (
+                      <ul className="space-y-3">
+                        {isEditing ? (
+                          <>
+                            {fieldValue?.map((item: string, idx: number) => (
+                              <li
+                                key={idx}
+                                className="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 p-3 group"
+                              >
                                 <input
                                   value={item}
                                   onChange={(e) => {
-                                    const updated = [
-                                      ...editableJob[section.field],
-                                    ];
-                                    updated[i] = e.target.value;
-                                    setEditableJob({
-                                      ...editableJob,
-                                      [section.field]: updated,
-                                    });
+                                    const updated = [...fieldValue];
+                                    updated[idx] = e.target.value;
+                                    setEditableJob((prev) =>
+                                      prev
+                                        ? { ...prev, [section.field]: updated }
+                                        : null,
+                                    );
                                   }}
-                                  className="w-full bg-transparent outline-none text-slate-700 dark:text-slate-300"
+                                  className="flex-1 bg-transparent outline-none border-b border-slate-300 dark:border-slate-600 focus:border-indigo-500 cursor-text"
                                 />
-                              ) : (
-                                <>
-                                  <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-slate-400" />
-                                  <span className="text-slate-700 dark:text-slate-300">
-                                    {item}
-                                  </span>
-                                </>
-                              )}
+                                <button
+                                  onClick={() => {
+                                    const updated = fieldValue.filter(
+                                      (_, i) => i !== idx,
+                                    );
+                                    setEditableJob((prev) =>
+                                      prev
+                                        ? { ...prev, [section.field]: updated }
+                                        : null,
+                                    );
+                                  }}
+                                  className="text-rose-600 hover:text-rose-800 opacity-70 hover:opacity-100 cursor-pointer transition"
+                                  title="Remove item"
+                                >
+                                  ✕
+                                </button>
+                              </li>
+                            ))}
+                            <button
+                              onClick={() => {
+                                const updated = [...(fieldValue || []), ""];
+                                setEditableJob((prev) =>
+                                  prev
+                                    ? { ...prev, [section.field]: updated }
+                                    : null,
+                                );
+                              }}
+                              className="mt-2 text-indigo-600 hover:text-indigo-800 text-sm font-medium cursor-pointer"
+                            >
+                              + Add item
+                            </button>
+                          </>
+                        ) : (
+                          fieldValue?.map((item: string, idx: number) => (
+                            <li
+                              key={idx}
+                              className="flex items-start gap-3 rounded-lg bg-slate-50 dark:bg-slate-800/60 p-3.5"
+                            >
+                              <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-indigo-400/70" />
+                              <span className="text-slate-700 dark:text-slate-300">
+                                {item}
+                              </span>
                             </li>
-                          ),
+                          ))
                         )}
                       </ul>
                     </section>
-                  ),
-              )}
+                  )
+                );
+              })}
 
-              {/* ACTION BUTTONS */}
-              <div
-                className={`flex flex-col gap-3 border-t border-slate-200 pt-6 dark:border-slate-700 sm:flex-row ${isEditing ? "sm:justify-end" : "justify-between"}`}
-              >
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-200 dark:border-slate-700 pt-8 mt-6">
                 {isEditing ? (
-                  <Button
-                    onClick={() => {
-                      console.log("Updated Job:", editableJob);
-                      setIsEditing(false);
-                    }}
-                    value="Save Changes"
-                  ></Button>
+                  <>
+                    <Button
+                      onClick={() => {
+                        setIsEditing(false);
+                      }}
+                      value="Save Changes"
+                    />
+                    <SecondaryButton
+                      onClick={() => {
+                        setEditableJob(selectedJob); // revert changes
+                        setIsEditing(false);
+                      }}
+                      value="Cancel"
+                    />
+                  </>
                 ) : (
                   <>
-                    <div className="space-x-4">
+                    <div className="flex flex-wrap gap-3">
                       <Button
-                        value="Approve"
                         onClick={() => handleApprove(selectedJob)}
+                        className="bg-emerald-600 hover:bg-emerald-700 cursor-pointer"
+                        value="Approve"
                       />
                       <SecondaryButton
                         onClick={() => handleReject(selectedJob)}
+                        className="border-rose-600 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer"
                         value="Reject"
                       />
                     </div>
                     <button
                       onClick={() => handleDelete(selectedJob)}
-                      className="rounded-lg bg-rose-600 px-6 py-2.5 font-medium text-white shadow hover:bg-rose-700 cursor-pointer"
+                      className="rounded-lg bg-rose-600 px-6 py-2.5 font-medium text-white hover:bg-rose-700 transition-colors cursor-pointer"
                     >
                       Delete
                     </button>

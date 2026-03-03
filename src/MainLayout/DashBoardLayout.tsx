@@ -34,7 +34,7 @@ const DashBoardLayout = () => {
             <GiHamburgerMenu size={25} />
           </button>
 
-          <div className={`mt-6 md:mt-0`}>
+          <div className={`mt-4 md:mt-0`}>
             <Outlet />
           </div>
         </div>

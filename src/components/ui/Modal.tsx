@@ -22,14 +22,12 @@ export const Modal = ({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         {/* Overlay */}
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-black/30 dark:bg-black/50 transition-opacity" />
+        <Dialog.Overlay className="fixed inset-0 z-20 bg-black/30 dark:bg-black/50 transition-opacity" />
 
         {/* Modal Content */}
         <Dialog.Content
-          className="
-            fixed inset-0 z-50 flex items-center justify-center p-4
-            focus:outline-none
-          "
+          className="fixed z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                           max-w-2xl w-[95%] rounded-xl shadow-lg"
         >
           <div
             className="

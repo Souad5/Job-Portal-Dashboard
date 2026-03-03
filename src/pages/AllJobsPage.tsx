@@ -245,7 +245,7 @@ export default function AllJobsPage() {
                 label: "Rejected",
               },
               pending: {
-                icon: <Hourglass size={16} />,
+                icon: <Hourglass size={12} />,
                 styles:
                   "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400",
                 label: "Pending",

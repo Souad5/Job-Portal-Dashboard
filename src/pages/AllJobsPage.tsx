@@ -101,8 +101,8 @@ export default function AllJobsPage() {
     const fetchJobs = async () => {
       try {
         setLoading(true);
-        // Change path if your JSON is elsewhere (public/jobs.json, src/data/jobs.json, etc.)
-        const response = await axios.get("/public.json"); // ← your 10-job array file
+
+        const response = await axios.get("/public.json");
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const transformed = response.data.map((raw: any) => ({
@@ -119,7 +119,7 @@ export default function AllJobsPage() {
           salaryRange: raw.salaryRange
             ? `$${raw.salaryRange.min.toLocaleString()} – $${raw.salaryRange.max.toLocaleString()} ${raw.salaryRange.currency || "USD"} / ${raw.salaryRange.period || "year"}`
             : "Not disclosed",
-          postedAt: "March 2026", // placeholder – add real field if available
+          postedAt: "March 2026",
           description:
             raw.jobSummary ||
             raw.companyDescription ||
@@ -353,7 +353,7 @@ export default function AllJobsPage() {
         </div>
       )}
 
-      {/* Modal – simplified version (you can extend editing further) */}
+      {/* Modal */}
       <Modal
         open={!!selectedJob}
         onOpenChange={() => {
@@ -411,7 +411,7 @@ export default function AllJobsPage() {
         }
       >
         {editableJob && (
-          <div className="max-h-[75vh] overflow-y-auto p-1 space-y-8 text-slate-800 dark:text-slate-100 custom-scrollbar">
+          <div className="max-h-[75vh] p-1 space-y-8 text-slate-800 dark:text-slate-100 custom-scrollbar">
             <div className="p-6 relative space-y-6">
               {/* Edit Toggle Button */}
               <button

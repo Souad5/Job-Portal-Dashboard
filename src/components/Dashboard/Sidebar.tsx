@@ -35,7 +35,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   return (
     <aside
       className={`
-    fixed top-0 left-0 h-screen z-10 
+    fixed top-0 left-0 h-screen md:z-10 z-40
     transition-all duration-200
     ${open ? " md:w-20" : "md:w-72"}
     ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0 "}

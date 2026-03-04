@@ -16,7 +16,6 @@ export default function StepCompanyInfo() {
         </p>
       </div>
 
-      {/* Core Company Details */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <Input
           placeholder="Enter Company Name"
@@ -33,7 +32,6 @@ export default function StepCompanyInfo() {
         />
       </div>
 
-      {/* Company Description */}
       <Textarea
         name="companyDescription"
         label="Company Description"
@@ -42,7 +40,6 @@ export default function StepCompanyInfo() {
         placeholder="Briefly describe your company, mission, and culture."
       />
 
-      {/* Trust / Guidance Block */}
       <div className="rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
         <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex items-start gap-2">
           <span className="flex items-center gap-1 text-nowrap font-medium text-gray-800 dark:text-gray-100">

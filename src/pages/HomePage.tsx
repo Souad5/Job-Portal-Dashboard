@@ -111,7 +111,7 @@ const HomePage = () => {
           </div>
           <div>
             <Link
-              to="/login"
+              to="/"
               className="font-medium text-slate-900 cursor-pointer opacity-70 dark:opacity-80 hover:opacity-105"
               title="Logout"
             >

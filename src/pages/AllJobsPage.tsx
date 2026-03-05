@@ -20,7 +20,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
 import SecondaryButton from "../components/ui/SecondaryButton";
 import { MdEditOff, MdModeEdit } from "react-icons/md";
-// import { jobSchema } from "../types/job";
 
 interface Job {
   summary: string;
@@ -81,19 +80,16 @@ export default function AllJobsPage() {
   const handleApprove = (job: Job | null) => {
     if (!job) return;
     console.log("Approved:", job.id);
-    // TODO: API call
   };
 
   const handleReject = (job: Job | null) => {
     if (!job) return;
     console.log("Rejected:", job.id);
-    // TODO: API call
   };
 
   const handleDelete = (job: Job | null) => {
     if (!job) return;
     console.log("Deleted:", job.id);
-    // TODO: API call
   };
 
   // Fetch & transform jobs
@@ -102,7 +98,7 @@ export default function AllJobsPage() {
       try {
         setLoading(true);
 
-        const response = await axios.get("/public.json");
+        const response = await axios.get("/jobs.json");
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const transformed = response.data.map((raw: any) => ({
@@ -157,7 +153,7 @@ export default function AllJobsPage() {
     pageIndex * pageSize,
     (pageIndex + 1) * pageSize,
   );
-
+  console.log(paginatedJobs);
   const goToFirst = () => setPageIndex(0);
   const goToLast = () => setPageIndex(totalPages - 1);
   const goPrev = () => setPageIndex((p) => Math.max(p - 1, 0));
@@ -187,8 +183,8 @@ export default function AllJobsPage() {
 
       {/* Filters */}
       <FormProvider {...methods}>
-        <form className="py-4 flex flex-col sm:flex-row gap-4 w-full">
-          <div className="w-full sm:w-80 md:w-96">
+        <form className="py-4 flex justify-between flex-col sm:flex-row gap-4 w-full">
+          <div className="w-full sm:w-64 md:w-72">
             <Input
               name="search"
               label="Search"
@@ -257,43 +253,48 @@ export default function AllJobsPage() {
             return (
               <div
                 key={job.id}
-                className="group relative rounded-2xl bg-white dark:bg-slate-800 p-6 shadow-md ring-1 ring-gray-200 dark:ring-slate-700 hover:-translate-y-1 hover:shadow-lg transition-all"
+                className="group relative rounded-xl bg-white dark:bg-slate-800 p-4 shadow-sm ring-1 ring-gray-200/70 dark:ring-slate-700 hover:-translate-y-1 hover:shadow-md transition-all duration-200"
               >
-                <div className="mb-4 flex items-start justify-between gap-3">
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white dark:hover:text-slate-200 transition">
+                {/* Title + employment type */}
+                <div className="mb-3 flex items-start justify-between gap-3">
+                  <h2 className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition">
                     {job.title}
                   </h2>
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${employmentTypeColors[job.employmentType] || "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"}`}
+                    className={`shrink-0 px-2.5 py-0.5 rounded-full text-xs font-medium ${employmentTypeColors[job.employmentType] || "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200"}`}
                   >
                     {job.employmentType}
                   </span>
                 </div>
 
-                <div className="mb-2 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                  <Briefcase size={16} />
+                {/* Company */}
+                <div className="mb-1.5 flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300">
+                  <Briefcase size={15} />
                   {job.company}
                 </div>
 
-                <div className="mb-4 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                  <MapPin size={16} />
-                  {job.location}
-                </div>
-
-                <div className="mb-4">
+                {/* Location */}
+                <div className="mb-3 flex items-start justify-between gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="flex items-start gap-1.5">
+                    <MapPin size={15} />
+                    {job.location}
+                  </span>
                   <span
-                    className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${currentStatus.styles}`}
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${currentStatus.styles}`}
                   >
                     {currentStatus.icon} {currentStatus.label}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1 pt-4 border-t border-gray-100 dark:border-slate-700 text-xs text-gray-400 dark:text-gray-500 ">
-                  <Clock size={14} />
-                  {job.postedAt}
+                {/* Footer */}
+                <div className="flex items-center gap-2 pt-3 border-t border-gray-100 dark:border-slate-700 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-1.5">
+                    <Clock size={13} />
+                    {job.postedAt}
+                  </div>
                   <button
                     onClick={() => setSelectedJob(job)}
-                    className="ml-auto text-indigo-600 dark:text-indigo-400 font-medium hover:underline text-base cursor-pointer"
+                    className="ml-auto text-indigo-600 dark:text-indigo-400 font-medium hover:text-indigo-800 dark:hover:text-indigo-300 transition text-sm cursor-pointer"
                   >
                     View Details →
                   </button>
@@ -310,14 +311,14 @@ export default function AllJobsPage() {
           <button
             onClick={goToFirst}
             disabled={pageIndex === 0}
-            className="cursor-pointer"
+            className={`cursor-pointer disabled:cursor-not-allowed disabled:opacity-60`}
           >
             <ChevronsLeft size={16} />
           </button>
           <button
             onClick={goPrev}
             disabled={pageIndex === 0}
-            className="cursor-pointer"
+            className={`cursor-pointer disabled:cursor-not-allowed disabled:opacity-60`}
           >
             <ChevronLeft size={16} />
           </button>
@@ -339,14 +340,14 @@ export default function AllJobsPage() {
           <button
             onClick={goNext}
             disabled={pageIndex === totalPages - 1}
-            className="cursor-pointer"
+            className={`cursor-pointer disabled:cursor-not-allowed disabled:opacity-60`}
           >
             <ChevronRight size={16} />
           </button>
           <button
             onClick={goToLast}
             disabled={pageIndex === totalPages - 1}
-            className="cursor-pointer"
+            className={`cursor-pointer disabled:cursor-not-allowed disabled:opacity-60`}
           >
             <ChevronsRight size={16} />
           </button>

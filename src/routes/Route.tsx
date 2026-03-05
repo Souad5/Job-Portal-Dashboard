@@ -11,14 +11,14 @@ import RecruiterPage from "../pages/RecruiterPage";
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Login />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-
       {
         path: "/dashboard",
         element: <HomePage />,
@@ -40,10 +40,6 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
     ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
   },
 ]);
 

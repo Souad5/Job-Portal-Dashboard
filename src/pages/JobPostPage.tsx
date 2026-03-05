@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
-import { jobSchema, JobFormValues } from "../types/job";
+import { jobSchema, type JobFormValues } from "../types/job";
 import Button from "../components/ui/Button";
 import Stepper from "../components/stepper/Stepper";
 import StepCompanyInfo from "../components/stepperform/StepCompanyInfo";

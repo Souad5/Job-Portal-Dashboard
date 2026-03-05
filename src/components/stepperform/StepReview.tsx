@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { JobFormValues } from "../../types/job";
+import type { JobFormValues } from "../../types/job";
 
 interface ReviewItemProps {
   label: string;

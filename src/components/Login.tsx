@@ -1,5 +1,4 @@
-import React from "react";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { useForm, type SubmitHandler, FormProvider } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import Input from "../components/ui/Input";

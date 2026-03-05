@@ -3,14 +3,14 @@ import { useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   recruiterSchema,
-  RecruiterFormValues,
+  type RecruiterFormValues,
 } from "../types/recruiter.schema";
 import {
-  ColumnDef,
+  type ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  SortingState,
+  type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import { AiFillEdit } from "react-icons/ai";
@@ -182,7 +182,7 @@ const RecruiterPage = () => {
     <div className="min-h-screen px-4 py-6 bg-white dark:bg-slate-900 transition-colors duration-500 ease-in-out">
       {/* Header */}
       <header className="mb-10">
-        <h1 className="md:text-3xl text-xl font-semibold text-slate-900 dark:text-emerald-300">
+        <h1 className="md:text-3xl text-xl font-semibold text-[#044635] dark:text-emerald-300">
           Recruiter Management
         </h1>
         <p className="text-slate-500 dark:text-slate-400">

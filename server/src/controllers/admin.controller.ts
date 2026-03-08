@@ -87,3 +87,10 @@ export const deleteRecruiter = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// ----------------Get Recruiter----------------
+
+export const getRecruiter = async (req: Request, res: Response) => {
+  const rec = await Recruiter.find();
+  res.send(rec);
+};

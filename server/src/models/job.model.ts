@@ -1,29 +1,43 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IJob extends Document {
-  title: string;
-  type: string;
-  summary: string;
+  jobTitle: string;
+  employmentType: string;
+  jobSummary: string;
   companyName: string;
-  location: string;
   companyDescription: string;
-  experience: string;
+  experienceLevel: string;
   education: string;
-  skills: string;
-  niceToHave: string;
+  requiredSkills: string[];
+  niceToHave: string[];
 }
 
-const jobSchema = new Schema<IJob>({
-  title: String,
-  type: { type: String, default: "Full-time" },
-  summary: String,
+const jobSchema = new Schema({
+  jobTitle: { type: String, required: true },
+  employmentType: { type: String, required: true },
+
+  salaryRange: {
+    min: Number,
+    max: Number,
+    currency: String,
+    period: String,
+  },
+
+  jobSummary: String,
   companyName: String,
-  location: String,
+
+  location: {
+    city: String,
+    country: String,
+    timezonePreference: String,
+  },
+
   companyDescription: String,
-  experience: String,
+  experienceLevel: String,
   education: String,
-  skills: String,
-  niceToHave: String,
+
+  requiredSkills: [String],
+  niceToHave: [String],
 });
 
-export default mongoose.model<IJob>("Job", jobSchema);
+export default mongoose.model("Job", jobSchema);

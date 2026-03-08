@@ -9,6 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ---------routes------------
+
 app.use("/api/admin", adminRoutes);
 app.use("/api/jobs", jobRoutes);
 

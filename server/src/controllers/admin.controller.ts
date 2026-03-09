@@ -5,16 +5,16 @@ import Recruiter from "../models/recruiter.model";
 
 export const createRecruiter = async (req: Request, res: Response) => {
   try {
-    const { name, email, tempPassword, confirmTempPassword } = req.body;
+    const { name, email, temPassword, confirmTemPassword } = req.body;
 
-    if (tempPassword !== confirmTempPassword) {
+    if (temPassword !== confirmTemPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
 
     const recruiter = await Recruiter.create({
       name,
       email,
-      tempPassword,
+      temPassword,
     });
 
     res.status(201).json(recruiter);
@@ -29,11 +29,11 @@ export const createRecruiter = async (req: Request, res: Response) => {
 export const updateRecruiter = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name, email, tempPassword } = req.body;
+    const { name, email, temPassword } = req.body;
 
     const recruiter = await Recruiter.findByIdAndUpdate(
       id,
-      { name, email, tempPassword },
+      { name, email, temPassword },
       { new: true },
     );
 

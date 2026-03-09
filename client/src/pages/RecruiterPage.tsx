@@ -1,6 +1,9 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import {
   recruiterSchema,
   type RecruiterFormValues,
@@ -24,25 +27,101 @@ import toast from "react-hot-toast";
 
 /* ---------------- types ---------------- */
 type Recruiter = {
+  _id: string;
   name: string;
   email: string;
-  status: "Active" | "Disabled";
+  temPassword: string;
 };
-
-/* ---------------- mock data ---------------- */
-const DATA: Recruiter[] = [
-  { name: "John Doe", email: "john@company.com", status: "Active" },
-  { name: "Sarah Smith", email: "sarah@company.com", status: "Disabled" },
-];
 
 /* ---------------- page ---------------- */
 const RecruiterPage = () => {
+  const queryClient = useQueryClient();
   const editMethods = useForm<Recruiter>();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [modalType, setModalType] = useState<"edit" | "delete" | null>(null);
   const [selectedRecruiter, setSelectedRecruiter] = useState<Recruiter | null>(
     null,
   );
+
+  // ------------------create recruiter-------------------
+
+  const createRecruiterMutation = useMutation({
+    mutationFn: async (data: RecruiterFormValues) => {
+      const res = await axios.post(
+        "http://localhost:5000/api/admin/create-recruiter",
+        {
+          name: data.recruiterName,
+          email: data.recruiterEmail,
+          temPassword: data.temPassword,
+          confirmTemPassword: data.confirmPassword,
+        },
+      );
+
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Recruiter added successfully");
+      methods.reset();
+      queryClient.invalidateQueries({ queryKey: ["recruiters"] });
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError: (error: any) => {
+      console.log("Backend error:", error.response?.data);
+      toast.error(
+        error.response?.data?.message || "Failed to create recruiter",
+      );
+    },
+  });
+
+  // -----------------------Get---------------------------------
+
+  const { data: recruiters = [], isLoading } = useQuery({
+    queryKey: ["recruiters"],
+    queryFn: async () => {
+      const res = await axios.get(
+        "http://localhost:5000/api/admin/recruiter-all",
+      );
+      return res.data;
+    },
+  });
+
+  // ------------------update-----------------
+
+  const updateRecruiterMutation = useMutation({
+    mutationFn: async (data: Recruiter) => {
+      const res = await axios.put(
+        `http://localhost:5000/api/admin/recruiter/${data._id}`,
+        {
+          name: data.name,
+          email: data.email,
+          temPassword: data.temPassword,
+        },
+      );
+
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Recruiter updated");
+      queryClient.invalidateQueries({ queryKey: ["recruiters"] });
+      setModalType(null);
+    },
+  });
+
+  // -------------------delete--------------------
+
+  const deleteRecruiterMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await axios.delete(
+        `http://localhost:5000/api/admin/recruiter/${id}`,
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Recruiter deleted");
+      queryClient.invalidateQueries({ queryKey: ["recruiters"] });
+      setModalType(null);
+    },
+  });
 
   const columns = useMemo<ColumnDef<Recruiter>[]>(
     () => [
@@ -89,13 +168,13 @@ const RecruiterPage = () => {
         ),
       },
       {
-        accessorKey: "status",
+        accessorKey: "temPassword",
         header: ({ column }) => (
           <button
             onClick={column.getToggleSortingHandler()}
             className="flex items-center gap-2 font-medium cursor-pointer select-none text-slate-700 dark:text-slate-300"
           >
-            <span>Status</span>
+            <span>Temporary Password</span>
 
             <span>
               {column.getIsSorted() === "asc" && "▲"}
@@ -104,21 +183,13 @@ const RecruiterPage = () => {
             </span>
           </button>
         ),
-        cell: (info) => {
-          const value = info.getValue() as string;
-          return (
-            <span
-              className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${
-                value === "Active"
-                  ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
-                  : "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300"
-              }`}
-            >
-              {value}
-            </span>
-          );
-        },
+        cell: (info) => (
+          <span className="text-slate-600 dark:text-slate-400 font-mono">
+            {info.getValue() as string}
+          </span>
+        ),
       },
+
       {
         accessorKey: "Actions",
         enableSorting: false,
@@ -159,7 +230,7 @@ const RecruiterPage = () => {
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
-    data: DATA,
+    data: recruiters,
     columns,
     state: { sorting },
     onSortingChange: setSorting,
@@ -167,9 +238,8 @@ const RecruiterPage = () => {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  const onSubmit = (data: unknown) => {
-    toast.success("Recruiter added successfully");
-    console.log("Form Data:", data);
+  const onSubmit = (data: RecruiterFormValues) => {
+    createRecruiterMutation.mutate(data);
   };
 
   const methods = useForm<RecruiterFormValues>({
@@ -223,13 +293,21 @@ const RecruiterPage = () => {
             />
 
             <div className="flex justify-end mt-4">
-              <Button value="Create Recruiter" type="submit" />
+              <Button
+                value={
+                  createRecruiterMutation.isPending
+                    ? "Creating..."
+                    : "Create Recruiter"
+                }
+                type="submit"
+              />
             </div>
           </form>
         </FormProvider>
       </section>
 
       {/* Recruiter Table */}
+
       <section className="rounded-2xl p-6 shadow ring-1 ring-blue-200/70 bg-white dark:bg-slate-800 dark:ring-blue-900/40">
         <h2 className="text-xl font-semibold mb-5 text-slate-900 dark:text-slate-100">
           Recruiter List
@@ -256,21 +334,31 @@ const RecruiterPage = () => {
             </thead>
 
             <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="bg-slate-50 hover:bg-indigo-50/60 dark:bg-slate-700 dark:hover:bg-slate-600 transition"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-4">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </td>
-                  ))}
+              {isLoading ? (
+                <tr>
+                  <td colSpan={columns.length} className="text-center py-4">
+                    <div className="flex justify-center items-center">
+                      <div className="animate-spin rounded-full h-12 w-24 border-t-2 border-b-2 border-blue-900"></div>
+                    </div>
+                  </td>
                 </tr>
-              ))}
+              ) : (
+                table.getRowModel().rows.map((row) => (
+                  <tr
+                    key={row.id}
+                    className="bg-slate-50 hover:bg-indigo-50/60 dark:bg-slate-700 dark:hover:bg-slate-600 transition"
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id} className="px-4 py-4">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
@@ -284,10 +372,24 @@ const RecruiterPage = () => {
         description={`Update details for ${selectedRecruiter?.name}`}
       >
         <FormProvider {...editMethods}>
-          <form className="space-y-4 px-4 py-6">
+          <form
+            onSubmit={editMethods.handleSubmit((data) => {
+              if (!selectedRecruiter) return;
+
+              updateRecruiterMutation.mutate({
+                ...data,
+                _id: selectedRecruiter._id,
+              });
+            })}
+            className="space-y-4 px-4 py-6"
+          >
             <Input name="name" label="Recruiter Name" />
             <Input name="email" label="Recruiter Email" />
-
+            <PasswordInput
+              name="temPassword"
+              label="Temporary Password"
+              placeholder="Enter temporary password"
+            />
             <div className="flex justify-end gap-3">
               <SecondaryButton
                 value="Cancel"
@@ -312,7 +414,13 @@ const RecruiterPage = () => {
             className="text-black dark:text-white"
             onClick={() => setModalType(null)}
           />
-          <Button value="Delete" />
+          <Button
+            value="Delete"
+            onClick={() =>
+              selectedRecruiter &&
+              deleteRecruiterMutation.mutate(selectedRecruiter._id)
+            }
+          />
         </div>
       </Modal>
     </div>

@@ -1,20 +1,20 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IJob extends Document {
-  jobTitle: string;
-  employmentType: string;
-  jobSummary: string;
+  title: string;
+  type: string;
+  summary: string;
   companyName: string;
   companyDescription: string;
-  experienceLevel: string;
+  experience: string;
   education: string;
-  requiredSkills: string[];
+  skills: string[];
   niceToHave: string[];
 }
 
 const jobSchema = new Schema({
-  jobTitle: { type: String, required: true },
-  employmentType: { type: String, required: true },
+  title: { type: String, required: true },
+  type: { type: String, required: true },
 
   salaryRange: {
     min: Number,
@@ -23,7 +23,7 @@ const jobSchema = new Schema({
     period: String,
   },
 
-  jobSummary: String,
+  summary: String,
   companyName: String,
 
   location: {
@@ -36,7 +36,7 @@ const jobSchema = new Schema({
   experienceLevel: String,
   education: String,
 
-  requiredSkills: [String],
+  skills: [String],
   niceToHave: [String],
 });
 

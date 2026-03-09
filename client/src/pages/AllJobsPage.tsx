@@ -98,12 +98,12 @@ export default function AllJobsPage() {
       try {
         setLoading(true);
 
-        const response = await axios.get("/jobs.json");
+        const response = await axios.get("http://localhost:5000/api/jobs");
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const transformed = response.data.map((raw: any) => ({
-          id: raw.id,
-          title: raw.jobTitle,
+          id: raw._id,
+          title: raw.jobTitle || raw.title,
           company: raw.companyName,
           location:
             typeof raw.location === "object"
@@ -140,8 +140,8 @@ export default function AllJobsPage() {
 
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch =
-      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.company.toLowerCase().includes(searchQuery.toLowerCase());
+      job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job?.company?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesEmploymentType =
       filterEmploymentType === "All" ||
       job.employmentType === filterEmploymentType;
@@ -153,7 +153,7 @@ export default function AllJobsPage() {
     pageIndex * pageSize,
     (pageIndex + 1) * pageSize,
   );
-  console.log(paginatedJobs);
+
   const goToFirst = () => setPageIndex(0);
   const goToLast = () => setPageIndex(totalPages - 1);
   const goPrev = () => setPageIndex((p) => Math.max(p - 1, 0));

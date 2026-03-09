@@ -11,6 +11,8 @@ import StepJobsDetails from "../components/stepperform/StepJobsDetails";
 import SecondaryButton from "../components/ui/SecondaryButton";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 const steps = [
   "Job Details",
@@ -19,9 +21,13 @@ const steps = [
   "Review & Publish",
 ];
 
-export default function JobPostPage() {
+const JobPostPage = () => {
   const [step, setStep] = useState(1);
   const [isValidating, setIsValidating] = useState(false);
+
+  const navigate = useNavigate(); // move navigate here
+  const queryClient = useQueryClient();
+
   const methods = useForm<JobFormValues>({
     resolver: zodResolver(jobSchema),
     defaultValues: {
@@ -38,15 +44,41 @@ export default function JobPostPage() {
     },
     mode: "onChange",
   });
-  const {
-    trigger,
-    formState: { isSubmitting },
-    handleSubmit,
-    reset,
-  } = methods;
+
+  const { trigger, handleSubmit, reset } = methods;
+
+  // ---------------- TanStack Mutation ----------------
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const createJobMutation = useMutation<any, any, JobFormValues>({
+    mutationFn: async (jobData: JobFormValues) => {
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/api/jobs/create-job",
+          jobData,
+        );
+        return res.data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        console.error("Backend response error:", err.response?.data);
+        throw err; // let TanStack handle onError
+      }
+    },
+    onSuccess: () => {
+      toast.success("Job published successfully!");
+      reset();
+      navigate("/all-jobs");
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError: (error: any) => {
+      console.error("Failed to create job:", error.response?.data || error);
+      toast.error(error.response?.data?.message || "Failed to publish job");
+    },
+  });
+
+  // ---------------- Step Navigation ----------------
   const handleContinue = async () => {
     setIsValidating(true);
-
     let isStepValid = false;
 
     if (step === 1) {
@@ -60,26 +92,17 @@ export default function JobPostPage() {
     } else if (step === 3) {
       isStepValid = await trigger(["experience", "skills"]);
     }
+
     setIsValidating(false);
-    if (isStepValid) {
-      setStep((prev) => Math.min(prev + 1, steps.length));
-    }
-  };
-  const handleBack = () => {
-    setStep((prev) => Math.max(prev - 1, 1));
+    if (isStepValid) setStep((prev) => Math.min(prev + 1, steps.length));
   };
 
-  const navigate = useNavigate();
+  const handleBack = () => setStep((prev) => Math.max(prev - 1, 1));
 
-  const onSubmit = async (data: JobFormValues) => {
+  const onSubmit = (data: JobFormValues) => {
+    console.log("Sending job data:", data);
     if (step !== steps.length) return;
-
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1400));
-    console.log("Job posted:", data);
-    toast.success("Job published successfully!");
-    reset();
-    navigate("/all-jobs");
+    createJobMutation.mutate(data);
   };
 
   return (
@@ -91,18 +114,11 @@ export default function JobPostPage() {
             Fill in the details — we'll guide you step by step.
           </p>
         </div>
-        <div className="overflow-hidden rounded-2xl bg-white dark:bg-slate-800 shadow-xl ring-1  ring-gray-200/70">
+
+        <div className="overflow-hidden rounded-2xl bg-white dark:bg-slate-800 shadow-xl ring-1 ring-gray-200/70">
           <div className="px-6 pt-8 pb-10 sm:px-10">
             <FormProvider {...methods}>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (step === steps.length) {
-                    handleSubmit(onSubmit)(e);
-                  }
-                }}
-                noValidate
-              >
+              <form noValidate>
                 <Stepper steps={steps} currentStep={step} />
                 <div className="mt-10 min-h-90">
                   {step === 1 && <StepJobsDetails />}
@@ -110,15 +126,17 @@ export default function JobPostPage() {
                   {step === 3 && <StepRequirements />}
                   {step === 4 && <StepReview />}
                 </div>
+
                 <div className="mt-12 flex items-center justify-between gap-4 border-t border-gray-200 pt-6">
                   {step > 1 && (
                     <SecondaryButton
                       value="Back"
                       type="button"
-                      onClick={() => handleBack()}
-                      disabled={isSubmitting}
-                    ></SecondaryButton>
+                      onClick={handleBack}
+                      disabled={createJobMutation.isPending}
+                    />
                   )}
+
                   <div className="ml-auto flex items-center gap-4">
                     {step < steps.length ? (
                       <Button
@@ -126,21 +144,19 @@ export default function JobPostPage() {
                         onClick={handleContinue}
                         loading={isValidating}
                         value="Continue"
-                        disabled={isValidating || isSubmitting}
-                      ></Button>
+                        disabled={isValidating || createJobMutation.isPending}
+                      />
                     ) : (
-                      <button
-                        type="submit"
-                        className="px-5 py-2.5 relative rounded group font-medium text-white inline-block cursor-pointer "
-                      >
-                        <span className="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-linear-to-br from-[#1e5849] to-green-500"></span>
-                        <span className="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-linear-to-br filter group-active:opacity-0 rounded opacity-50 from-green-800 to-green-500"></span>
-                        <span className="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-linear-to-br filter group-active:opacity-0 group-hover:blur-sm from-green-600 to-green-500"></span>
-                        <span
-                          className={`absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-linear-to-br to-[#1e5849] from-[#1e5849]/40 `}
-                        ></span>
-                        <span className="relative">Publish Job</span>
-                      </button>
+                      <Button
+                        type="button" // change from "submit" to "button"
+                        onClick={handleSubmit(onSubmit)} // submit only when clicked
+                        value={
+                          createJobMutation.isPending
+                            ? "Publishing..."
+                            : "Publish Job"
+                        }
+                        disabled={createJobMutation.isPending}
+                      />
                     )}
                   </div>
                 </div>
@@ -151,4 +167,6 @@ export default function JobPostPage() {
       </div>
     </div>
   );
-}
+};
+
+export default JobPostPage;

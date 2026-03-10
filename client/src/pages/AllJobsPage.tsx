@@ -11,7 +11,7 @@ import {
   ChevronsRight,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router"; // corrected import (assuming react-router-dom)
+import { Link, useNavigate } from "react-router";
 import Button from "../components/ui/Button";
 import { Modal } from "../components/ui/Modal";
 import axios from "axios";
@@ -19,10 +19,10 @@ import Select from "../components/ui/Select";
 import { FormProvider, useForm } from "react-hook-form";
 import Input from "../components/ui/Input";
 import SecondaryButton from "../components/ui/SecondaryButton";
-import { MdEditOff, MdModeEdit } from "react-icons/md";
+import toast from "react-hot-toast";
+import { API_BASE_URL } from "@/config";
 
 interface Job {
-  summary: string;
   id: string;
   title: string;
   company: string;
@@ -43,15 +43,8 @@ export default function AllJobsPage() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editableJob, setEditableJob] = useState<Job | null>(null);
 
-  useEffect(() => {
-    if (selectedJob) {
-      setEditableJob(selectedJob);
-      setIsEditing(false);
-    }
-  }, [selectedJob]);
+  const navigate = useNavigate();
 
   const pageSize = 9;
 
@@ -77,19 +70,63 @@ export default function AllJobsPage() {
       "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200",
   };
 
-  const handleApprove = (job: Job | null) => {
+  const handleApprove = async (job: Job | null) => {
     if (!job) return;
-    console.log("Approved:", job.id);
+    try {
+      const { data } = await axios.patch(
+        `${API_BASE_URL}/jobs/${job.id}/status`,
+        {
+          status: "approved",
+        },
+      );
+
+      setJobs((prev) =>
+        prev.map((j) => (j.id === job.id ? { ...j, status: data.status } : j)),
+      );
+
+      setSelectedJob((prev) =>
+        prev && prev.id === job.id ? { ...prev, status: data.status } : prev,
+      );
+    } catch (err) {
+      console.error("Failed to approve job", err);
+    }
+    setSelectedJob(null);
   };
 
-  const handleReject = (job: Job | null) => {
+  const handleReject = async (job: Job | null) => {
     if (!job) return;
-    console.log("Rejected:", job.id);
+    try {
+      const { data } = await axios.patch(
+        `${API_BASE_URL}/jobs/${job.id}/status`,
+        {
+          status: "rejected",
+        },
+      );
+      // update client state
+      setJobs((prev) =>
+        prev.map((j) => (j.id === job.id ? { ...j, status: data.status } : j)),
+      );
+
+      setSelectedJob((prev) =>
+        prev && prev.id === job.id ? { ...prev, status: data.status } : prev,
+      );
+    } catch (err) {
+      console.error("Failed to reject job", err);
+    }
+    setSelectedJob(null);
   };
 
-  const handleDelete = (job: Job | null) => {
+  const handleDelete = async (job: Job | null) => {
     if (!job) return;
-    console.log("Deleted:", job.id);
+    try {
+      await axios.delete(`${API_BASE_URL}/jobs/${job.id}`);
+      setJobs((prev) => prev.filter((j) => j.id !== job.id));
+      setSelectedJob(null); // close modal
+      toast.success("Job deleted successfully");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to delete job");
+    }
   };
 
   // Fetch & transform jobs
@@ -98,30 +135,43 @@ export default function AllJobsPage() {
       try {
         setLoading(true);
 
-        const response = await axios.get("http://localhost:5000/api/jobs");
+        const response = await axios.get(`${API_BASE_URL}/jobs`);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const transformed = response.data.map((raw: any) => ({
+        const transformed = response?.data?.map((raw: any) => ({
           id: raw._id,
-          title: raw.jobTitle || raw.title,
+
+          title: raw.title || raw.jobTitle,
+
           company: raw.companyName,
+
           location:
             typeof raw.location === "object"
               ? `${raw.location.city || ""} ${raw.location.country || ""}`.trim() ||
                 "Remote"
               : raw.location || "Remote",
-          employmentType: raw.employmentType || "Full-time",
-          experienceLevel: raw.experienceLevel || "Not specified",
+
+          employmentType: raw.type || "Full-time",
+
+          experienceLevel: raw.experience || "Not specified",
+
           salaryRange: raw.salaryRange
             ? `$${raw.salaryRange.min.toLocaleString()} – $${raw.salaryRange.max.toLocaleString()} ${raw.salaryRange.currency || "USD"} / ${raw.salaryRange.period || "year"}`
-            : "Not disclosed",
-          postedAt: "March 2026",
+            : "Negotiable",
+
+          postedAt: new Date(raw.createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }),
+
           description:
-            raw.jobSummary ||
-            raw.companyDescription ||
-            "No description available",
-          requirements: raw.requiredSkills || [],
+            raw.summary || raw.companyDescription || "No description available",
+
+          requirements: raw.skills || [],
+
           niceToHave: raw.niceToHave || [],
+
           status: raw.status || "pending",
         }));
 
@@ -201,6 +251,7 @@ export default function AllJobsPage() {
                 "Part-time",
                 "Contract",
                 "Internship",
+                "Remote",
               ]}
             />
           </div>
@@ -357,87 +408,18 @@ export default function AllJobsPage() {
       {/* Modal */}
       <Modal
         open={!!selectedJob}
-        onOpenChange={() => {
-          setSelectedJob(null);
-          setIsEditing(false);
-        }}
-        title={
-          isEditing ? (
-            <input
-              value={editableJob?.title ?? ""}
-              onChange={(e) =>
-                setEditableJob((prev) =>
-                  prev ? { ...prev, title: e.target.value } : null,
-                )
-              }
-              className="w-full bg-transparent border-b border-slate-300 
-                       dark:border-slate-600 
-                       focus:border-indigo-500 
-                       outline-none font-mediums"
-              placeholder="Job Title"
-            />
-          ) : (
-            editableJob?.title
-          )
-        }
-        description={
-          isEditing ? (
-            <div className="flex gap-2">
-              <input
-                value={editableJob?.company ?? ""}
-                onChange={(e) =>
-                  setEditableJob((prev) =>
-                    prev ? { ...prev, company: e.target.value } : null,
-                  )
-                }
-                className="bg-transparent border-b border-slate-300 focus:outline-none 
-                       dark:border-slate-600 
-                       focus:border-indigo-500 "
-                placeholder="Company Name"
-              />
-              <input
-                value={editableJob?.location ?? ""}
-                onChange={(e) =>
-                  setEditableJob((prev) =>
-                    prev ? { ...prev, location: e.target.value } : null,
-                  )
-                }
-                className="bg-transparent border-b border-slate-300 dark:border-slate-600 focus:outline-none focus:border-indigo-500"
-                placeholder="Location"
-              />
-            </div>
-          ) : (
-            `${editableJob?.company} • ${editableJob?.location}`
-          )
-        }
+        onOpenChange={() => setSelectedJob(null)}
+        title={selectedJob?.title}
+        description={`${selectedJob?.company} • ${selectedJob?.location}`}
       >
-        {editableJob && (
+        {selectedJob && (
           <div className="max-h-[75vh] p-1 space-y-8 text-slate-800 dark:text-slate-100 custom-scrollbar">
             <div className="p-6 relative space-y-6">
-              {/* Edit Toggle Button */}
-              <button
-                onClick={() => setIsEditing(!isEditing)}
-                className="absolute top-5 right-5 p-2.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer"
-                title={isEditing ? "Cancel Edit" : "Edit Job"}
-                aria-label={isEditing ? "Cancel editing" : "Edit job details"}
-              >
-                {isEditing ? (
-                  <span>
-                    <MdEditOff size={22} />
-                  </span>
-                ) : (
-                  <span>
-                    <MdModeEdit size={22} />
-                  </span>
-                )}
-              </button>
-
               {/* Job Overview */}
               <section className="space-y-4">
                 <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
                   Overview
                 </h2>
-
                 <div className="grid sm:grid-cols-2 gap-6">
                   {[
                     {
@@ -454,34 +436,15 @@ export default function AllJobsPage() {
                     <div
                       key={item.field}
                       className="p-5 rounded-xl bg-linear-to-br from-slate-50 to-white 
-                   dark:from-slate-800 dark:to-slate-900 
-                   border border-slate-200/60 dark:border-slate-700 
-                   shadow-sm"
+                           dark:from-slate-800 dark:to-slate-900 
+                           border border-slate-200/60 dark:border-slate-700 shadow-sm"
                     >
                       <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
                         {item.label}
                       </p>
-
-                      {isEditing && item.field !== "postedAt" ? (
-                        <input
-                          value={editableJob?.[item.field] ?? ""}
-                          onChange={(e) =>
-                            setEditableJob((prev) =>
-                              prev
-                                ? { ...prev, [item.field]: e.target.value }
-                                : null,
-                            )
-                          }
-                          className="w-full bg-transparent border-b border-slate-300 
-                       dark:border-slate-600 
-                       focus:border-indigo-500 
-                       outline-none font-medium"
-                        />
-                      ) : (
-                        <p className="font-semibold text-slate-900 dark:text-white">
-                          {editableJob?.[item.field] || "—"}
-                        </p>
-                      )}
+                      <p className="font-semibold text-slate-900 dark:text-white">
+                        {selectedJob[item.field] || "—"}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -492,149 +455,62 @@ export default function AllJobsPage() {
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
                   Job Summary
                 </h3>
-
-                {isEditing ? (
-                  <textarea
-                    value={editableJob?.description ?? ""}
-                    onChange={(e) =>
-                      setEditableJob((prev) =>
-                        prev ? { ...prev, description: e.target.value } : null,
-                      )
-                    }
-                    className="w-full rounded-xl border border-slate-300 dark:border-slate-600 p-4 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
-                    rows={5}
-                  />
-                ) : (
-                  <p className="leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line">
-                    {editableJob?.description || "No summary provided."}
-                  </p>
-                )}
+                <p className="leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line">
+                  {selectedJob.description || "No summary provided."}
+                </p>
               </section>
 
-              {/* Lists: Requirements & Nice to Have */}
-              {[
-                { title: "Requirements", field: "requirements" as const },
-                { title: "Nice to Have", field: "niceToHave" as const },
-              ].map((section) => {
-                const fieldValue = editableJob[section.field];
-                return (
-                  (fieldValue?.length > 0 || isEditing) && (
-                    <section key={section.title}>
-                      <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
-                        {section.title}
-                      </h3>
-                      <ul className="space-y-3">
-                        {isEditing ? (
-                          <>
-                            {fieldValue?.map((item: string, idx: number) => (
-                              <li
-                                key={idx}
-                                className="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-700/50 p-3 group"
-                              >
-                                <input
-                                  value={item}
-                                  onChange={(e) => {
-                                    const updated = [...fieldValue];
-                                    updated[idx] = e.target.value;
-                                    setEditableJob((prev) =>
-                                      prev
-                                        ? { ...prev, [section.field]: updated }
-                                        : null,
-                                    );
-                                  }}
-                                  className="flex-1 bg-transparent outline-none border-b border-slate-300 dark:border-slate-600 focus:border-indigo-500 cursor-text"
-                                />
-                                <button
-                                  onClick={() => {
-                                    const updated = fieldValue.filter(
-                                      (_, i) => i !== idx,
-                                    );
-                                    setEditableJob((prev) =>
-                                      prev
-                                        ? { ...prev, [section.field]: updated }
-                                        : null,
-                                    );
-                                  }}
-                                  className="text-rose-600 hover:text-rose-800 opacity-70 hover:opacity-100 cursor-pointer transition"
-                                  title="Remove item"
-                                >
-                                  ✕
-                                </button>
-                              </li>
-                            ))}
-                            <button
-                              onClick={() => {
-                                const updated = [...(fieldValue || []), ""];
-                                setEditableJob((prev) =>
-                                  prev
-                                    ? { ...prev, [section.field]: updated }
-                                    : null,
-                                );
-                              }}
-                              className="mt-2 text-indigo-600 hover:text-indigo-800 text-sm font-medium cursor-pointer"
-                            >
-                              + Add item
-                            </button>
-                          </>
-                        ) : (
-                          fieldValue?.map((item: string, idx: number) => (
-                            <li
-                              key={idx}
-                              className="flex items-start gap-3 rounded-lg bg-slate-50 dark:bg-slate-800/60 p-3.5"
-                            >
-                              <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-indigo-400/70" />
-                              <span className="text-slate-700 dark:text-slate-300">
-                                {item}
-                              </span>
-                            </li>
-                          ))
-                        )}
-                      </ul>
-                    </section>
-                  )
-                );
-              })}
+              {/* Requirements */}
+              <section>
+                <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
+                  Requirements
+                </h3>
+                <p className="whitespace-pre-line text-slate-700 dark:text-slate-300">
+                  {(selectedJob.requirements || []).join("\n")}
+                </p>
+              </section>
+
+              {/* Nice to Have */}
+              <section>
+                <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
+                  Nice to Have
+                </h3>
+                <p className="whitespace-pre-line text-slate-700 dark:text-slate-300">
+                  {(selectedJob.niceToHave || []).join("\n")}
+                </p>
+              </section>
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-200 dark:border-slate-700 pt-8 mt-6">
-                {isEditing ? (
-                  <>
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="flex md:justify-between gap-3">
                     <Button
-                      onClick={() => {
-                        setIsEditing(false);
-                      }}
-                      value="Save Changes"
+                      onClick={() => handleApprove(selectedJob)}
+                      className="bg-emerald-600 hover:bg-emerald-700 cursor-pointer w-[50%] md:w-full"
+                      value="Approve"
+                      disabled={selectedJob.status === "approved"}
                     />
                     <SecondaryButton
-                      onClick={() => {
-                        setEditableJob(selectedJob); // revert changes
-                        setIsEditing(false);
-                      }}
-                      value="Cancel"
+                      onClick={() => handleReject(selectedJob)}
+                      className="border-rose-600 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer w-[50%] md:w-full"
+                      value="Reject"
+                      disabled={selectedJob.status === "rejected"}
                     />
-                  </>
-                ) : (
-                  <>
-                    <div className="flex flex-wrap gap-3">
-                      <Button
-                        onClick={() => handleApprove(selectedJob)}
-                        className="bg-emerald-600 hover:bg-emerald-700 cursor-pointer"
-                        value="Approve"
-                      />
-                      <SecondaryButton
-                        onClick={() => handleReject(selectedJob)}
-                        className="border-rose-600 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer"
-                        value="Reject"
-                      />
-                    </div>
-                    <button
-                      onClick={() => handleDelete(selectedJob)}
-                      className="rounded-lg bg-rose-600 px-6 py-2.5 font-medium text-white hover:bg-rose-700 transition-colors cursor-pointer"
-                    >
-                      Delete
-                    </button>
-                  </>
-                )}
+                  </div>
+
+                  {/* Navigate to Edit Page */}
+                  <SecondaryButton
+                    value="Edit"
+                    onClick={() => {
+                      if (selectedJob) navigate(`/edit-job/${selectedJob.id}`);
+                    }}
+                  />
+
+                  <SecondaryButton
+                    value="Delete"
+                    onClick={() => handleDelete(selectedJob)}
+                  />
+                </div>
               </div>
             </div>
           </div>

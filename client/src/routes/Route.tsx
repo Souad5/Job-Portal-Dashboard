@@ -8,6 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import Login from "../components/Login";
 import RecruiterPage from "../pages/RecruiterPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import JobEditPage from "@/pages/JobEditPage";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/job-post",
         element: <JobPostPage />,
+      },
+      {
+        path: "/edit-job/:id",
+        element: <JobEditPage />,
       },
       {
         path: "/all-jobs",

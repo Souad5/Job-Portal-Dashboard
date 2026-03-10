@@ -19,6 +19,16 @@ export const getJobs = async (req: Request, res: Response) => {
   res.json(jobs);
 };
 
+// ---------------get job by id-------------------
+export const jobsById = async (req: Request, res: Response) => {
+  try {
+    const job = await Job.findById(req.params.id); // use Job
+    if (!job) return res.status(404).json({ message: "Job not found" });
+    res.json(job);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
 // -------------------update jobs-------------------------
 
 export const updateJob = async (req: Request, res: Response) => {
@@ -52,6 +62,20 @@ export const patchJob = async (req: Request, res: Response) => {
     res.json(job);
   } catch (error) {
     res.status(500).json({ error });
+  }
+};
+
+// -----------------status Update--------------------
+
+export const statusUpdate = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { status } = req.body; // "approved" | "rejected"
+
+  try {
+    const job = await Job.findByIdAndUpdate(id, { status }, { new: true });
+    res.json(job);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to update status" });
   }
 };
 

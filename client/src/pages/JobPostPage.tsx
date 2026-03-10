@@ -13,6 +13,7 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { API_BASE_URL } from "@/config";
 
 const steps = [
   "Job Details",
@@ -25,7 +26,7 @@ const JobPostPage = () => {
   const [step, setStep] = useState(1);
   const [isValidating, setIsValidating] = useState(false);
 
-  const navigate = useNavigate(); // move navigate here
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const methods = useForm<JobFormValues>({
@@ -35,12 +36,15 @@ const JobPostPage = () => {
       type: "Full-time",
       summary: "",
       companyName: "",
-      location: "",
       companyDescription: "",
       experience: "",
       education: "",
       skills: "",
       niceToHave: "",
+
+      salaryMin: "",
+      salaryMax: "",
+      workMode: "Onsite",
     },
     mode: "onChange",
   });
@@ -48,12 +52,13 @@ const JobPostPage = () => {
   const { trigger, handleSubmit, reset } = methods;
 
   // ---------------- TanStack Mutation ----------------
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createJobMutation = useMutation<any, any, JobFormValues>({
     mutationFn: async (jobData: JobFormValues) => {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/jobs/create-job",
+          `${API_BASE_URL}/jobs/create-job`,
           jobData,
         );
         return res.data;
@@ -86,7 +91,7 @@ const JobPostPage = () => {
     } else if (step === 2) {
       isStepValid = await trigger([
         "companyName",
-        "location",
+        "workMode",
         "companyDescription",
       ]);
     } else if (step === 3) {
@@ -102,7 +107,16 @@ const JobPostPage = () => {
   const onSubmit = (data: JobFormValues) => {
     console.log("Sending job data:", data);
     if (step !== steps.length) return;
-    createJobMutation.mutate(data);
+    const payload = {
+      ...data,
+      salaryRange: {
+        min: data.salaryMin ? Number(data.salaryMin) : undefined,
+        max: data.salaryMax ? Number(data.salaryMax) : undefined,
+        currency: "USD",
+        period: "year",
+      },
+    };
+    createJobMutation.mutate(payload);
   };
 
   return (
@@ -148,8 +162,8 @@ const JobPostPage = () => {
                       />
                     ) : (
                       <Button
-                        type="button" // change from "submit" to "button"
-                        onClick={handleSubmit(onSubmit)} // submit only when clicked
+                        type="button"
+                        onClick={handleSubmit(onSubmit)}
                         value={
                           createJobMutation.isPending
                             ? "Publishing..."

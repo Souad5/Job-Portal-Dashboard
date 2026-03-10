@@ -55,7 +55,7 @@ export default function StepReview() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <ReviewItem label="Company Name" value={values.companyName} />
-          <ReviewItem label="Location" value={values.location} />
+          <ReviewItem label="Work Mode" value={values.workMode} />
         </div>
       </section>
 

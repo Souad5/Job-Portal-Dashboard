@@ -24,6 +24,7 @@ import PasswordInput from "../components/ui/PasswordInput";
 import { Modal } from "../components/ui/Modal";
 import SecondaryButton from "../components/ui/SecondaryButton";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "@/config";
 
 /* ---------------- types ---------------- */
 type Recruiter = {
@@ -47,15 +48,12 @@ const RecruiterPage = () => {
 
   const createRecruiterMutation = useMutation({
     mutationFn: async (data: RecruiterFormValues) => {
-      const res = await axios.post(
-        "http://localhost:5000/api/admin/create-recruiter",
-        {
-          name: data.recruiterName,
-          email: data.recruiterEmail,
-          temPassword: data.temPassword,
-          confirmTemPassword: data.confirmPassword,
-        },
-      );
+      const res = await axios.post(`${API_BASE_URL}/admin/create-recruiter`, {
+        name: data.recruiterName,
+        email: data.recruiterEmail,
+        temPassword: data.temPassword,
+        confirmTemPassword: data.confirmPassword,
+      });
 
       return res.data;
     },
@@ -78,9 +76,7 @@ const RecruiterPage = () => {
   const { data: recruiters = [], isLoading } = useQuery({
     queryKey: ["recruiters"],
     queryFn: async () => {
-      const res = await axios.get(
-        "http://localhost:5000/api/admin/recruiter-all",
-      );
+      const res = await axios.get(`${API_BASE_URL}/admin/recruiter-all`);
       return res.data;
     },
   });
@@ -90,7 +86,7 @@ const RecruiterPage = () => {
   const updateRecruiterMutation = useMutation({
     mutationFn: async (data: Recruiter) => {
       const res = await axios.put(
-        `http://localhost:5000/api/admin/recruiter/${data._id}`,
+        `${API_BASE_URL}/admin/recruiter/${data._id}`,
         {
           name: data.name,
           email: data.email,
@@ -111,9 +107,7 @@ const RecruiterPage = () => {
 
   const deleteRecruiterMutation = useMutation({
     mutationFn: async (id: string) => {
-      const res = await axios.delete(
-        `http://localhost:5000/api/admin/recruiter/${id}`,
-      );
+      const res = await axios.delete(`${API_BASE_URL}/admin/recruiter/${id}`);
       return res.data;
     },
     onSuccess: () => {

@@ -1,4 +1,5 @@
 import Input from "../ui/Input";
+import Select from "../ui/Select";
 import Textarea from "../ui/Textarea";
 import { SiMatternet } from "react-icons/si";
 
@@ -24,11 +25,10 @@ export default function StepCompanyInfo() {
           required
         />
 
-        <Input
-          placeholder="Enter Location"
-          name="location"
-          label="Location"
-          required
+        <Select
+          name="workMode"
+          label="Work Mode"
+          options={["Onsite", "Remote", "Hybrid"]}
         />
       </div>
 

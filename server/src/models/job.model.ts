@@ -7,37 +7,31 @@ export interface IJob extends Document {
   companyName: string;
   companyDescription: string;
   experience: string;
-  education: string;
+  education?: string;
   skills: string[];
   niceToHave: string[];
+  status: "approved" | "rejected" | "pending";
+  createdAt: Date;
 }
 
-const jobSchema = new Schema({
-  title: { type: String, required: true },
-  type: { type: String, required: true },
-
-  salaryRange: {
-    min: Number,
-    max: Number,
-    currency: String,
-    period: String,
+const jobSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    type: { type: String, required: true },
+    summary: String,
+    companyName: String,
+    companyDescription: String,
+    experience: String,
+    education: String,
+    skills: [String],
+    niceToHave: [String],
+    status: {
+      type: String,
+      enum: ["approved", "rejected", "pending"],
+      default: "pending",
+    },
   },
+  { timestamps: true, versionKey: false },
+);
 
-  summary: String,
-  companyName: String,
-
-  location: {
-    city: String,
-    country: String,
-    timezonePreference: String,
-  },
-
-  companyDescription: String,
-  experienceLevel: String,
-  education: String,
-
-  skills: [String],
-  niceToHave: [String],
-});
-
-export default mongoose.model("Job", jobSchema);
+export default mongoose.model<IJob>("Job", jobSchema);

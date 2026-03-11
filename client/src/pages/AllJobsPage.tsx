@@ -21,6 +21,7 @@ import Input from "../components/ui/Input";
 import SecondaryButton from "../components/ui/SecondaryButton";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "@/config";
+import Loading from "@/components/ui/Loading";
 
 interface Job {
   id: string;
@@ -34,6 +35,7 @@ interface Job {
   description: string;
   requirements: string[];
   niceToHave: string[];
+  workMode: string;
   status?: "approved" | "rejected" | "pending";
 }
 
@@ -69,6 +71,65 @@ export default function AllJobsPage() {
     Internship:
       "bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200",
   };
+
+  // Fetch & transform jobs
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+
+        const response = await axios.get(`${API_BASE_URL}/jobs`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const transformed = response?.data?.map((raw: any) => ({
+          id: raw._id,
+
+          title: raw.title || raw.jobTitle,
+
+          company: raw.companyName,
+
+          location:
+            typeof raw.location === "object"
+              ? `${raw.location.city || ""} ${raw.location.country || ""}`.trim() ||
+                "Remote"
+              : raw.location || "Remote",
+
+          employmentType: raw.type || "Full-time",
+
+          experienceLevel: raw.experience || "Not specified",
+
+          salaryRange: raw.salaryRange
+            ? `$${raw.salaryRange.min.toLocaleString()} – $${raw.salaryRange.max.toLocaleString()} ${raw.salaryRange.currency || "USD"} / ${raw.salaryRange.period || "year"}`
+            : "Negotiable",
+
+          postedAt: new Date(raw.createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          }),
+
+          description:
+            raw.summary || raw.companyDescription || "No description available",
+
+          requirements: raw.skills || [],
+
+          niceToHave: raw.niceToHave || [],
+
+          status: raw.status || "pending",
+          workMode: raw.workMode || "Not specify",
+        }));
+
+        setJobs(transformed);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load jobs. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   const handleApprove = async (job: Job | null) => {
     if (!job) return;
@@ -129,65 +190,6 @@ export default function AllJobsPage() {
     }
   };
 
-  // Fetch & transform jobs
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        setLoading(true);
-
-        const response = await axios.get(`${API_BASE_URL}/jobs`);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const transformed = response?.data?.map((raw: any) => ({
-          id: raw._id,
-
-          title: raw.title || raw.jobTitle,
-
-          company: raw.companyName,
-
-          location:
-            typeof raw.location === "object"
-              ? `${raw.location.city || ""} ${raw.location.country || ""}`.trim() ||
-                "Remote"
-              : raw.location || "Remote",
-
-          employmentType: raw.type || "Full-time",
-
-          experienceLevel: raw.experience || "Not specified",
-
-          salaryRange: raw.salaryRange
-            ? `$${raw.salaryRange.min.toLocaleString()} – $${raw.salaryRange.max.toLocaleString()} ${raw.salaryRange.currency || "USD"} / ${raw.salaryRange.period || "year"}`
-            : "Negotiable",
-
-          postedAt: new Date(raw.createdAt).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-          }),
-
-          description:
-            raw.summary || raw.companyDescription || "No description available",
-
-          requirements: raw.skills || [],
-
-          niceToHave: raw.niceToHave || [],
-
-          status: raw.status || "pending",
-        }));
-
-        setJobs(transformed);
-        setError(null);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load jobs. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchJobs();
-  }, []);
-
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch =
       job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -210,11 +212,7 @@ export default function AllJobsPage() {
   const goNext = () => setPageIndex((p) => Math.min(p + 1, totalPages - 1));
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-slate-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-900 dark:border-sky-400" />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) return <p className="text-red-500 text-center py-10">{error}</p>;
@@ -406,21 +404,41 @@ export default function AllJobsPage() {
       )}
 
       {/* Modal */}
-      <Modal
-        open={!!selectedJob}
-        onOpenChange={() => setSelectedJob(null)}
-        title={selectedJob?.title}
-        description={`${selectedJob?.company} • ${selectedJob?.location}`}
-      >
+      <Modal open={!!selectedJob} onOpenChange={() => setSelectedJob(null)}>
         {selectedJob && (
-          <div className="max-h-[75vh] p-1 space-y-8 text-slate-800 dark:text-slate-100 custom-scrollbar">
-            <div className="p-6 relative space-y-6">
-              {/* Job Overview */}
-              <section className="space-y-4">
-                <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
-                  Overview
-                </h2>
-                <div className="grid sm:grid-cols-2 gap-6">
+          <div className="max-h-[80vh] custom-scrollbar">
+            {/* Header */}
+            <div className="border-b border-slate-200 dark:border-slate-700 p-6">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+                {selectedJob.title}
+              </h2>
+
+              <div className="flex items-center gap-3 mt-2 text-slate-500">
+                <span>{selectedJob.company}</span>
+                <span>•</span>
+                <span>{selectedJob.workMode}</span>
+
+                <span
+                  className={`ml-auto text-xs px-3 py-1 rounded-full font-medium
+              ${
+                selectedJob.status === "approved"
+                  ? "bg-emerald-100 text-emerald-700"
+                  : selectedJob.status === "rejected"
+                    ? "bg-rose-100 text-rose-700"
+                    : "bg-amber-100 text-amber-700"
+              }`}
+                >
+                  {selectedJob.status || "pending"}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-8 text-slate-800 dark:text-slate-100">
+              {/* Overview */}
+              <section>
+                <h3 className="text-lg font-semibold mb-4">Job Overview</h3>
+
+                <div className="grid sm:grid-cols-2 gap-4">
                   {[
                     {
                       label: "Employment Type",
@@ -435,14 +453,12 @@ export default function AllJobsPage() {
                   ].map((item) => (
                     <div
                       key={item.field}
-                      className="p-5 rounded-xl bg-linear-to-br from-slate-50 to-white 
-                           dark:from-slate-800 dark:to-slate-900 
-                           border border-slate-200/60 dark:border-slate-700 shadow-sm"
+                      className="p-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"
                     >
-                      <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+                      <p className="text-xs text-slate-500 mb-1">
                         {item.label}
                       </p>
-                      <p className="font-semibold text-slate-900 dark:text-white">
+                      <p className="font-medium text-slate-900 dark:text-white">
                         {selectedJob[item.field] || "—"}
                       </p>
                     </div>
@@ -451,66 +467,62 @@ export default function AllJobsPage() {
               </section>
 
               {/* Job Summary */}
-              <section className="space-y-4 mt-4">
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
-                  Job Summary
-                </h3>
-                <p className="leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line">
+              <section>
+                <h3 className="text-lg font-semibold mb-3">Job Summary</h3>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
                   {selectedJob.description || "No summary provided."}
                 </p>
               </section>
 
               {/* Requirements */}
               <section>
-                <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
-                  Requirements
-                </h3>
-                <p className="whitespace-pre-line text-slate-700 dark:text-slate-300">
-                  {(selectedJob.requirements || []).join("\n")}
-                </p>
+                <h3 className="text-lg font-semibold mb-3">Requirements</h3>
+                <ul className="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-300">
+                  {(selectedJob.requirements || []).map(
+                    (req: string, i: number) => (
+                      <li key={i}>{req}</li>
+                    ),
+                  )}
+                </ul>
               </section>
 
               {/* Nice to Have */}
               <section>
-                <h3 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
-                  Nice to Have
-                </h3>
-                <p className="whitespace-pre-line text-slate-700 dark:text-slate-300">
-                  {(selectedJob.niceToHave || []).join("\n")}
-                </p>
+                <h3 className="text-lg font-semibold mb-3">Nice to Have</h3>
+                <ul className="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-300">
+                  {(selectedJob.niceToHave || []).map(
+                    (item: string, i: number) => (
+                      <li key={i}>{item}</li>
+                    ),
+                  )}
+                </ul>
               </section>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 border-t border-slate-200 dark:border-slate-700 pt-8 mt-6">
-                <div className="flex flex-col gap-4 w-full">
-                  <div className="flex md:justify-between gap-3">
-                    <Button
-                      onClick={() => handleApprove(selectedJob)}
-                      className="bg-emerald-600 hover:bg-emerald-700 cursor-pointer w-[50%] md:w-full"
-                      value="Approve"
-                      disabled={selectedJob.status === "approved"}
-                    />
-                    <SecondaryButton
-                      onClick={() => handleReject(selectedJob)}
-                      className="border-rose-600 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 cursor-pointer w-[50%] md:w-full"
-                      value="Reject"
-                      disabled={selectedJob.status === "rejected"}
-                    />
-                  </div>
+              {/* Actions */}
+              <div className="border-t border-slate-200 dark:border-slate-700 pt-6 flex flex-wrap gap-3">
+                <Button
+                  onClick={() => handleApprove(selectedJob)}
+                  className="bg-emerald-600 hover:bg-emerald-700"
+                  value="Approve"
+                  disabled={selectedJob.status === "approved"}
+                />
 
-                  {/* Navigate to Edit Page */}
-                  <SecondaryButton
-                    value="Edit"
-                    onClick={() => {
-                      if (selectedJob) navigate(`/edit-job/${selectedJob.id}`);
-                    }}
-                  />
+                <SecondaryButton
+                  onClick={() => handleReject(selectedJob)}
+                  className="border-rose-600 text-rose-600 hover:bg-rose-50"
+                  value="Reject"
+                  disabled={selectedJob.status === "rejected"}
+                />
 
-                  <SecondaryButton
-                    value="Delete"
-                    onClick={() => handleDelete(selectedJob)}
-                  />
-                </div>
+                <SecondaryButton
+                  value="Edit"
+                  onClick={() => navigate(`/edit-job/${selectedJob.id}`)}
+                />
+
+                <SecondaryButton
+                  value="Delete"
+                  onClick={() => handleDelete(selectedJob)}
+                />
               </div>
             </div>
           </div>

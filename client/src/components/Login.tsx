@@ -5,6 +5,8 @@ import Input from "../components/ui/Input";
 import PasswordInput from "../components/ui/PasswordInput";
 import Button from "../components/ui/Button";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { API_BASE_URL } from "@/config";
 
 type LoginFormInputs = {
   email: string;
@@ -22,7 +24,6 @@ const Login = () => {
       remember: false,
     },
   });
-  const notify = () => toast.success("Login successful!");
 
   const {
     handleSubmit,
@@ -30,10 +31,22 @@ const Login = () => {
   } = methods;
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
-    console.log("Login data:", data);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    notify();
-    navigate("/dashboard");
+    try {
+      const res = await axios.post(`${API_BASE_URL}/admin/login`, {
+        email: data.email,
+        password: data.password,
+      });
+
+      toast.success("Login successful!");
+
+      // save recruiter info
+      localStorage.setItem("recruiter", JSON.stringify(res.data.recruiter));
+
+      navigate("/dashboard");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Login failed");
+    }
   };
 
   return (

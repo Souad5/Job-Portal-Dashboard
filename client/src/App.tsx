@@ -1,6 +1,7 @@
 import DashBoardLayout from "./MainLayout/DashBoardLayout";
 import "@radix-ui/themes/styles.css";
 import { ThemeProvider } from "next-themes";
+import ProtectedRoute from "./guards/ProtectedRoute";
 
 function App() {
   return (
@@ -10,7 +11,9 @@ function App() {
         defaultTheme="light"
         themes={["light", "dark"]}
       >
-        <DashBoardLayout />
+        <ProtectedRoute>
+          <DashBoardLayout />
+        </ProtectedRoute>
       </ThemeProvider>
     </>
   );

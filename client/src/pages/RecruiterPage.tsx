@@ -25,6 +25,7 @@ import { Modal } from "../components/ui/Modal";
 import SecondaryButton from "../components/ui/SecondaryButton";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "@/config";
+import Loading from "@/components/ui/Loading";
 
 /* ---------------- types ---------------- */
 type Recruiter = {
@@ -331,9 +332,7 @@ const RecruiterPage = () => {
               {isLoading ? (
                 <tr>
                   <td colSpan={columns.length} className="text-center py-4">
-                    <div className="flex justify-center items-center">
-                      <div className="animate-spin rounded-full h-12 w-24 border-t-2 border-b-2 border-blue-900"></div>
-                    </div>
+                    <Loading />
                   </td>
                 </tr>
               ) : (

@@ -12,7 +12,7 @@ import SecondaryButton from "../components/ui/SecondaryButton";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { API_BASE_URL } from "@/config";
 
 const steps = [
@@ -41,7 +41,6 @@ const JobPostPage = () => {
       education: "",
       skills: "",
       niceToHave: "",
-
       salaryMin: "",
       salaryMax: "",
       workMode: "Onsite",
@@ -62,10 +61,10 @@ const JobPostPage = () => {
           jobData,
         );
         return res.data;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (err: any) {
-        console.error("Backend response error:", err.response?.data);
-        throw err; // let TanStack handle onError
+      } catch (err) {
+        const error = err as AxiosError;
+        console.error("Backend response error:", error.response?.data);
+        throw err;
       }
     },
     onSuccess: () => {

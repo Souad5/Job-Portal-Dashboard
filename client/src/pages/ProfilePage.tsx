@@ -1,193 +1,230 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../components/ui/Button";
 import SecondaryButton from "../components/ui/SecondaryButton";
 import { Modal } from "../components/ui/Modal";
 import Input from "../components/ui/Input";
 import { FormProvider, useForm } from "react-hook-form";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { API_BASE_URL, IMGBB_API_KEY } from "@/config"; // IMGBB_API_KEY required
+import Loading from "@/components/ui/Loading";
+
+type ProfileForm = {
+  name: string;
+  email: string;
+  role: string;
+  dateOfBirth: string;
+  country: string;
+  city: string;
+  postalCode: string;
+  phone: string;
+  profilePic?: string;
+};
 
 const ProfilePage = () => {
   const [open, setOpen] = useState(false);
-  const [profilePic, setProfilePic] = useState(
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIf4R5qPKHPNMyAqV-FjS_OTBB8pfUV29Phg&s",
-  );
+  const [profile, setProfile] = useState<ProfileForm | null>(null);
+  const [profilePic, setProfilePic] = useState<string>("");
 
-  const methods = useForm({
-    defaultValues: {
-      firstName: "Md Souad",
-      lastName: "Al Kabir",
-      email: "souadalkabir@gmail.com",
-      role: "Admin",
-      dateOfBirth: "2026-12-12",
-      country: "Bangladesh",
-      city: "Dhaka",
-      postalCode: "1229",
-      phone: "+8801830807523",
+  const user = JSON.parse(localStorage.getItem("recruiter") || "{}");
+
+  const methods = useForm<ProfileForm>({
+    defaultValues: profile || {
+      name: "",
+      email: "",
+      role: "",
+      dateOfBirth: "",
+      country: "",
+      city: "",
+      postalCode: "",
+      phone: "",
+      profilePic: "",
     },
   });
 
-  const handleProfileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) setProfilePic(event.target.result as string);
-      };
-      reader.readAsDataURL(file);
+  /* ---------------- Fetch Profile ---------------- */
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user?._id) return;
+      try {
+        const res = await axios.get(
+          `${API_BASE_URL}/admin/recruiter/${user._id}`,
+        );
+        setProfile(res.data);
+        setProfilePic(res.data.profilePic || "");
+        methods.reset(res.data);
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to load profile");
+      }
+    };
+    fetchProfile();
+  }, [methods, user._id]);
+
+  /* ---------------- Upload image to ImgBB ---------------- */
+  const handleProfileUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const res = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+        formData,
+      );
+      const url = res.data.data.url as string;
+      setProfilePic(url);
+      toast.success("Image uploaded!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to upload image");
     }
   };
 
+  /* ---------------- Update Profile ---------------- */
+  const onSubmit = async (data: ProfileForm) => {
+    try {
+      const res = await axios.put(
+        `${API_BASE_URL}/admin/recruiter/${user._id}/profile`,
+        { ...data, profilePic },
+      );
+      setProfile(res.data);
+      localStorage.setItem("recruiter", JSON.stringify(res.data));
+      toast.success("Profile updated");
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update profile");
+    }
+  };
+
+  if (!profile)
+    return (
+      <div className="text-center mt-20">
+        <Loading />
+      </div>
+    );
+
   return (
-    <section className="px-4 py-6 min-h-screen bg-white dark:bg-slate-900 transition-colors duration-500 ease-in-out">
-      {/* Page Title */}
+    <section className="px-4 py-6 min-h-screen bg-white dark:bg-slate-900 transition-colors duration-500">
       <h1 className="md:text-3xl text-xl font-semibold text-[#044635] dark:text-[#0af0b4]">
         My Profile
       </h1>
 
-      {/* Profile Header */}
-      <div className="mt-6 flex flex-col md:flex-row items-center md:items-start gap-6 rounded-xl bg-white dark:bg-slate-800 px-6 md:px-10 py-6 ring-1 ring-blue-200 dark:ring-slate-700 transition-colors">
-        <div className="flex flex-col items-center md:items-start gap-3 w-full md:w-auto">
+      {/* Header */}
+      <div className="mt-6 flex flex-col md:flex-row items-center md:items-start gap-6 rounded-xl bg-white dark:bg-slate-800 px-6 md:px-10 py-6 ring-1 ring-blue-200 dark:ring-slate-700">
+        <div className="flex flex-col items-center md:items-start gap-3">
           <img
-            src={profilePic}
+            src={
+              profilePic || `https://ui-avatars.com/api/?name=${profile.name}`
+            }
             alt="Profile"
-            className="h-28 w-28 rounded-full object-cover border-2 border-gray-200 dark:border-gray-600"
+            className="h-28 w-28 rounded-full object-cover border"
           />
           <h2 className="text-xl font-semibold text-[#044635] dark:text-[#0af0b4]">
-            Md Souad Al Kabir
+            {profile.name}
           </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Admin</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            {profile.role}
+          </p>
           <p className="text-sm text-gray-500 dark:text-gray-200">
-            Dhaka, Bangladesh
+            {profile.city}, {profile.country}
           </p>
         </div>
-        <div className="ml-auto mt-4 md:mt-0">
-          <Button value="Edit" onClick={() => setOpen(true)} />
+        <div className="ml-auto">
+          <Button value="Edit Profile" onClick={() => setOpen(true)} />
         </div>
-
-        {/* Edit Modal */}
-        <Modal
-          open={open}
-          onOpenChange={setOpen}
-          title="Edit Profile"
-          description="Update your personal information"
-        >
-          <FormProvider {...methods}>
-            <form className="space-y-4 px-4 py-6">
-              {/* Profile Upload */}
-              <div className="flex flex-col items-center gap-2">
-                <img
-                  src={profilePic}
-                  alt="Profile Preview"
-                  className="h-24 w-24 rounded-full object-cover border-2 border-gray-200 dark:border-gray-600"
-                />
-                <label className="cursor-pointer text-sm text-blue-600 dark:text-sky-400 hover:underline">
-                  Upload New Photo
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleProfileUpload}
-                  />
-                </label>
-              </div>
-
-              <Input name="firstName" label="First Name" />
-              <Input name="lastName" label="Last Name" />
-              <Input name="email" label="Email" />
-              <Input name="dateOfBirth" label="Date of Birth" type="date" />
-              <Input name="role" label="Role" disabled />
-              <Input name="country" label="Country" />
-              <Input name="city" label="City" />
-              <Input name="postalCode" label="Postal Code" />
-              <Input name="phone" label="Phone Number" />
-
-              <div className="flex flex-col sm:flex-row justify-end gap-2 mt-4">
-                <SecondaryButton
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  value="Cancel"
-                />
-                <Button
-                  value="Save Changes"
-                  type="submit"
-                  onClick={methods.handleSubmit((data) =>
-                    console.log("Form Data:", data),
-                  )}
-                />
-              </div>
-            </form>
-          </FormProvider>
-        </Modal>
       </div>
 
-      {/* Personal Information Section */}
-      <div className="mt-10 rounded-xl bg-white dark:bg-slate-800 px-6 md:px-10 py-6 ring-1 ring-blue-200 dark:ring-slate-700 transition-colors">
-        <h2 className="text-lg font-semibold text-[#044635] dark:text-[#0af0b4] mb-6">
+      {/* Personal Info */}
+      <div className="mt-10 rounded-xl bg-white dark:bg-slate-800 px-6 md:px-10 py-6 ring-1 ring-blue-200 dark:ring-slate-700">
+        <h2 className="text-lg font-semibold mb-6 text-[#044635] dark:text-[#0af0b4]">
           Personal Information
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">
-              First Name
-            </p>
-            <p className="font-medium">Md Souad</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">
-              Last Name
-            </p>
-            <p className="font-medium">Al Kabir</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">
-              Date of Birth
-            </p>
-            <p className="font-medium">12-12-2026</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">Email</p>
-            <p className="font-medium">souadalkabir@gmail.com</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">
-              Phone Number
-            </p>
-            <p className="font-medium">+8801830807523</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">
-              User Role
-            </p>
-            <p className="font-medium">Admin</p>
-          </div>
+          <Info label="Name" value={profile.name} />
+          <Info label="Email" value={profile.email} />
+          <Info label="Phone" value={profile.phone} />
+          <Info label="Date of Birth" value={profile.dateOfBirth} />
+          <Info label="Role" value={profile.role} />
         </div>
       </div>
 
-      {/* Address Section */}
-      <div className="mt-10 rounded-xl bg-white dark:bg-slate-800 px-6 md:px-10 py-6 ring-1 ring-blue-200 dark:ring-slate-700 transition-colors">
-        <h2 className="text-lg font-semibold text-[#044635] dark:text-[#0af0b4] mb-6">
+      {/* Address */}
+      <div className="mt-10 rounded-xl bg-white dark:bg-slate-800 px-6 md:px-10 py-6 ring-1 ring-blue-200 dark:ring-slate-700">
+        <h2 className="text-lg font-semibold mb-6 text-[#044635] dark:text-[#0af0b4]">
           Address
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">Country</p>
-            <p className="font-medium">Bangladesh</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">City</p>
-            <p className="font-medium">Dhaka</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-gray-200">
-              Postal Code
-            </p>
-            <p className="font-medium">1229</p>
-          </div>
+          <Info label="Country" value={profile.country} />
+          <Info label="City" value={profile.city} />
+          <Info label="Postal Code" value={profile.postalCode} />
         </div>
       </div>
+
+      {/* Edit Modal */}
+      <Modal
+        open={open}
+        onOpenChange={setOpen}
+        title="Edit Profile"
+        description="Update your personal information"
+      >
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="space-y-4 px-4 py-6"
+          >
+            <div className="flex flex-col items-center gap-2">
+              <img
+                src={
+                  profilePic ||
+                  `https://ui-avatars.com/api/?name=${profile.name}`
+                }
+                className="h-24 w-24 rounded-full object-cover"
+              />
+              <label className="cursor-pointer text-sm text-blue-600 hover:underline">
+                Upload Photo
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleProfileUpload}
+                />
+              </label>
+            </div>
+            <Input name="name" label="Name" />
+            <Input name="email" label="Email" />
+            <Input name="phone" label="Phone" />
+            <Input name="dateOfBirth" label="Date of Birth" type="date" />
+            <Input name="country" label="Country" />
+            <Input name="city" label="City" />
+            <Input name="postalCode" label="Postal Code" />
+            <Input name="role" label="Role" disabled />
+
+            <div className="flex justify-end gap-3 mt-4">
+              <SecondaryButton
+                type="button"
+                value="Cancel"
+                onClick={() => setOpen(false)}
+              />
+              <Button value="Save Changes" type="submit" />
+            </div>
+          </form>
+        </FormProvider>
+      </Modal>
     </section>
   );
 };
+
+const Info = ({ label, value }: { label: string; value?: string }) => (
+  <div>
+    <p className="text-sm text-gray-500 dark:text-gray-200">{label}</p>
+    <p className="font-medium">{value || "—"}</p>
+  </div>
+);
 
 export default ProfilePage;

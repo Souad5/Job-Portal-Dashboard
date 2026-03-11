@@ -10,6 +10,14 @@ export interface IJob extends Document {
   education?: string;
   skills: string[];
   niceToHave: string[];
+  workMode: string;
+  salaryRange?: {
+    min?: number;
+    max?: number;
+    currency?: string;
+    period?: string;
+  };
+
   status: "approved" | "rejected" | "pending";
   createdAt: Date;
 }
@@ -25,6 +33,14 @@ const jobSchema = new Schema(
     education: String,
     skills: [String],
     niceToHave: [String],
+    workMode: String,
+    salaryRange: {
+      min: Number,
+      max: Number,
+      currency: String,
+      period: String,
+    },
+
     status: {
       type: String,
       enum: ["approved", "rejected", "pending"],
@@ -33,5 +49,4 @@ const jobSchema = new Schema(
   },
   { timestamps: true, versionKey: false },
 );
-
 export default mongoose.model<IJob>("Job", jobSchema);

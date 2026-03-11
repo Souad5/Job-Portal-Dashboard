@@ -8,7 +8,7 @@ import RecentJobs from "../components/Dashboard/RecentJobs";
 import { IoPeopleOutline } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
 const stats = [
   {
@@ -80,6 +80,13 @@ const ACCENT_CLASSES: Record<
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("recruiter"); // remove login data
+    navigate("/"); // go to login page
+  };
+
   return (
     <section className="px-4 py-6 space-y-10 dark:bg-slate-900 transition-colors duration-500 ease-in-out">
       {/* Header */}
@@ -110,13 +117,16 @@ const HomePage = () => {
             </span>
           </div>
           <div>
-            <Link
-              to="/"
-              className="font-medium text-slate-900 cursor-pointer opacity-70 dark:opacity-80 hover:opacity-105"
+            <button
+              onClick={handleLogout}
+              className="opacity-70 hover:opacity-100"
               title="Logout"
             >
-              <IoIosLogOut size={25} className="dark:text-white" />
-            </Link>
+              <IoIosLogOut
+                size={25}
+                className="dark:text-white cursor-pointer"
+              />
+            </button>
           </div>
         </div>
       </header>

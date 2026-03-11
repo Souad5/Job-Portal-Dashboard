@@ -35,7 +35,9 @@ export const updateJob = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const job = await Job.findByIdAndUpdate(id, req.body, { new: true });
+    const job = await Job.findByIdAndUpdate(id, req.body, {
+      returnDocument: "after",
+    });
 
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
@@ -53,7 +55,9 @@ export const patchJob = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const job = await Job.findByIdAndUpdate(id, req.body, { new: true });
+    const job = await Job.findByIdAndUpdate(id, req.body, {
+      returnDocument: "after",
+    });
 
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
@@ -72,7 +76,11 @@ export const statusUpdate = async (req: Request, res: Response) => {
   const { status } = req.body; // "approved" | "rejected"
 
   try {
-    const job = await Job.findByIdAndUpdate(id, { status }, { new: true });
+    const job = await Job.findByIdAndUpdate(
+      id,
+      { status },
+      { returnDocument: "after" },
+    );
     res.json(job);
   } catch (err) {
     res.status(500).json({ message: "Failed to update status" });

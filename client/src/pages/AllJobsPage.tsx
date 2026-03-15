@@ -25,6 +25,7 @@ import Loading from "@/components/ui/Loading";
 
 interface Job {
   id: string;
+  recruiterId?: string;
   title: string;
   company: string;
   location: string;
@@ -45,6 +46,16 @@ export default function AllJobsPage() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("recruiter");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const navigate = useNavigate();
 
@@ -79,43 +90,35 @@ export default function AllJobsPage() {
         setLoading(true);
 
         const response = await axios.get(`${API_BASE_URL}/jobs`);
+        console.log(response.data);
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const transformed = response?.data?.map((raw: any) => ({
+        const transformed: Job[] = response.data.map((raw: any) => ({
           id: raw._id,
-
-          title: raw.title || raw.jobTitle,
-
-          company: raw.companyName,
-
+          recruiterId: raw.recruiterId?._id || raw.recruiterId || "",
+          title: raw.title || raw.jobTitle || "No title",
+          company: raw.companyName || "Unknown",
           location:
             typeof raw.location === "object"
               ? `${raw.location.city || ""} ${raw.location.country || ""}`.trim() ||
                 "Remote"
               : raw.location || "Remote",
-
           employmentType: raw.type || "Full-time",
-
           experienceLevel: raw.experience || "Not specified",
-
           salaryRange: raw.salaryRange
             ? `$${raw.salaryRange.min.toLocaleString()} – $${raw.salaryRange.max.toLocaleString()} ${raw.salaryRange.currency || "USD"} / ${raw.salaryRange.period || "year"}`
             : "Negotiable",
-
           postedAt: new Date(raw.createdAt).toLocaleDateString("en-US", {
             year: "numeric",
             month: "short",
             day: "numeric",
           }),
-
           description:
             raw.summary || raw.companyDescription || "No description available",
-
           requirements: raw.skills || [],
-
           niceToHave: raw.niceToHave || [],
-
-          status: raw.status || "pending",
           workMode: raw.workMode || "Not specify",
+          status: raw.status || "pending",
         }));
 
         setJobs(transformed);
@@ -192,14 +195,23 @@ export default function AllJobsPage() {
 
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch =
-      job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job?.company?.toLowerCase().includes(searchQuery.toLowerCase());
+      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchQuery.toLowerCase());
+
     const matchesEmploymentType =
       filterEmploymentType === "All" ||
       job.employmentType === filterEmploymentType;
-    return matchesSearch && matchesEmploymentType;
-  });
 
+    if (user?.role === "Admin") return matchesSearch && matchesEmploymentType;
+
+    if (user?.role === "Recruiter") {
+      return (
+        job.recruiterId === user.id && matchesSearch && matchesEmploymentType
+      );
+    }
+
+    return false;
+  });
   const totalPages = Math.ceil(filteredJobs.length / pageSize);
   const paginatedJobs = filteredJobs.slice(
     pageIndex * pageSize,
@@ -214,6 +226,7 @@ export default function AllJobsPage() {
   if (loading) {
     return <Loading />;
   }
+  if (!user) return <Loading />;
 
   if (error) return <p className="text-red-500 text-center py-10">{error}</p>;
 
@@ -500,29 +513,37 @@ export default function AllJobsPage() {
 
               {/* Actions */}
               <div className="border-t border-slate-200 dark:border-slate-700 pt-6 flex flex-wrap gap-3">
-                <Button
-                  onClick={() => handleApprove(selectedJob)}
-                  className="bg-emerald-600 hover:bg-emerald-700"
-                  value="Approve"
-                  disabled={selectedJob.status === "approved"}
-                />
+                {user?.role === "Admin" && (
+                  <>
+                    <Button
+                      onClick={() => handleApprove(selectedJob)}
+                      className="bg-emerald-600 hover:bg-emerald-700"
+                      value="Approve"
+                      disabled={selectedJob.status === "approved"}
+                    />
 
-                <SecondaryButton
-                  onClick={() => handleReject(selectedJob)}
-                  className="border-rose-600 text-rose-600 hover:bg-rose-50"
-                  value="Reject"
-                  disabled={selectedJob.status === "rejected"}
-                />
+                    <SecondaryButton
+                      onClick={() => handleReject(selectedJob)}
+                      className="border-rose-600 text-rose-600 hover:bg-rose-50"
+                      value="Reject"
+                      disabled={selectedJob.status === "rejected"}
+                    />
+                  </>
+                )}
 
-                <SecondaryButton
-                  value="Edit"
-                  onClick={() => navigate(`/edit-job/${selectedJob.id}`)}
-                />
+                {(user?.role === "Admin" || user?.role === "Recruiter") && (
+                  <>
+                    <SecondaryButton
+                      value="Edit"
+                      onClick={() => navigate(`/edit-job/${selectedJob.id}`)}
+                    />
 
-                <SecondaryButton
-                  value="Delete"
-                  onClick={() => handleDelete(selectedJob)}
-                />
+                    <SecondaryButton
+                      value="Delete"
+                      onClick={() => handleDelete(selectedJob)}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>

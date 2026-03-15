@@ -9,6 +9,7 @@ import { IoPeopleOutline } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 const stats = [
   {
@@ -83,8 +84,12 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("recruiter"); // remove login data
-    navigate("/"); // go to login page
+    localStorage.removeItem("token");
+    localStorage.removeItem("recruiter");
+
+    toast.success("Logged out successfully");
+
+    navigate("/");
   };
 
   return (

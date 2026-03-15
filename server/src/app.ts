@@ -3,6 +3,7 @@ import cors from "cors";
 
 import adminRoutes from "./routes/admin.routes";
 import jobRoutes from "./routes/job.routers";
+import loginRoutes from "./routes/login.routes";
 
 const app = express();
 
@@ -13,5 +14,6 @@ app.use(express.json());
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/jobs", jobRoutes);
+app.use("/api", loginRoutes);
 
 export default app;

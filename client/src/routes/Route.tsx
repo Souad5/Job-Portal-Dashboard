@@ -5,10 +5,11 @@ import App from "../App";
 import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
-import Login from "../components/Login";
+import Login from "../pages/Login";
 import RecruiterPage from "../pages/RecruiterPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import JobEditPage from "@/pages/JobEditPage";
+import RoleProtectedRoute from "@/guards/RoleProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -33,7 +34,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/recruiter-page",
-        element: <RecruiterPage />,
+        element: (
+          <RoleProtectedRoute allowedRoles={["Admin"]}>
+            <RecruiterPage />
+          </RoleProtectedRoute>
+        ),
       },
       {
         path: "/job-post",

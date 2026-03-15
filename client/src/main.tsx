@@ -4,10 +4,13 @@ import "./index.css";
 import { RouterProvider } from "react-router";
 import router from "./routes/Route.tsx";
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./components/context/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
-    <Toaster />
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+      <Toaster />
+    </AuthProvider>
   </StrictMode>,
 );

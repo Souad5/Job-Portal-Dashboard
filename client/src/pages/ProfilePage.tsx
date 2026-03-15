@@ -197,7 +197,7 @@ const ProfilePage = () => {
               </label>
             </div>
             <Input name="name" label="Name" />
-            <Input name="email" label="Email" />
+            <Input name="email" label="Email" disabled />
             <Input name="phone" label="Phone" />
             <Input name="dateOfBirth" label="Date of Birth" type="date" />
             <Input name="country" label="Country" />

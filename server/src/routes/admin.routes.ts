@@ -5,10 +5,13 @@ import {
   patchRecruiter,
   deleteRecruiter,
   getRecruiter,
-  recruiterLogin,
+} from "../controllers/admin.controller";
+import {
   getRecruiterById,
   updateRecruiterProfile,
-} from "../controllers/admin.controller";
+} from "../controllers/login.controller";
+import { verifyToken } from "../middleware/auth.middleware";
+import { getMe } from "../controllers/me.controller";
 
 const router = express.Router();
 
@@ -17,8 +20,8 @@ router.get("/recruiter-all", getRecruiter);
 router.put("/recruiter/:id", updateRecruiter);
 router.patch("/recruiter/:id", patchRecruiter);
 router.delete("/recruiter/:id", deleteRecruiter);
-router.post("/login", recruiterLogin);
 router.get("/recruiter/:id", getRecruiterById);
 router.put("/recruiter/:id/profile", updateRecruiterProfile);
+router.get("/recruiter/me", verifyToken, getMe);
 
 export default router;

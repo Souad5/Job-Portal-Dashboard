@@ -5,7 +5,7 @@ type Props = {
 };
 
 const ProtectedRoute = ({ children }: Props) => {
-  const recruiter = localStorage.getItem("recruiter");
+  const recruiter = localStorage.getItem("token");
 
   if (!recruiter) {
     return <Navigate to="/" replace />;

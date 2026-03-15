@@ -4,9 +4,10 @@ import { useNavigate } from "react-router";
 import Input from "../components/ui/Input";
 import PasswordInput from "../components/ui/PasswordInput";
 import Button from "../components/ui/Button";
-import toast from "react-hot-toast";
 import axios from "axios";
 import { API_BASE_URL } from "@/config";
+import { useAuth } from "@/components/context/AuthContext";
+import toast from "react-hot-toast";
 
 type LoginFormInputs = {
   email: string;
@@ -30,18 +31,38 @@ const Login = () => {
     formState: { isSubmitting },
   } = methods;
 
+  const { setUser } = useAuth();
+
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      const res = await axios.post(`${API_BASE_URL}/admin/login`, {
+      const res = await axios.post(`${API_BASE_URL}/login`, {
         email: data.email,
         password: data.password,
       });
 
+      const { token, recruiter } = res.data;
+
+      // store only token in localStorage
+      localStorage.setItem("token", token);
+
+      // fetch full recruiter info from database
+      const { data: fullUser } = await axios.get(
+        `${API_BASE_URL}/admin/recruiter/${recruiter.id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      const normalizedUser = {
+        _id: fullUser._id,
+        name: fullUser.name,
+        email: fullUser.email,
+        role: fullUser.role ?? "Recruiter",
+        profilePic: fullUser.profilePic ?? null,
+      };
+
+      setUser(normalizedUser); // update AuthContext
       toast.success("Login successful!");
-
-      // save recruiter info
-      localStorage.setItem("recruiter", JSON.stringify(res.data.recruiter));
-
       navigate("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

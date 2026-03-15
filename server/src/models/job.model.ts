@@ -17,9 +17,9 @@ export interface IJob extends Document {
     currency?: string;
     period?: string;
   };
-
   status: "approved" | "rejected" | "pending";
   createdAt: Date;
+  recruiterId: string; // <-- NEW: link to the recruiter who posted
 }
 
 const jobSchema = new Schema(
@@ -40,13 +40,18 @@ const jobSchema = new Schema(
       currency: String,
       period: String,
     },
-
     status: {
       type: String,
       enum: ["approved", "rejected", "pending"],
       default: "pending",
     },
+    recruiterId: {
+      type: Schema.Types.ObjectId,
+      ref: "Recruiter",
+      required: true,
+    }, // <--- new
   },
   { timestamps: true, versionKey: false },
 );
+
 export default mongoose.model<IJob>("Job", jobSchema);

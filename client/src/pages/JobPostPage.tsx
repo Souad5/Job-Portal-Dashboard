@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { jobSchema, type JobFormValues } from "../types/job";
@@ -25,9 +25,23 @@ const steps = [
 const JobPostPage = () => {
   const [step, setStep] = useState(1);
   const [isValidating, setIsValidating] = useState(false);
+  const [user, setUser] = useState<{
+    _id: string;
+    name: string;
+    role: string;
+  } | null>(null);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  // Load user from localStorage
+  useEffect(() => {
+    const storedUser = localStorage.getItem("recruiter");
+    if (storedUser) {
+      // defer the setState to avoid synchronous update
+      setTimeout(() => setUser(JSON.parse(storedUser)), 0);
+    }
+  }, []);
 
   const methods = useForm<JobFormValues>({
     resolver: zodResolver(jobSchema),
@@ -51,10 +65,9 @@ const JobPostPage = () => {
   const { trigger, handleSubmit, reset } = methods;
 
   // ---------------- TanStack Mutation ----------------
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const createJobMutation = useMutation<any, any, JobFormValues>({
-    mutationFn: async (jobData: JobFormValues) => {
+  const createJobMutation = useMutation({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mutationFn: async (jobData: any) => {
       try {
         const res = await axios.post(
           `${API_BASE_URL}/jobs/create-job`,
@@ -103,11 +116,23 @@ const JobPostPage = () => {
 
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 1));
 
+  // ---------------- Form Submit ----------------
   const onSubmit = (data: JobFormValues) => {
-    console.log("Sending job data:", data);
+    if (!user) {
+      toast.error("You must be logged in to post a job");
+      return;
+    }
+
+    // Only submit on final step
     if (step !== steps.length) return;
+
     const payload = {
       ...data,
+      recruiterId: user._id,
+      skills: data.skills ? data.skills.split(",").map((s) => s.trim()) : [],
+      niceToHave: data.niceToHave
+        ? data.niceToHave.split(",").map((s) => s.trim())
+        : [],
       salaryRange: {
         min: data.salaryMin ? Number(data.salaryMin) : undefined,
         max: data.salaryMax ? Number(data.salaryMax) : undefined,
@@ -115,6 +140,13 @@ const JobPostPage = () => {
         period: "year",
       },
     };
+
+    // Validate required fields before sending
+    if (!payload.title || !payload.type || !payload.recruiterId) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
     createJobMutation.mutate(payload);
   };
 

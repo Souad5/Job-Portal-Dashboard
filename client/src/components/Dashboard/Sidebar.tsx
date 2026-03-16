@@ -60,7 +60,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
           <button
             onClick={() => setOpen(!open)}
-            className={`text-2xl hidden md:block ${open ? "pl-3" : ""}`}
+            className={`text-2xl hidden md:block cursor-pointer ${open ? "pl-3" : ""}`}
           >
             {open ? <GoSidebarCollapse /> : <GoSidebarExpand />}
           </button>

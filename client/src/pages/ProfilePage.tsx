@@ -6,7 +6,7 @@ import Input from "../components/ui/Input";
 import { FormProvider, useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { API_BASE_URL, IMGBB_API_KEY } from "@/config"; // IMGBB_API_KEY required
+import { API_BASE_URL, IMGBB_API_KEY } from "@/config";
 import Loading from "@/components/ui/Loading";
 import { useAuth } from "@/components/context/AuthContext";
 
@@ -131,7 +131,7 @@ const ProfilePage = () => {
               profilePic || `https://ui-avatars.com/api/?name=${profile.name}`
             }
             alt="Profile"
-            className="h-28 w-28 rounded-full object-cover border"
+            className="h-28 w-28 rounded-full object-cover"
           />
           <h2 className="text-xl font-semibold text-[#044635] dark:text-[#0af0b4]">
             {profile.name}

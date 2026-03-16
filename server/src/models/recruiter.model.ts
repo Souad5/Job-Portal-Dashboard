@@ -24,7 +24,7 @@ const recruiterSchema = new mongoose.Schema(
       default: "Recruiter",
     },
   },
-  { timestamps: true },
+  { timestamps: true, versionKey: false },
 );
 
 export default mongoose.model("Recruiter", recruiterSchema);

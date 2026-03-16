@@ -60,7 +60,7 @@ const Login = () => {
         profilePic: fullUser.profilePic ?? null,
       };
 
-      setUser(normalizedUser); // update AuthContext
+      setUser(normalizedUser);
       toast.success("Login successful!");
       navigate("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

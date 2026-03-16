@@ -19,7 +19,7 @@ export interface IJob extends Document {
   };
   status: "approved" | "rejected" | "pending";
   createdAt: Date;
-  recruiterId: string; // <-- NEW: link to the recruiter who posted
+  recruiterId: string;
 }
 
 const jobSchema = new Schema(
@@ -49,7 +49,7 @@ const jobSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Recruiter",
       required: true,
-    }, // <--- new
+    },
   },
   { timestamps: true, versionKey: false },
 );

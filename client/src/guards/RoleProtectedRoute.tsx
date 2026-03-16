@@ -1,4 +1,5 @@
 import { Navigate } from "react-router";
+import { useAuth } from "@/components/context/AuthContext";
 
 type Props = {
   children: React.ReactNode;
@@ -6,13 +7,13 @@ type Props = {
 };
 
 const RoleProtectedRoute = ({ children, allowedRoles }: Props) => {
-  const storedUser = localStorage.getItem("token");
+  const { user, loading } = useAuth();
 
-  if (!storedUser) {
-    return <Navigate to="/login" />;
+  if (loading) return null;
+
+  if (!user) {
+    return <Navigate to="/" />;
   }
-
-  const user = JSON.parse(storedUser);
 
   if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/dashboard" />;

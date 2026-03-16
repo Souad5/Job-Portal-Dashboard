@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Recruiter from "../models/recruiter.model";
 import jwt from "jsonwebtoken";
+import { AuthRequest } from "../middleware/auth.middleware";
 
 // ---------------- Recruiter Login ----------------
 export const recruiterLogin = async (req: Request, res: Response) => {
@@ -69,16 +70,16 @@ export const getRecruiterById = async (req: Request, res: Response) => {
 };
 
 // GET /recruiter/me
-export const getCurrentRecruiter = async (req: Request, res: Response) => {
+export const getCurrentRecruiter = async (req: AuthRequest, res: Response) => {
   try {
-    // token should already be verified by middleware
-    const recruiterId = (req as any).userId; // set in auth middleware
+    const recruiterId = req.user?.id;
 
     if (!recruiterId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
     const recruiter = await Recruiter.findById(recruiterId);
+
     if (!recruiter) {
       return res.status(404).json({ message: "Recruiter not found" });
     }

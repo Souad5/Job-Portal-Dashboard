@@ -39,7 +39,6 @@ const Login = () => {
         email: data.email,
         password: data.password,
       });
-
       const { token, recruiter } = res.data;
 
       // store only token in localStorage

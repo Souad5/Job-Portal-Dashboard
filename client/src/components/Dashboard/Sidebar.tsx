@@ -8,9 +8,6 @@ import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import { useTheme } from "next-themes";
 import { useAuth } from "../context/AuthContext";
 import Loading from "../ui/Loading";
-import { useEffect } from "react";
-import axios from "axios";
-import { API_BASE_URL } from "@/config";
 
 type SidebarProps = {
   open: boolean;
@@ -19,7 +16,7 @@ type SidebarProps = {
 
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const { theme, setTheme } = useTheme();
-  const { user, setUser } = useAuth(); // make sure setUser comes from AuthContext
+  const { user } = useAuth(); // make sure setUser comes from AuthContext
 
   const btnClass = `flex items-center w-full py-2 h-14 text-xl font-bold
     opacity-90 hover:opacity-100 hover:bg-[#3c7365]
@@ -35,26 +32,6 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const handleMobileClose = () => {
     if (window.innerWidth < 640) setOpen(false);
   };
-
-  // fetch current user from backend if token exists
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token || user) return; // no token or already have user
-
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get(`${API_BASE_URL}/admin/recruiter/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setUser(res.data); // update AuthContext with fresh data
-      } catch (err) {
-        console.error("Failed to fetch user", err);
-        setUser(null);
-      }
-    };
-
-    fetchUser();
-  }, [user, setUser]);
 
   return (
     <aside

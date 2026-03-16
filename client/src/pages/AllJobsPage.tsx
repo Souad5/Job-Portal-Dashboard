@@ -22,6 +22,7 @@ import SecondaryButton from "../components/ui/SecondaryButton";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "@/config";
 import Loading from "@/components/ui/Loading";
+import { useAuth } from "@/components/context/AuthContext";
 
 interface Job {
   id: string;
@@ -46,16 +47,7 @@ export default function AllJobsPage() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("recruiter");
-
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  const { user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -90,7 +82,6 @@ export default function AllJobsPage() {
         setLoading(true);
 
         const response = await axios.get(`${API_BASE_URL}/jobs`);
-        console.log(response.data);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const transformed: Job[] = response.data.map((raw: any) => ({
@@ -206,7 +197,7 @@ export default function AllJobsPage() {
 
     if (user?.role === "Recruiter") {
       return (
-        job.recruiterId === user.id && matchesSearch && matchesEmploymentType
+        job.recruiterId === user._id && matchesSearch && matchesEmploymentType
       );
     }
 
@@ -530,20 +521,19 @@ export default function AllJobsPage() {
                     />
                   </>
                 )}
+                {(user?.role === "Admin" || user?.role === "Recruiter") &&
+                  selectedJob.recruiterId === user._id}
+                <>
+                  <SecondaryButton
+                    value="Edit"
+                    onClick={() => navigate(`/edit-job/${selectedJob.id}`)}
+                  />
 
-                {(user?.role === "Admin" || user?.role === "Recruiter") && (
-                  <>
-                    <SecondaryButton
-                      value="Edit"
-                      onClick={() => navigate(`/edit-job/${selectedJob.id}`)}
-                    />
-
-                    <SecondaryButton
-                      value="Delete"
-                      onClick={() => handleDelete(selectedJob)}
-                    />
-                  </>
-                )}
+                  <SecondaryButton
+                    value="Delete"
+                    onClick={() => handleDelete(selectedJob)}
+                  />
+                </>
               </div>
             </div>
           </div>

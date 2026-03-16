@@ -8,6 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { API_BASE_URL, IMGBB_API_KEY } from "@/config"; // IMGBB_API_KEY required
 import Loading from "@/components/ui/Loading";
+import { useAuth } from "@/components/context/AuthContext";
 
 type ProfileForm = {
   name: string;
@@ -22,14 +23,14 @@ type ProfileForm = {
 };
 
 const ProfilePage = () => {
+  const { user } = useAuth();
+
   const [open, setOpen] = useState(false);
   const [profile, setProfile] = useState<ProfileForm | null>(null);
   const [profilePic, setProfilePic] = useState<string>("");
 
-  const user = JSON.parse(localStorage.getItem("recruiter") || "{}");
-
   const methods = useForm<ProfileForm>({
-    defaultValues: profile || {
+    defaultValues: {
       name: "",
       email: "",
       role: "",
@@ -46,10 +47,12 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       if (!user?._id) return;
+
       try {
         const res = await axios.get(
           `${API_BASE_URL}/admin/recruiter/${user._id}`,
         );
+
         setProfile(res.data);
         setProfilePic(res.data.profilePic || "");
         methods.reset(res.data);
@@ -58,8 +61,9 @@ const ProfilePage = () => {
         toast.error("Failed to load profile");
       }
     };
+
     fetchProfile();
-  }, [methods, user._id]);
+  }, [user, methods]);
 
   /* ---------------- Upload image to ImgBB ---------------- */
   const handleProfileUpload = async (
@@ -87,6 +91,10 @@ const ProfilePage = () => {
 
   /* ---------------- Update Profile ---------------- */
   const onSubmit = async (data: ProfileForm) => {
+    if (!user?._id) {
+      toast.error("User not found");
+      return;
+    }
     try {
       const res = await axios.put(
         `${API_BASE_URL}/admin/recruiter/${user._id}/profile`,

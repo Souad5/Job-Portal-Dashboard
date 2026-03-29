@@ -1,1 +1,1 @@
-{"root":["./src/index.ts"],"version":"5.9.3"}
+{"root":["./src/app.ts","./src/index.ts","./src/config/db.ts","./src/controllers/admin.controller.ts","./src/controllers/job.controller.ts","./src/controllers/login.controller.ts","./src/controllers/logout.controller.ts","./src/controllers/me.controller.ts","./src/middleware/auth.middleware.ts","./src/models/job.model.ts","./src/models/recruiter.model.ts","./src/routes/admin.routes.ts","./src/routes/job.routers.ts","./src/routes/login.routes.ts"],"version":"5.9.3"}

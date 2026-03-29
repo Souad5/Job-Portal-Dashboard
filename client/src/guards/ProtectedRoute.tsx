@@ -1,3 +1,5 @@
+import { useAuth } from "@/components/context/AuthContext";
+import Loading from "@/components/ui/Loading";
 import { Navigate } from "react-router";
 
 type Props = {
@@ -5,10 +7,12 @@ type Props = {
 };
 
 const ProtectedRoute = ({ children }: Props) => {
-  const recruiter = localStorage.getItem("token");
+  const { user, loading } = useAuth();
 
-  if (!recruiter) {
-    return <Navigate to="/" replace />;
+  if (loading) return <Loading></Loading>;
+
+  if (!user) {
+    return <Navigate to="/" />;
   }
 
   return children;

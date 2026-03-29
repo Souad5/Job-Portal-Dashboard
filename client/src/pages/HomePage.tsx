@@ -10,6 +10,9 @@ import { IoIosNotifications } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { API_BASE_URL } from "@/config";
+import { useAuth } from "@/components/context/AuthContext";
 
 const stats = [
   {
@@ -82,14 +85,21 @@ const ACCENT_CLASSES: Record<
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
+  const handleLogout = async () => {
+    try {
+      // Call backend to clear cookie
+      await axios.post(`${API_BASE_URL}/logout`, {}, { withCredentials: true });
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("recruiter");
+      // Clear user state in frontend
+      setUser(null);
 
-    toast.success("Logged out successfully");
-
-    navigate("/");
+      toast.success("Logged out successfully");
+      navigate("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+    } catch (error: any) {
+      toast.error("Failed to logout");
+    }
   };
 
   return (

@@ -29,16 +29,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(`${API_BASE_URL}/recruiter/me`, {
-          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true, // ✅ important for cookie
         });
 
         const normalizedUser: Recruiter = {
@@ -52,8 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(normalizedUser);
       } catch (err) {
         console.error("Failed to fetch user", err);
-        localStorage.removeItem("token");
-        setUser(null);
+        setUser(null); // cookie invalid or expired
       } finally {
         setLoading(false);
       }

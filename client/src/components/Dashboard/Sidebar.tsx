@@ -16,7 +16,7 @@ type SidebarProps = {
 
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const { theme, setTheme } = useTheme();
-  const { user } = useAuth(); // make sure setUser comes from AuthContext
+  const { user } = useAuth();
 
   const btnClass = `flex items-center w-full py-2 h-14 text-xl font-bold
     opacity-90 hover:opacity-100 hover:bg-[#3c7365]

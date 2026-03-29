@@ -32,10 +32,15 @@ export const recruiterLogin = async (req: Request, res: Response) => {
       },
       process.env.JWT_SECRET as string,
       {
-        expiresIn: "7d",
+        expiresIn: "1m",
       },
     );
-
+    res.cookie("token", token, {
+      httpOnly: true, //  can't access from JS
+      secure: false, //  true in production (HTTPS)
+      sameSite: "lax", // CSRF protection
+      maxAge: 300000,
+    });
     res.status(200).json({
       message: "Login successful",
       token,

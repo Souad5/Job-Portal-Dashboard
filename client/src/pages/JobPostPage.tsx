@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { jobSchema, type JobFormValues } from "../types/job";
@@ -14,6 +14,8 @@ import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { API_BASE_URL } from "@/config";
+import { useAuth } from "@/components/context/AuthContext";
+import Loading from "@/components/ui/Loading";
 
 const steps = [
   "Job Details",
@@ -25,23 +27,10 @@ const steps = [
 const JobPostPage = () => {
   const [step, setStep] = useState(1);
   const [isValidating, setIsValidating] = useState(false);
-  const [user, setUser] = useState<{
-    _id: string;
-    name: string;
-    role: string;
-  } | null>(null);
+  const { user, loading } = useAuth();
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
-  // Load user from localStorage
-  useEffect(() => {
-    const storedUser = localStorage.getItem("recruiter");
-    if (storedUser) {
-      // defer the setState to avoid synchronous update
-      setTimeout(() => setUser(JSON.parse(storedUser)), 0);
-    }
-  }, []);
 
   const methods = useForm<JobFormValues>({
     resolver: zodResolver(jobSchema),
@@ -116,6 +105,10 @@ const JobPostPage = () => {
 
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 1));
 
+  if (loading) {
+    return <Loading />;
+  }
+
   // ---------------- Form Submit ----------------
   const onSubmit = (data: JobFormValues) => {
     if (!user) {
@@ -140,12 +133,6 @@ const JobPostPage = () => {
         period: "year",
       },
     };
-
-    // Validate required fields before sending
-    if (!payload.title || !payload.type || !payload.recruiterId) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
 
     createJobMutation.mutate(payload);
   };

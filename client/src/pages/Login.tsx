@@ -5,9 +5,9 @@ import Input from "../components/ui/Input";
 import PasswordInput from "../components/ui/PasswordInput";
 import Button from "../components/ui/Button";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { API_BASE_URL } from "@/config";
 import { useAuth } from "@/components/context/AuthContext";
-import toast from "react-hot-toast";
 
 type LoginFormInputs = {
   email: string;
@@ -17,6 +17,7 @@ type LoginFormInputs = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const methods = useForm<LoginFormInputs>({
     defaultValues: {
@@ -31,24 +32,20 @@ const Login = () => {
     formState: { isSubmitting },
   } = methods;
 
-  const { setUser } = useAuth();
-
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      const res = await axios.post(`${API_BASE_URL}/login`, {
-        email: data.email,
-        password: data.password,
-      });
-      const { token, recruiter } = res.data;
+      // Login request: cookie will be set automatically (httpOnly)
+      await axios.post(
+        `${API_BASE_URL}/login`,
+        { email: data.email, password: data.password },
+        { withCredentials: true }, // ✅ important
+      );
 
-      // store only token in localStorage
-      localStorage.setItem("token", token);
-
-      // fetch full recruiter info from database
+      // Fetch full user info from backend
       const { data: fullUser } = await axios.get(
-        `${API_BASE_URL}/admin/recruiter/${recruiter.id}`,
+        `${API_BASE_URL}/recruiter/me`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true, // ✅ cookie sent automatically
         },
       );
 
@@ -60,7 +57,7 @@ const Login = () => {
         profilePic: fullUser.profilePic ?? null,
       };
 
-      setUser(normalizedUser);
+      setUser(normalizedUser); // ✅ set user context
       toast.success("Login successful!");
       navigate("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -37,8 +37,8 @@ export const recruiterLogin = async (req: Request, res: Response) => {
     );
     res.cookie("token", token, {
       httpOnly: true, //  can't access from JS
-      secure: false, //  true in production (HTTPS)
-      sameSite: "lax", // CSRF protection
+      secure: true, //  true in production (HTTPS)
+      sameSite: "none", // CSRF protection
       maxAge: 300000,
     });
     res.status(200).json({

@@ -10,11 +10,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://job-portal-delta-rust.vercel.app/",
-    ],
-    credentials: true, //
+    origin: "https://job-portal-delta-rust.vercel.app",
+    credentials: true, // ✅ allow cookies
   }),
 );
 app.use(express.json());

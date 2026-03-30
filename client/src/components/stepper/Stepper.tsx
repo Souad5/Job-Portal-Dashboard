@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 interface StepperProps {
   steps: string[];
-  currentStep: number; // 1-based index
+  currentStep: number;
 }
 
 const Stepper = ({ steps, currentStep }: StepperProps) => {

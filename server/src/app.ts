@@ -11,7 +11,7 @@ const app = express();
 app.use(
   cors({
     origin: "https://job-portal-delta-rust.vercel.app",
-    credentials: true, // ✅ allow cookies
+    credentials: true, // allow cookies
   }),
 );
 app.use(express.json());

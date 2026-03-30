@@ -38,14 +38,14 @@ const Login = () => {
       await axios.post(
         `${API_BASE_URL}/login`,
         { email: data.email, password: data.password },
-        { withCredentials: true }, // ✅ important
+        { withCredentials: true },
       );
 
       // Fetch full user info from backend
       const { data: fullUser } = await axios.get(
         `${API_BASE_URL}/recruiter/me`,
         {
-          withCredentials: true, // ✅ cookie sent automatically
+          withCredentials: true,
         },
       );
 
@@ -57,7 +57,7 @@ const Login = () => {
         profilePic: fullUser.profilePic ?? null,
       };
 
-      setUser(normalizedUser); // ✅ set user context
+      setUser(normalizedUser);
       toast.success("Login successful!");
       navigate("/dashboard");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -10,7 +10,7 @@ export const verifyToken = (
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.cookies?.token; // 🍪 get token from cookie
+  const token = req.cookies?.token; // get token from cookie
 
   if (!token) {
     return res.status(401).json({ message: "No token provided" });

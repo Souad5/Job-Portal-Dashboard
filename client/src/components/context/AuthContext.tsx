@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get(`${API_BASE_URL}/recruiter/me`, {
-          withCredentials: true, // ✅ important for cookie
+          withCredentials: true,
         });
 
         const normalizedUser: Recruiter = {
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(normalizedUser);
       } catch (err) {
         console.error("Failed to fetch user", err);
-        setUser(null); // cookie invalid or expired
+        setUser(null);
       } finally {
         setLoading(false);
       }

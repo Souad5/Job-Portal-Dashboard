@@ -21,7 +21,7 @@ const RoleProtectedRoute = ({ children, allowedRoles }: Props) => {
       !hasShownToast.current
     ) {
       toast.error("You do not have access to this route");
-      hasShownToast.current = true; // prevent duplicate
+      hasShownToast.current = true;
     }
   }, [user, loading, allowedRoles]);
 

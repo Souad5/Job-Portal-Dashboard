@@ -10,7 +10,7 @@ interface SelectProps {
 
 export default function Select({ name, label, options }: SelectProps) {
   const { setValue, watch, register } = useFormContext();
-  const selectedValue = watch(name) || options[0]; // get current value
+  const selectedValue = watch(name) || options[0];
 
   return (
     <div className="space-y-1 min-w-full sm:w-1/3">

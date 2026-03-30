@@ -73,7 +73,7 @@ export const patchJob = async (req: Request, res: Response) => {
 
 export const statusUpdate = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { status } = req.body; // "approved" | "rejected"
+  const { status } = req.body;
 
   try {
     const job = await Job.findByIdAndUpdate(

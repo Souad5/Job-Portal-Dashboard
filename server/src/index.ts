@@ -8,7 +8,13 @@ const PORT = process.env.PORT || 5000;
 
 connectDB();
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
+  res.send(
+    `<h1 style="text-align: center">Welcome to the job portal server</h1>`,
+  );
+});
+
+app.use((req, res) => {
   const htmlRes = `<!DOCTYPE html>
     <html>
     <head>

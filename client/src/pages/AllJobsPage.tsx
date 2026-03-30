@@ -330,7 +330,7 @@ export default function AllJobsPage() {
                 <div className="mb-3 flex items-start justify-between gap-1.5 text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-start gap-1.5">
                     <MapPin size={15} />
-                    {job.location}
+                    {job.workMode}
                   </span>
                   <span
                     className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${currentStatus.styles}`}

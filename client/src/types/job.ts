@@ -34,7 +34,6 @@ export const jobSchema = z.object({
 
   niceToHave: z.string().max(600).optional(),
 
-  // ⭐ ADD THESE
   salaryMin: z.string().optional(),
   salaryMax: z.string().optional(),
 });

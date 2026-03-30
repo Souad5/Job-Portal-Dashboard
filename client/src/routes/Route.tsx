@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/recruiter-page",
+        path: "/recruiters",
         element: (
           <RoleProtectedRoute allowedRoles={["Admin"]}>
             <RecruiterPage />
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         element: <JobEditPage />,
       },
       {
-        path: "/all-jobs",
+        path: "/jobs",
         element: <AllJobsPage />,
       },
       {

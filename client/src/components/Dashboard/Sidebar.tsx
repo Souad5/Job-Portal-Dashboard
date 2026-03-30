@@ -83,7 +83,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
               {/* Recruiters (Admin only) */}
               {user.role === "Admin" && (
                 <NavLink
-                  to="/recruiter-page"
+                  to="/recruiters"
                   className={isActive}
                   onClick={handleMobileClose}
                 >
@@ -94,7 +94,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
               {/* All jobs (Admin + Recruiter) */}
               <NavLink
-                to="/all-jobs"
+                to="/jobs"
                 className={isActive}
                 onClick={handleMobileClose}
               >
@@ -116,7 +116,11 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
               </button>
 
               {/* Profile */}
-              <NavLink to="/profile" className={isActive}>
+              <NavLink
+                to="/profile"
+                className={isActive}
+                onClick={handleMobileClose}
+              >
                 <img
                   src={user.profilePic ?? "/default-profile.png"}
                   className="h-8 w-8 rounded-full"

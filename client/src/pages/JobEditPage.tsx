@@ -14,6 +14,7 @@ import StepRequirements from "../components/stepperform/StepRequirements";
 import StepReview from "../components/stepperform/StepReview";
 import StepJobsDetails from "../components/stepperform/StepJobsDetails";
 import { API_BASE_URL } from "@/config";
+import Loading from "@/components/ui/Loading";
 
 const steps = [
   "Job Details",
@@ -125,7 +126,12 @@ const JobEditPage = () => {
     updateJobMutation.mutate(data);
   };
 
-  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (isLoading)
+    return (
+      <p className="text-center py-10">
+        <Loading />
+      </p>
+    );
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 py-6 px-4">

@@ -1,0 +1,209 @@
+import { FaBriefcase, FaMessage, FaBusinessTime } from "react-icons/fa6";
+import { MdEngineering } from "react-icons/md";
+import BiaxiaLineChart from "../components/Dashboard/HiringTrends";
+import { ApplicationChart } from "../components/Dashboard/ApplicationsChart";
+import { RecentActivity } from "../components/Dashboard/RecentlyActivities";
+import Notification from "../components/Dashboard/Notification";
+import RecentJobs from "../components/Dashboard/RecentJobs";
+import { IoPeopleOutline } from "react-icons/io5";
+import { IoIosNotifications } from "react-icons/io";
+import { IoIosLogOut } from "react-icons/io";
+import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { API_BASE_URL } from "@/config";
+import { useAuth } from "@/components/context/AuthContext";
+
+const stats = [
+  {
+    icon: <FaBriefcase size={20} />,
+    label: "Total Jobs",
+    value: "500+",
+    accent: "indigo",
+  },
+  {
+    icon: <MdEngineering size={20} />,
+    label: "Pending Jobs",
+    value: "200+",
+    accent: "yellow",
+  },
+  {
+    icon: <FaBusinessTime size={20} />,
+    label: "Approved Jobs",
+    value: "50+",
+    accent: "emerald",
+  },
+  {
+    icon: <FaMessage size={20} />,
+    label: "Rejected Jobs",
+    value: "10+",
+    accent: "rose",
+  },
+  {
+    icon: <IoPeopleOutline size={20} />,
+    label: "Total Recruiter",
+    value: "10+",
+    accent: "amber",
+  },
+];
+
+const ACCENT_CLASSES: Record<
+  string,
+  { bg: string; text: string; darkBg?: string; darkText?: string }
+> = {
+  indigo: {
+    bg: "bg-indigo-100",
+    text: "text-indigo-600",
+    darkBg: "dark:bg-indigo-500/20",
+    darkText: "dark:text-indigo-400",
+  },
+  yellow: {
+    bg: "bg-yellow-100",
+    text: "text-yellow-600",
+    darkBg: "dark:bg-yellow-500/20",
+    darkText: "dark:text-yellow-400",
+  },
+  emerald: {
+    bg: "bg-emerald-100",
+    text: "text-emerald-600",
+    darkBg: "dark:bg-emerald-500/20",
+    darkText: "dark:text-emerald-400",
+  },
+  rose: {
+    bg: "bg-rose-100",
+    text: "text-rose-600",
+    darkBg: "dark:bg-rose-500/20",
+    darkText: "dark:text-rose-400",
+  },
+  amber: {
+    bg: "bg-amber-100",
+    text: "text-amber-600",
+    darkBg: "dark:bg-amber-500/20",
+    darkText: "dark:text-amber-400",
+  },
+};
+
+const HomePage = () => {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+  const handleLogout = async () => {
+    try {
+      // Call backend to clear cookie
+      await axios.post(`${API_BASE_URL}/logout`, {}, { withCredentials: true });
+
+      // Clear user state in frontend
+      setUser(null);
+
+      toast.success("Logged out successfully");
+      navigate("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+    } catch (error: any) {
+      toast.error("Failed to logout");
+    }
+  };
+
+  return (
+    <section className="px-4 py-6 space-y-10 dark:bg-slate-900 transition-colors duration-500 ease-in-out">
+      {/* Header */}
+      <header className="flex flex-row items-start justify-between gap-4">
+        <div>
+          <h1 className="md:text-3xl text-xl font-semibold text-[#044635] dark:text-[#0af0b4]">
+            Dashboard
+          </h1>
+          <p className="opacity-80 dark:opacity-100">
+            Overview of your hiring activity
+          </p>
+        </div>
+
+        <div
+          className="flex items-center gap-6 p-3 cursor-pointer "
+          title="Notifications"
+        >
+          <div className="relative inline-flex items-center">
+            {/* Bell */}
+            <IoIosNotifications
+              size={24}
+              className="text-slate-700 dark:text-white animate-bell opacity-70 hover:opacity-105 transition-hover duration-200"
+            />
+
+            {/* Badge */}
+            <span className="absolute -top-2 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-semibold animate-pulse opacity-100 text-white">
+              1
+            </span>
+          </div>
+          <div>
+            <button
+              onClick={handleLogout}
+              className="opacity-70 hover:opacity-100"
+              title="Logout"
+            >
+              <IoIosLogOut
+                size={25}
+                className="dark:text-white cursor-pointer"
+              />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Stats */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6">
+        {stats.map((s, i) => {
+          const accent = ACCENT_CLASSES[s.accent];
+          return (
+            <div
+              key={i}
+              className={`
+              rounded-2xl p-6
+              shadow-[0_10px_40px_rgba(0,0,0,0.06)]
+              ring-1 ring-slate-200/70 dark:ring-slate-700
+              transition-all hover:-translate-y-1 duration-200 hover:shadow-lg
+              dark:bg-slate-800
+            `}
+            >
+              <div
+                className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4
+                ${accent.bg} ${accent.text} ${accent.darkBg} ${accent.darkText}
+              `}
+              >
+                {s.icon}
+              </div>
+              <p className="text-sm text-slate-700 dark:text-slate-300">
+                {s.label}
+              </p>
+              <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                {s.value}
+              </h2>
+            </div>
+          );
+        })}
+      </section>
+
+      {/* Main Content Grid */}
+      <section className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+        {/* Hiring Trends */}
+        <div className="xl:col-span-7 dark:bg-slate-800 rounded-2xl p-6 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700">
+          <h3 className="text-lg font-semibold mb-4">Hiring Trends</h3>
+          <BiaxiaLineChart />
+        </div>
+
+        {/* Quick Insights */}
+        <div className="xl:col-span-5 space-y-6">
+          <ApplicationChart />
+          <Notification />
+        </div>
+
+        {/* Bottom Section */}
+        <div className="xl:col-span-7">
+          <RecentActivity />
+        </div>
+
+        <div className="xl:col-span-5">
+          <RecentJobs />
+        </div>
+      </section>
+    </section>
+  );
+};
+
+export default HomePage;

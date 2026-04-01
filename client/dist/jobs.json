@@ -1,0 +1,311 @@
+[
+  {
+    "id": "JOB-001",
+    "jobTitle": "Senior Full Stack Developer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 140000,
+      "max": 185000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Build and maintain scalable web applications using modern JavaScript frameworks. Collaborate with product, design, and DevOps teams to deliver features for a SaaS platform serving enterprise clients.",
+    "companyName": "CloudPeak Solutions",
+    "location": {
+      "city": "Remote",
+      "country": "USA",
+      "timezonePreference": "US time zones"
+    },
+    "companyDescription": "CloudPeak is a growing SaaS provider of workflow automation tools, backed by top VCs, serving mid-market and enterprise customers across North America.",
+    "experienceLevel": "Senior",
+    "education": "Bachelor's in Computer Science or equivalent experience",
+    "requiredSkills": [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "AWS",
+      "REST/GraphQL APIs",
+      "Git",
+      "CI/CD"
+    ],
+    "niceToHave": [
+      "Next.js",
+      "Docker/Kubernetes",
+      "Redis",
+      "Terraform",
+      "Previous SaaS experience "
+    ]
+  },
+  {
+    "id": "JOB-002",
+    "jobTitle": "Data Scientist",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 125000,
+      "max": 170000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Develop machine learning models to drive insights and personalization features. Work closely with engineering and business teams to deploy models into production.",
+    "companyName": "InsightFlow AI",
+    "location": "Remote (Worldwide)",
+    "companyDescription": "InsightFlow AI specializes in predictive analytics for e-commerce and retail, helping brands optimize inventory and customer experience.",
+    "experienceLevel": "Mid-Senior",
+    "education": "Master's in Data Science, Statistics, or related field preferred",
+    "requiredSkills": [
+      "Python",
+      "SQL",
+      "Scikit-learn",
+      "TensorFlow/PyTorch",
+      "Pandas & NumPy",
+      "A/B testing",
+      "Data visualization (Tableau/Power BI)"
+    ],
+    "niceToHave": [
+      "MLflow",
+      "Snowflake",
+      "BigQuery",
+      "NLP experience",
+      "AWS SageMaker"
+    ]
+  },
+  {
+    "id": "JOB-003",
+    "jobTitle": "Backend Engineer (Go)",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 130000,
+      "max": 175000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Design and implement high-performance APIs and microservices for a fintech platform processing millions of transactions daily.",
+    "companyName": "PayForge",
+    "location": "Remote",
+    "companyDescription": "PayForge provides secure payment infrastructure for startups and scale-ups in emerging markets.",
+    "experienceLevel": "Senior",
+    "education": "Bachelor's degree or equivalent",
+    "requiredSkills": [
+      "Go (Golang)",
+      "PostgreSQL",
+      "gRPC / REST",
+      "Docker",
+      "Kubernetes",
+      "Microservices architecture",
+      "Unit testing"
+    ],
+    "niceToHave": ["Kafka", "Redis", "AWS/GCP", "Fintech domain knowledge"]
+  },
+  {
+    "id": "JOB-004",
+    "jobTitle": "AI/ML Engineer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 150000,
+      "max": 210000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Build and deploy large language models and computer vision solutions for customer-facing products in healthcare.",
+    "companyName": "MediAI Labs",
+    "location": "Remote (US preferred)",
+    "companyDescription": "MediAI Labs develops AI tools to assist clinicians with diagnostics and patient data analysis.",
+    "experienceLevel": "Senior",
+    "education": "Master's/PhD in CS, AI, or related",
+    "requiredSkills": [
+      "PyTorch",
+      "Transformers",
+      "Python",
+      "MLOps",
+      "Docker",
+      "Cloud (AWS/GCP/Azure)",
+      "Model fine-tuning"
+    ],
+    "niceToHave": [
+      "LangChain",
+      "Hugging Face",
+      "Computer vision (OpenCV)",
+      "Healthcare data experience"
+    ]
+  },
+  {
+    "id": "JOB-005",
+    "jobTitle": "DevOps Engineer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 135000,
+      "max": 180000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Automate infrastructure, CI/CD pipelines, and monitoring for a high-traffic consumer app. Ensure reliability and scalability.",
+    "companyName": "StreamVibe",
+    "location": "Remote",
+    "companyDescription": "StreamVibe is a video streaming platform focused on live events and interactive content.",
+    "experienceLevel": "Mid-Senior",
+    "education": "Bachelor's or relevant experience",
+    "requiredSkills": [
+      "Terraform",
+      "Kubernetes",
+      "AWS",
+      "Jenkins/GitHub Actions",
+      "Prometheus/Grafana",
+      "Linux",
+      "Scripting (Bash/Python)"
+    ],
+    "niceToHave": [
+      "ArgoCD",
+      "Istio",
+      "Security scanning tools",
+      "High-availability setups"
+    ]
+  },
+  {
+    "id": "JOB-006",
+    "jobTitle": "Frontend Developer (React)",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 110000,
+      "max": 155000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Create responsive, performant user interfaces for a B2B analytics dashboard used by Fortune 500 companies.",
+    "companyName": "DataVista",
+    "location": "Remote",
+    "companyDescription": "DataVista delivers real-time business intelligence and visualization tools to enterprise teams.",
+    "experienceLevel": "Mid-level",
+    "education": "Bachelor's preferred",
+    "requiredSkills": [
+      "React",
+      "TypeScript",
+      "Redux / Zustand",
+      "Tailwind CSS",
+      "Jest",
+      "Responsive design",
+      "API integration"
+    ],
+    "niceToHave": [
+      "D3.js or Chart.js",
+      "Storybook",
+      "Next.js",
+      "Accessibility (a11y)"
+    ]
+  },
+  {
+    "id": "JOB-007",
+    "jobTitle": "Machine Learning Engineer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 145000,
+      "max": 195000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Optimize recommendation systems and fraud detection models for an e-commerce marketplace.",
+    "companyName": "ShopSphere",
+    "location": "Remote (Worldwide)",
+    "companyDescription": "ShopSphere is a global online marketplace connecting independent sellers with millions of buyers.",
+    "experienceLevel": "Senior",
+    "education": "Master's in CS/ML preferred",
+    "requiredSkills": [
+      "Python",
+      "TensorFlow/PyTorch",
+      "Spark",
+      "SQL",
+      "MLOps tools",
+      "A/B experimentation"
+    ],
+    "niceToHave": [
+      "Recommendation systems",
+      "Fraud detection",
+      "Airflow",
+      "BigQuery"
+    ]
+  },
+  {
+    "id": "JOB-008",
+    "jobTitle": "Cloud Software Engineer",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 140000,
+      "max": 190000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Develop cloud-native applications and services on AWS for a cybersecurity platform.",
+    "companyName": "SecureLayer",
+    "location": "Remote (US)",
+    "companyDescription": "SecureLayer protects organizations from advanced threats using AI-driven security analytics.",
+    "experienceLevel": "Senior",
+    "education": "Bachelor's in CS or equivalent",
+    "requiredSkills": [
+      "AWS (Lambda, ECS, RDS)",
+      "Python / Go",
+      "Infrastructure as Code",
+      "Microservices",
+      "Security best practices"
+    ],
+    "niceToHave": [
+      "Serverless architecture",
+      "Zero Trust",
+      "CIS benchmarks",
+      "SIEM integration"
+    ]
+  },
+  {
+    "id": "JOB-009",
+    "jobTitle": "Mid-Level Full Stack Engineer (Java/Spring)",
+    "employmentType": "Full-time",
+    "salaryRange": {
+      "min": 115000,
+      "max": 155000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Build enterprise-grade backend services and modern frontend for internal tools and client portals.",
+    "companyName": "EnterpriseFlow",
+    "location": "Remote",
+    "companyDescription": "EnterpriseFlow provides workflow and automation software to large organizations in finance and insurance.",
+    "experienceLevel": "Mid-level",
+    "education": "Bachelor's preferred",
+    "requiredSkills": [
+      "Java 17+",
+      "Spring Boot",
+      "React",
+      "PostgreSQL",
+      "Docker",
+      "Git",
+      "Agile/Scrum"
+    ],
+    "niceToHave": ["Kafka", "Microservices", "Jenkins", "Angular"]
+  },
+  {
+    "id": "JOB-010",
+    "jobTitle": "Senior Software Engineer - Backend (Python)",
+    "employmentType": "Part-time",
+    "salaryRange": {
+      "min": 145000,
+      "max": 195000,
+      "currency": "USD",
+      "period": "yearly"
+    },
+    "jobSummary": "Lead backend development for a high-scale API serving real-time data to mobile and web clients.",
+    "companyName": "PulseData",
+    "location": "Remote",
+    "companyDescription": "PulseData delivers real-time analytics and monitoring for IoT and smart devices.",
+    "experienceLevel": "Senior",
+    "education": "Bachelor's or equivalent experience",
+    "requiredSkills": [
+      "Python (FastAPI/Flask)",
+      "PostgreSQL / TimescaleDB",
+      "Redis",
+      "AWS",
+      "asyncio",
+      "API design",
+      "Testing"
+    ],
+    "niceToHave": ["GraphQL", "Celery", "IoT protocols", "Real-time systems"]
+  }
+]
